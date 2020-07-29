@@ -41,8 +41,8 @@ export default {
 }
 
 .login-title {
-  font-size: 1.4rem;
-  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
   font-weight: 800;
 }
 
