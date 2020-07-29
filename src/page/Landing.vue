@@ -1,7 +1,7 @@
 <template>
     <div>
       <Header />
-      <div style="display: flex; align-items: center; justify-content: center; margin-left: -300px">
+      <div style="display: flex; align-items: center; justify-content: center;">
         <img src="@/assets/img/landing-img.png" style="height: 486px; margin-right: 3rem" />
         <div class="text">
           <h1>开发 Develope<br>
@@ -20,16 +20,19 @@
           </a>
         </div>
       </div>
+      <Footer />
     </div>
 </template>
 
 <script>
 
 import Header from '@/components/Header.vue'
+import Footer from '@/components/Footer.vue'
 
 export default {
   components: {
-    Header
+    Header,
+    Footer
   },
   mounted () {
     let words = document.getElementsByClassName('word')
@@ -101,6 +104,7 @@ body {
   overflow: hidden;
 }
 .text {
+  width: 600px;
   height: 100vh;
   display: flex;
   justify-content: center;
