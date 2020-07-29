@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div style="height: 100%;">
       <Header />
-      <div style="display: flex; align-items: center; justify-content: center;">
-        <img src="@/assets/img/landing-img.png" style="height: 486px; margin-right: 3rem" />
+      <div class="wrapper" style="display: flex; align-items: center; justify-content: center;">
+        <img src="@/assets/img/landing-img.png" class="kv"/>
         <div class="text">
           <h1>开发 Develope<br>
             <span class="container">
@@ -103,9 +103,14 @@ body {
   margin: 0;
   overflow: hidden;
 }
+
+.wrapper {
+  height: 85%;
+}
+
 .text {
   width: 600px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -151,6 +156,11 @@ body {
   font-weight: 800;
 }
 
+.kv {
+  height: 486px;
+  margin-right: 3rem;
+}
+
 @media screen and (min-height: 300px) {
   :root {
     font-size: 13px;
@@ -166,15 +176,33 @@ body {
     font-size: 32px;
   }
 }
+
 @media screen and (min-width: 1000px) {
   :root {
     font-size: 24px;
   }
+}
 
+@media screen and (max-width: 1200px) {
+  .kv {
+    width: 60%;
+    height: 30%;
+    margin-right: 0;
+  }
+  .wrapper {
+    flex-direction: column;
+    justify-content: center;
+  }
   .text {
-    height: 85vh;
+    height: 40vh;
+    width: 100%;
+  }
+
+  body {
+    overflow: auto;
   }
 }
+
 .letter {
   text-rendering: optimizeLegibility !important;
   display: inline-block;
