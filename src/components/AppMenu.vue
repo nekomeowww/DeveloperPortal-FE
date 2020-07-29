@@ -4,7 +4,7 @@
       <el-menu default-active="1-4-1" class="el-menu-vertical">
         <el-menu-item class="menu-item" index="1">
           <img class="menu-icon" src="../assets/img/info.png" />
-          <span slot="title">基本信息 General Information</span>
+          <span slot="title">基本信息 Information</span>
         </el-menu-item>
         <el-menu-item class="menu-item" index="2">
           <img class="menu-icon" src="../assets/img/oauth.png" />

@@ -2,7 +2,7 @@
     <div>
       <div v-if="id!==0">
         <Header />
-        <Menu />
+        <AppMenu />
         <NewAppForm
           :showSecretRow="true"
           :appData="app"
@@ -14,7 +14,7 @@
 <script>
 
 import Header from '@/components/Header.vue'
-import Menu from '@/components/Menu.vue'
+import AppMenu from '@/components/AppMenu.vue'
 import NewAppForm from '@/components/NewAppForm.vue'
 
 export default {
@@ -26,12 +26,18 @@ export default {
   },
   components: {
     Header,
-    Menu,
+    AppMenu,
     NewAppForm
   },
   data () {
     return {
-      app: {}
+      app: {
+        img: require('../../assets/img/test/app02.png'),
+        name: 'App',
+        clientId: '127272782',
+        clientSecret: 'KDE47XGdbGGlmUmQ',
+        callback: 'text'
+      }
     }
   }
 }
