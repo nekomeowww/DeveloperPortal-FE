@@ -7,7 +7,9 @@
           <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
         </a>
         <div v-if="showLoginBtn">
-          <el-button type="primary" class="login-btn">登陆</el-button>
+          <router-link to="/login">
+            <el-button type="primary" class="login-btn">登陆</el-button>
+          </router-link>
         </div>
       </header>
     </div>
@@ -44,6 +46,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+a {
+  text-decoration: none;
+}
 
 #logo {
   margin-right: 10px;
