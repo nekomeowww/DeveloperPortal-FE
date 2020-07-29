@@ -13,9 +13,15 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.19.2",
+    "compressorjs": "^1.0.6",
+    "cropperjs": "^1.5.7",
     "element-ui": "^2.13.2",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.27.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-upload-component": "^2.8.20",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
