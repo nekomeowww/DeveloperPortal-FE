@@ -14,10 +14,12 @@
             </div>
           </div>
         </div>
+        <router-link to="/newapp">
         <div class="app-new">
             <img id="new-logo" src="../assets/img/newapp.png" />
             <span id="new-text">Start your app</span>
           </div>
+        </router-link>
       </el-row>
     </div>
 </template>
