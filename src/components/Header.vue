@@ -6,8 +6,10 @@
           <div id='divider'></div>
           <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
         </a>
-        <div>
-          <el-button type="primary" class="login-btn">登陆</el-button>
+        <div v-if="showLoginBtn">
+          <router-link to="/login">
+            <el-button type="primary" class="login-btn">登陆</el-button>
+          </router-link>
         </div>
       </header>
     </div>
@@ -20,6 +22,10 @@ export default {
   components: {
   },
   props: {
+    showLoginBtn: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
@@ -40,6 +46,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+a {
+  text-decoration: none;
+}
 
 #logo {
   margin-right: 10px;

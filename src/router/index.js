@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import Landing from '@/page/Landing.vue'
+import Login from '@/page/Login.vue'
 import Home from '@/page/Home'
 import NewApp from '@/page/NewApplication.vue'
-import App from '@/page/Application.vue'
+import App from '@/page/App/_id.vue'
+import Redirect from '@/page/Redirect/_id.vue'
 
 Vue.use(Router)
 
@@ -10,6 +14,16 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Landing',
+      component: Landing
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/apps',
       name: 'Home',
       component: Home
     },
@@ -19,9 +33,16 @@ export default new Router({
       component: NewApp
     },
     {
-      path: '/app',
+      path: '/app/:id',
       name: 'App',
-      component: App
+      component: App,
+      props: true
+    },
+    {
+      path: '/app/:id/redirect/:callback',
+      name: 'Redirect',
+      component: Redirect,
+      props: true
     }
   ]
 })
