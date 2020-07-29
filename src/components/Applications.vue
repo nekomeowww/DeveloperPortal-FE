@@ -15,7 +15,7 @@
           </div>
         </div>
         <router-link to="/newapp">
-        <div class="app-new">
+          <div class="app-new">
             <img id="new-logo" src="../assets/img/newapp.png" />
             <span id="new-text">Start your app</span>
           </div>
@@ -95,6 +95,10 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+
+a {
+  text-decoration: none;
+}
 
 .application {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
@@ -179,5 +183,6 @@ export default {
   margin-top: 20px;
   font-size: 14px;
   color: #B2B2B2;
+  text-decoration: none;
 }
 </style>
