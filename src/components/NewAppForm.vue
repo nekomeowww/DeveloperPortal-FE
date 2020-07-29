@@ -41,12 +41,12 @@
           <div class="cid">
             <span class="form-label">Client ID</span><br>
             <span class="secret-text">{{ appData.clientId }}</span><br>
-            <el-button type="primary" size="small" class="secret-btn">Copy</el-button>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientId)">Copy</el-button>
           </div>
           <div class="cet">
             <span class="form-label">Client Secret</span><br>
             <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-            <el-button type="primary" size="small" class="secret-btn">Copy</el-button>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientSecret)">Copy</el-button>
             <el-button type="primary" size="small" class="secret-btn">Regenerate</el-button>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default {
           { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
         ],
         callback: [
-          { required: true, message: '请输入回调链接', trigger: 'change' }
+          { required: true, message: '', trigger: 'change' }
         ],
         toslink: [
           { required: false, message: '', trigger: 'change' }
@@ -185,6 +185,26 @@ export default {
           return false
         }
       })
+    },
+    copyToClipboard (text) {
+      if (window.clipboardData && window.clipboardData.setData) {
+        // IE specific code path to prevent textarea being shown while dialog is visible.
+        return window.clipboardData.setData('Text', text)
+      } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
+        var textarea = document.createElement('textarea')
+        textarea.textContent = text
+        textarea.style.position = 'fixed' // Prevent scrolling to bottom of page in MS Edge.
+        document.body.appendChild(textarea)
+        textarea.select()
+        try {
+          return document.execCommand('copy') // Security exception may be thrown by some browsers.
+        } catch (ex) {
+          console.warn('Copy to clipboard failed.', ex)
+          return false
+        } finally {
+          document.body.removeChild(textarea)
+        }
+      }
     },
     handleRemove (file) {
       console.log(file)
@@ -316,6 +336,7 @@ export default {
 .toShow {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #542DE0;
+  font-size: 0.8rem;
 }
 
 .secret-btn {
