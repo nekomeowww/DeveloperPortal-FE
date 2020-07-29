@@ -13,13 +13,13 @@
               <span class="word">合作力 Corporative</span>
             </span>
           </h1>
+          <a href="https://github.com/Matataki-io/DeveloperPortal-FE">
+            <div class="start">
+            开始 Get Started
+            </div>
+          </a>
         </div>
       </div>
-      <a href="https://github.com/Matataki-io/DeveloperPortal-FE">
-        <div class="start">
-        开始 Get Started
-      </div>
-      </a>
     </div>
 </template>
 
@@ -91,6 +91,9 @@ export default {
 </script>
 
 <style>
+a {
+  text-decoration: none;
+}
 body {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
@@ -126,11 +129,10 @@ body {
   position: absolute;
 }
 .start {
-  position: absolute;
+  text-decoration: none;
+  margin-top: 2rem;
+  position: relative;
   padding: 10px 20px 10px 20px;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   border-radius: 10px;
   border: 2px solid #542DE0;
   color: #542DE0;
