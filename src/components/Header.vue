@@ -1,11 +1,12 @@
 <template>
     <div>
       <header class="header home-fixed">
-        <a href="/" style="display: flex;align-items: center;flex: 1;">
+        <a href="/" style="display: flex;align-items: center;">
           <img id='logo' src="../assets/img/logo.png" style="height: 30px;"/>
           <div id='divider'></div>
           <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
         </a>
+        <div style="flex: 1;"> </div>
         <div v-if="showLoginBtn">
           <router-link to="/login">
             <el-button type="primary" class="login-btn">登录</el-button>
