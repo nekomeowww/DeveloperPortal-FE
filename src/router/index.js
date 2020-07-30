@@ -7,6 +7,7 @@ import Home from '@/page/Home'
 import NewApp from '@/page/NewApplication.vue'
 import App from '@/page/App/_id.vue'
 import Redirect from '@/page/Redirect/_id.vue'
+import OauthLogin from '@/page/Oauth/Login.vue'
 
 Vue.use(Router)
 
@@ -43,6 +44,13 @@ export default new Router({
       name: 'Redirect',
       component: Redirect,
       props: true
+    },
+    {
+      path: '/app/:id/oauth',
+      name: 'OauthLogin',
+      component: OauthLogin,
+      props: true
+
     }
   ]
 })
