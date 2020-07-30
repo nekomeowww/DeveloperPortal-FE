@@ -11,6 +11,7 @@
               <span class="word">实用性 Accessibilities</span>
               <span class="word">想象力 Imagination</span>
               <span class="word">合作力 Corporative</span>
+              <span class="word">互通性 Interoperability</span>
             </span>
           </h1>
           <a href="https://github.com/Matataki-io/DeveloperPortal-FE">
@@ -109,7 +110,7 @@ body {
 }
 
 .text {
-  width: 600px;
+  width: 700px;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -161,6 +162,13 @@ body {
   margin-right: 3rem;
 }
 
+.footer {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  left: 0;
+}
+
 @media screen and (min-height: 300px) {
   :root {
     font-size: 13px;
@@ -183,23 +191,42 @@ body {
   }
 }
 
+@media screen and (max-width: 600px) {
+  .text h1 {
+    font-size: 2rem;
+  }
+
+  .start {
+    margin-top: 1.4rem;
+    font-size: 0.8rem;
+  }
+
+  .text {
+    height: 20vh;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .kv {
-    width: 60%;
-    height: 30%;
+    width: 50%;
     margin-right: 0;
+    object-fit: scale-down;
   }
   .wrapper {
     flex-direction: column;
     justify-content: center;
   }
   .text {
-    height: 40vh;
+    height: 20vh;
     width: 100%;
   }
 
   body {
     overflow: auto;
+  }
+
+  .footer {
+    position: relative;
   }
 }
 
