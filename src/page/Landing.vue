@@ -121,7 +121,7 @@ body {
 .text h1 {
   margin: 0;
   letter-spacing: -.15rem;
-  font-size: 3rem;
+  font-size: 5rem;
   font-weight: 400;
 }
 .text h1 .container {
@@ -159,7 +159,7 @@ body {
 
 .kv {
   height: 486px;
-  margin-right: 3rem;
+  margin-right: 0.5rem;
 }
 
 .footer {
@@ -170,24 +170,30 @@ body {
 }
 
 @media screen and (min-height: 300px) {
-  :root {
+  .wrapper {
     font-size: 13px;
   }
 }
 @media screen and (min-height: 900px) {
-  :root {
+  .wrapper {
     font-size: 20px;
   }
 }
 @media screen and (min-height: 1200px) {
-  :root {
+  .wrapper {
     font-size: 32px;
   }
 }
 
 @media screen and (min-width: 1000px) {
-  :root {
+  .wrapper {
     font-size: 24px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .text h1 {
+    font-size: 1rem;
   }
 }
 
@@ -204,19 +210,37 @@ body {
   .text {
     height: 20vh;
   }
+
+  .kv {
+    height: 200px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .text h1 {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 1200px) {
   .kv {
     width: 50%;
+    height: 35%;
     margin-right: 0;
     object-fit: scale-down;
   }
+
+  .start {
+    font-size: 1rem;
+  }
+
   .wrapper {
     flex-direction: column;
     justify-content: center;
   }
+
   .text {
+    font-size: 3rem !important;
     height: 20vh;
     width: 100%;
   }
