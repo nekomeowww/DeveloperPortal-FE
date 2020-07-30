@@ -6,7 +6,7 @@
     <div class="wrapper">
       <img src="@/assets/img/landing-img.png" class="kv"/>
       <div class="login-box">
-        <span class="login-title">即刻登陆</span><br>
+        <span class="login-title">即刻登录</span><br>
         <Input />
       </div>
     </div>

@@ -41,13 +41,13 @@
           <div class="cid">
             <span class="form-label">Client ID</span><br>
             <span class="secret-text">{{ appData.clientId }}</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientId)">Copy</el-button>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientId)">复制</el-button>
           </div>
           <div class="cet">
             <span class="form-label">Client Secret</span><br>
             <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientSecret)">Copy</el-button>
-            <el-button type="primary" size="small" class="secret-btn">Regenerate</el-button>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientSecret)">复制</el-button>
+            <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
           </div>
         </div>
         <el-form-item label=' ' prop="description">
@@ -197,9 +197,16 @@ export default {
         document.body.appendChild(textarea)
         textarea.select()
         try {
+          this.$notify.success({
+            title: '复制成功',
+            message: '内容已经成功复制到剪贴板'
+          })
           return document.execCommand('copy') // Security exception may be thrown by some browsers.
         } catch (ex) {
-          console.warn('Copy to clipboard failed.', ex)
+          this.$notify.error({
+            title: '复制失败',
+            message: '请手动复制内容'
+          })
           return false
         } finally {
           document.body.removeChild(textarea)
@@ -235,6 +242,7 @@ export default {
 }
 
 .app-desp-content {
+  font-size: 16px;
   word-break: break-all;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -306,6 +314,7 @@ export default {
 }
 
 #new-text {
+  font-size: 16px;
   margin-top: 10px;
 }
 
@@ -329,12 +338,14 @@ export default {
 }
 .secret-text {
   font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
   margin-top: 10px;
   display: inline-block;
 }
 
 .toShow {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px !important;
   color: #542DE0;
   font-size: 0.8rem;
 }

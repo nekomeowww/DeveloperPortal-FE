@@ -8,7 +8,7 @@
         <el-input type="password" placeholder="请输入密码..." v-model="ruleForm.pass" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">登陆</el-button>
+        <el-button type="primary" @click="submitForm('ruleForm')" style="width: 100%;">登录</el-button>
       </el-form-item>
     </el-form>
   </div>

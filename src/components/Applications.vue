@@ -7,12 +7,14 @@
       <div class="app-title">My Application</div>
       <el-row :gutter="20" class="apps">
         <div v-for="(app, index) in appCards" :key=index>
-          <div v-if="app.id">
-            <div class="app-item" :href="app.href">
-              <img class="app-img" :src="app.img" />
-              <span class="app-name">{{ app.name }}</span>
+          <router-link :to="'/app/' + app.id">
+            <div v-if="app.id">
+              <div class="app-item" :href="app.href">
+                <img class="app-img" :src="app.img" />
+                <span class="app-name">{{ app.name }}</span>
+              </div>
             </div>
-          </div>
+          </router-link>
         </div>
         <router-link to="/newapp">
           <div class="app-new">
@@ -98,10 +100,11 @@ export default {
 
 a {
   text-decoration: none;
+  color: black;
 }
 
 .application {
-  font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
+  font-family:'PingFangSC-Medium','PingFang SC', Arial, Helvetica, sans-serif;
   padding-right: 2rem;
 }
 
@@ -110,6 +113,7 @@ a {
 }
 
 .app-desp-content {
+  font-size: 16px;
   word-break: break-all;
   margin-top: 20px;
   color: #B2B2B2;
@@ -159,6 +163,7 @@ a {
 
 .app-name {
   margin-top: 0.5rem;
+  font-size: 16px;
 }
 
 .app-new {

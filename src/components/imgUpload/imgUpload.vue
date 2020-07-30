@@ -278,14 +278,14 @@ export default {
 
         // console.log(file)
       } catch (error) {
-        // 捕获错误 未登陆提示
+        // 捕获错误 未登录提示
         console.log(error)
         this.modalLoading = false
         if (error.toString().includes('code 401')) {
           this.$message({
             showClose: true,
             duration: 1000,
-            message: '请先登陆'
+            message: '请先登录'
           })
         } else {
           this.$message({
