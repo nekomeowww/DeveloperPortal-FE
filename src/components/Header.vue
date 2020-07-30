@@ -8,7 +8,7 @@
         </a>
         <div v-if="showLoginBtn">
           <router-link to="/login">
-            <el-button type="primary" class="login-btn">登陆</el-button>
+            <el-button type="primary" class="login-btn">登录</el-button>
           </router-link>
         </div>
       </header>
