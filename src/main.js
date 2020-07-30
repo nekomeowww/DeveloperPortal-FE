@@ -7,6 +7,7 @@ import '../static/theme/index.css'
 import router from './router'
 
 Vue.use(ElementUI)
+Vue.prototype.$notify = ElementUI.Notification
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
