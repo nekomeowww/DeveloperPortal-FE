@@ -101,7 +101,7 @@ a {
 }
 
 .application {
-  font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
+  font-family:'PingFangSC-Medium','PingFang SC', Arial, Helvetica, sans-serif;
   padding-right: 2rem;
 }
 
