@@ -48,7 +48,7 @@ export default {
 
 .login-box {
   box-shadow:0px 10px 40px 0px rgba(0,0,0,0.1);
-  width: 300px;
+  width: 500px;
   height: 400px;
   display: -webkit-box;
   display: -ms-flexbox;

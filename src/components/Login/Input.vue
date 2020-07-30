@@ -61,4 +61,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.input {
+  width: 60%;
+}
 </style>
