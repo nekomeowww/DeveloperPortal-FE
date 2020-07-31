@@ -61,7 +61,7 @@ a {
 .avatar {
   height: 48px;
   object-fit: cover;
-  margin-right: 20px;
+  margin-right: 40px;
   border-radius: 50%;
 }
 
