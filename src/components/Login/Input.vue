@@ -57,7 +57,9 @@ export default {
                 type: 'success',
                 duration: 4000
               })
-              this.$router.push({ name: 'Home' })
+              setTimeout(() => {
+                this.$router.push({ name: 'Home' })
+              }, 3000)
             } else {
               console.log('failed')
               this.$message({
