@@ -12,6 +12,7 @@ import OauthLogin from '@/page/Oauth/Login.vue'
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -51,6 +52,12 @@ export default new Router({
       component: OauthLogin,
       props: true
 
+    },
+    {
+      path: '/app/:id/login/:redirect',
+      name: 'LoginRedirect',
+      component: Redirect,
+      props: true
     }
   ]
 })

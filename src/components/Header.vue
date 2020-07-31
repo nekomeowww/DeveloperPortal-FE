@@ -12,17 +12,24 @@
             <el-button type="primary" class="login-btn">登录</el-button>
           </router-link>
         </div>
+          <img class="avatar" v-if="showAvatar && isLoggedIn" :src="userAvatar" />
       </header>
     </div>
 </template>
 
 <script>
 
+import { mapState } from 'vuex'
+
 export default {
   name: 'Header',
   components: {
   },
   props: {
+    showAvatar: {
+      type: Boolean,
+      default: false
+    },
     showLoginBtn: {
       type: Boolean,
       default: true
@@ -33,7 +40,7 @@ export default {
     }
   },
   computed: {
-
+    ...mapState(['userAvatar', 'isLoggedIn'])
   },
   watch: {
   },
@@ -49,6 +56,13 @@ export default {
 <style lang="less" scoped>
 a {
   text-decoration: none;
+}
+
+.avatar {
+  height: 48px;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 50%;
 }
 
 #logo {
