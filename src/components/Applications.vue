@@ -67,11 +67,6 @@ export default {
           id: 7
         },
         {
-          img: require('@/assets/img/test/app08.png'),
-          name: `Neko's App`,
-          id: 8
-        },
-        {
           img: null,
           name: null,
           href: null
