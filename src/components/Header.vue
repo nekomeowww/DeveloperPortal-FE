@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userInfo', 'userAvatar', 'isLoggedIn'])
+    ...mapState(['userAvatar', 'isLoggedIn'])
   },
   watch: {
   },

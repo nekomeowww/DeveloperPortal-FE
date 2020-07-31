@@ -6,7 +6,10 @@
     <div class="wrapper">
       <img src="@/assets/img/landing-img.png" class="kv"/>
       <div class="login-box">
-        <span class="login-title">即刻登录</span><br>
+        <span class="login-title">
+          即刻登录<br>
+          成为 <span class="purple">Matataki</span> 的开发者
+        </span><br>
         <Input />
       </div>
     </div>
@@ -17,11 +20,20 @@
 
 import Header from '@/components/Header.vue'
 import Input from '@/components/Login/Input.vue'
+import { mapState } from 'vuex'
 
 export default {
   components: {
     Header,
     Input
+  },
+  computed: {
+    ...mapState(['isLoggedIn'])
+  },
+  watch: {
+    isLoggedIn (val) {
+      console.log(val)
+    }
   }
 }
 </script>
@@ -41,9 +53,14 @@ export default {
 }
 
 .login-title {
+  text-align: center;
   font-size: 1.2rem;
   margin-bottom: 1rem;
   font-weight: 800;
+}
+
+.purple {
+  color: #542DE0
 }
 
 .login-box {
@@ -64,7 +81,7 @@ export default {
 @media screen and (max-width: 1200px) {
   .kv {
     width: 50%;
-    height: 30%;
+    height: 50%;
     margin-right: 0;
   }
 }

@@ -10,7 +10,7 @@ import router from './router'
 require('dotenv').config()
 
 Vue.use(ElementUI)
-Vue.prototype.$alert = ElementUI.MessageBox.alert
+Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$notify = ElementUI.Notification
 Vue.config.productionTip = false
 

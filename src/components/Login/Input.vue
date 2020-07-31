@@ -1,6 +1,6 @@
 <template>
   <div class="input">
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="ruleForm">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="ruleForm" @keyup.enter="submitForm('ruleForm')">
       <el-form-item prop="email">
         <el-input type="email" placeholder="请输入电子邮箱..." v-model="ruleForm.email" autocomplete="off"></el-input>
       </el-form-item>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   data () {
     let validateEmail = (rule, value, callback) => {
@@ -43,18 +45,34 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['login']),
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          this.login(this.ruleForm).then(res => {
+            if (res) {
+              console.log('success')
+              this.$message({
+                message: '登录成功，现在为你跳转到管理页面...',
+                type: 'success',
+                duration: 4000
+              })
+              this.$router.push({ name: 'Home' })
+            } else {
+              console.log('failed')
+              this.$message({
+                message: '电子邮件或密码错误',
+                type: 'error',
+                duration: 4000
+              })
+            }
+          })
         } else {
-          console.log('error submit!!')
-          return false
+          this.$message({
+            message: '出现了错误，请重试。'
+          })
         }
       })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
     }
   }
 }
