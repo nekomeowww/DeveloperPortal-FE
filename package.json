@@ -16,6 +16,7 @@
     "axios": "^0.19.2",
     "compressorjs": "^1.0.6",
     "cropperjs": "^1.5.7",
+    "dotenv": "^8.2.0",
     "element-ui": "^2.13.2",
     "js-cookie": "^2.2.1",
     "moment": "^2.27.0",

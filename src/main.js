@@ -4,9 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import ElementUI from 'element-ui'
 import '../static/theme/index.css'
+import store from '@/store/index.js'
 import router from './router'
 
+require('dotenv').config()
+
 Vue.use(ElementUI)
+Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$notify = ElementUI.Notification
 Vue.config.productionTip = false
 
@@ -14,6 +18,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
