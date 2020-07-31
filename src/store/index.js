@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import API from '@/api/api.js'
+import { getUserProfile } from '@/api/user.js'
+import { getAvatarUrl } from '../api/user'
 
 Vue.use(Vuex)
 
@@ -10,22 +11,30 @@ export default new Vuex.Store({
 
   },
   state: {
-    isLoggedIn: false
+    isLoggedIn: false,
+    userInfo: '',
+    userAvatar: ''
   },
   mutations: {
     setLoggedIn (state, login) {
-      this.state.isLoggedIn = login
+      state.isLoggedIn = login
+    },
+    setUserInfo (state, info) {
+      state.userInfo = info
+    },
+    setUserAvatar (state, avatar) {
+      state.userAvatar = avatar
     }
   },
   actions: {
     setLoggedIn ({ commit }, login) {
       commit('setLoggedIn', login)
     },
-    async refreshUser ({ commit, rootGetters }, { id }) {
-      const { isMe } = rootGetters
-      const { data } = await (isMe(id) ? API.getMyUserData() : API.getUser(id))
-      // console.log('数据：', isMe(id), data)
-      commit('setUserInfo', data)
+    async setUserInfo ({ commit }, info) {
+      const user = await getUserProfile(info.id)
+      const avatar = await getAvatarUrl(user.data.data.avatar)
+      commit('setUserInfo', user)
+      commit('setUserAvatar', avatar)
     }
   }
 })
