@@ -24,11 +24,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm install
     - run: npm run build
+    - run: npm run test
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.2
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script:  cd Git/DeveloperPortal-FE && yarn && yarn build
+        script:  cd Git/DeveloperPortal-FE && git pull && yarn && yarn build
 
