@@ -1,7 +1,12 @@
-# DeveloperPortal-FE
+<h1 align="center">DeveloperPortal-FE</h1>
 
-<p align="center" style="font-size: 1.5rem; font-weight:700;">Developer portal for Matataki.io</p>
-<p align="center" style="font-size: 1.5rem; font-weight:700;">This is still a on going working project</p>
+<p align="center">Developer portal for Matataki.io</p>
+<p align="center">This is still a on going working project</p>
+<p align="center">
+<img alt="常规测试" src="https://github.com/nekomeowww/DeveloperPortal-FE/workflows/Node%20Test/badge.svg" />
+<img alt="生产环境测试" src="https://github.com/nekomeowww/DeveloperPortal-FE/workflows/Production%20CI%20Test/badge.svg" />
+<img alt="生产环境部署" src="https://github.com/nekomeowww/DeveloperPortal-FE/workflows/Production%20Deployment/badge.svg" />
+</p>
 
 ## Build Setup
 
