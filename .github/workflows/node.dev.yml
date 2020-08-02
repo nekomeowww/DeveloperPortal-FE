@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node CI/CD
+name: Node Test
 
 on:
   pull_request:
@@ -25,11 +25,4 @@ jobs:
     - run: npm install
     - run: npm run build
     - run: npm run test
-    - name: SSH Remote Commands
-      uses: appleboy/ssh-action@v0.1.2
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        script:  cd Git/DeveloperPortal-FE && git pull && yarn && yarn build
 
