@@ -1,0 +1,23 @@
+name: Production Continues Deployment
+
+on: 
+  pull_request:
+    branches: [ production ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: SSH Remote Commands
+      uses: appleboy/ssh-action@v0.1.2
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        script:  cd Git/DeveloperPortal-FE && git pull && yarn && yarn test && yarn build
