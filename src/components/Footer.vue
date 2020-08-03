@@ -70,17 +70,6 @@
             src="@/assets/img/footer_logo1.png"
             alt="logo"
           >
-          <a
-            target="_blank"
-            href="https://jq.qq.com/?_wv=1027&k=gY0RKj2t"
-            title="群号：766605671"
-            class="icon qq"
-          >
-            <svg-icon
-              class="qq-icon"
-              icon-class="qq"
-            />
-          </a>
           <div class="icon wechat-icon">
             <div class="wechat">
               <div class="wechat-img">
@@ -114,15 +103,6 @@
             href="https://t.me/smartsignature_io"
           >
             <div class="icon telegram-icon" />
-          </a>
-          <a
-            target="_blank"
-            href="https://twitter.com/intent/follow?ref_src=twsrc%5Etfw&screen_name=realmatataki&tw_p=followbutton"
-          >
-            <svg-icon
-              class="icon twitter-icon"
-              icon-class="twitter"
-            />
           </a>
           <!--
           <a
