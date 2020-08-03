@@ -16,8 +16,11 @@ jobs:
     steps:
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@v0.1.2
+      env: 
+        API_TOKEN: ${{ secrets.API_TOKEN }}
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script:  cd Git/DeveloperPortal-FE && git pull && yarn && yarn test && yarn build
+        envs: API_TOKEN
+        script: cd Git/DeveloperPortal-FE && git pull && rm -rf apitoken.json && touch apitoken.json && printf '{"token":"%s"}' "$API_TOKEN" > apitoken.json && yarn && yarn test && yarn build

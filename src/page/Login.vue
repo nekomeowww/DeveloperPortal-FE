@@ -20,7 +20,9 @@
 
 import Header from '@/components/Header.vue'
 import Input from '@/components/Login/Input.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+
+import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
@@ -30,9 +32,20 @@ export default {
   computed: {
     ...mapState(['isLoggedIn'])
   },
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
   watch: {
     isLoggedIn (val) {
-      console.log(val)
+    }
+  },
+  mounted () {
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+      this.$router.push({ name: 'Home' })
     }
   }
 }

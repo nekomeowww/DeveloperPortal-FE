@@ -1,6 +1,8 @@
 <template>
     <div style="height: 100%;">
-      <Header />
+      <Header
+        :showLoginBtn="!isLoggedIn"
+      />
       <div class="wrapper" style="display: flex; align-items: center; justify-content: center;">
         <img src="@/assets/img/landing-img.png" class="kv"/>
         <div class="text">
@@ -29,13 +31,33 @@
 
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import { mapState, mapActions } from 'vuex'
+
+import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
     Header,
     Footer
   },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapState(['isLoggedIn'])
+  },
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
   mounted () {
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+    }
+
     let words = document.getElementsByClassName('word')
     let wordArray = []
     let currentWord = 0
@@ -89,7 +111,10 @@ export default {
     }
 
     changeWord()
-    setInterval(changeWord, 3500)
+    this.theInterval = setInterval(changeWord, 3500)
+  },
+  destroyed () {
+    clearInterval(this.theInterval)
   }
 }
 </script>

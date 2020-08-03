@@ -32,7 +32,7 @@ export default {
   data () {
     return {
       app: {
-        img: require('../../assets/img/test/app02.png'),
+        img: null,
         name: 'App',
         clientId: '127272782',
         clientSecret: 'KDE47XGdbGGlmUmQ',

@@ -1,7 +1,7 @@
 <template>
-  <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;width: 60%;">
+  <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;width: 60%; padding-bottom: 40px; height: 100%;">
     <div class="app-desp">
-      <div class="app-desp-title">General Information</div>
+      <div class="app-desp-title">Creating New App</div>
       <div class="app-desp-content">填写基本的 App 信息</div>
     </div>
     <div>
@@ -50,7 +50,7 @@
             <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
           </div>
         </div>
-        <el-form-item label=' ' prop="description">
+        <el-form-item label=' ' prop="desp">
           <span class="form-label">简介 Description</span>
           <el-input placeholder="请输入简介... " type="textarea" v-model="ruleForm.desp" :rows="6"></el-input>
         </el-form-item>
@@ -90,6 +90,10 @@
 <script>
 
 import imgUpload from '@/components/imgUpload/imgUpload.vue'
+import { mapActions, mapState } from 'vuex'
+import Axios from 'axios'
+
+import env from '../../env.json'
 
 export default {
   components: {
@@ -123,11 +127,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { required: true, message: '请输入名称', trigger: 'change' }
         ],
         callback: [
-          { required: true, message: '', trigger: 'change' }
+          { required: true, message: '请输入回调地址', trigger: 'change' }
         ],
         toslink: [
           { required: false, message: '', trigger: 'change' }
@@ -138,8 +141,8 @@ export default {
         orglink: [
           { required: false, message: '', trigger: 'change' }
         ],
-        description: [
-          { required: true, message: '请输入简介', trigger: 'blur' }
+        desp: [
+          { required: true, message: '请输入简介', trigger: 'change' }
         ]
       },
       dialogImageUrl: '',
@@ -147,12 +150,16 @@ export default {
       disabled: false
     }
   },
-  mounted () {
-    if (this.showSecretRow) {
-      this.ruleForm = this.appData
+  computed: {
+    ...mapState(['currentAppId', 'isLoggedIn', 'userId'])
+  },
+  created () {
+    if (!this.isLoggedIn) {
+      this.$router.push({ name: 'Login' })
     }
   },
   methods: {
+    ...mapActions(['setCurrentAppId']),
     reveal () {
       let elem = document.getElementById('secret')
       this.defaultCss = elem.style.cssText
@@ -169,8 +176,14 @@ export default {
       }
     },
     getAvatar () {
+      Axios(env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
+        this.avatar = env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId
+      })
+
       if (this.showSecretRow) {
         this.avatar = this.appData.img
+        return this.avatar
+      } else if (this.avatar !== '') {
         return this.avatar
       } else {
         return false
@@ -179,7 +192,17 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          Axios.post(env.DEVELOPERAPI + '/app/new', { params: { form: this.ruleForm } }).then(res => {
+            if (res.data.code === 0) {
+              this.$message({
+                message: '创建成功... 现在返回 App 列表',
+                type: 'success',
+                duration: 4000
+              })
+
+              this.$router.push({ name: 'Home' })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
@@ -213,20 +236,28 @@ export default {
         }
       }
     },
-    handleRemove (file) {
-      console.log(file)
-    },
-    handlePictureCardPreview (file) {
-      this.dialogImageUrl = file.url
-      this.dialogVisible = true
-    },
-    handleDownload (file) {
-      console.log(file)
-    },
     doneImageUpload () {
       this.imgUploadDone += Date.now()
-      this.refreshApp({ id: this.$route.params.id })
+      location.reload()
     }
+  },
+  mounted () {
+    if (this.showSecretRow) {
+      this.ruleForm = this.appData
+    }
+    Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {
+      if (apps.data.id) {
+        console.log('appid', apps.data.id)
+        let id = apps.data.id
+        id = id + 1
+        this.setCurrentAppId(id)
+      } else {
+        console.log('set app id to 1')
+        this.setCurrentAppId(1)
+      }
+    }).catch(e => {
+      this.setCurrentAppId(1)
+    })
   }
 }
 </script>
@@ -251,6 +282,11 @@ export default {
 .icon-title {
   font-size: 16px;
 }
+
+.avatar-shift {
+  margin-bottom: 20px;
+}
+
 .app-icon {
   cursor: pointer;
   margin-top: 1rem;
@@ -259,7 +295,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   width:148px;
-  height:180px;
+  height:148px;
   object-fit: cover;
   background:rgba(241,241,241,1);
   border-radius:8px;
