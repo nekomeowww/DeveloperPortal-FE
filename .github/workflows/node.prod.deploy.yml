@@ -20,4 +20,6 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        script:  cd Git/DeveloperPortal-FE && git pull && yarn && yarn test && yarn build
+        script: cd Git/DeveloperPortal-FE && git pull
+        script: rm -rf apitoken.json && touch apitoken.json && echo `{ "token": "${{ secrets.API_TOKEN }}" }` > apitoken.json
+        script: yarn && yarn test && yarn build
