@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Axios from 'axios'
 
-import { setCookie, disassemble } from '../util/cookie'
+import { setCookie, disassemble, clearAllCookie, removeCookie } from '../util/cookie'
 import { getUserProfile } from '@/api/user.js'
 import { loginWithEmail, getAvatarUrl } from '../api/user'
+
+import env from '../../env.json'
 
 Vue.use(Vuex)
 
@@ -13,11 +16,12 @@ export default new Vuex.Store({
   },
   state: {
     isLoggedIn: false,
-    userId: '',
+    userId: 0,
     userInfo: '',
     userProfile: '',
     userAvatar: '',
-    accessToken: ''
+    accessToken: '',
+    currentAppId: 0
   },
   mutations: {
     setLoggedIn (state, login) {
@@ -37,6 +41,9 @@ export default new Vuex.Store({
     },
     setToken (state, token) {
       state.accessToken = token
+    },
+    setCurrentAppId (state, id) {
+      state.currentAppId = id
     }
   },
   actions: {
@@ -58,22 +65,35 @@ export default new Vuex.Store({
         const res2 = await getUserProfile(user.id)
         const avatar = await getAvatarUrl(res2.data.data.avatar)
         commit('setUserAvatar', avatar)
-        // Axios.get(process.env.VUE_APP_CMUAPI + '/user/login?id=' + user.id + '&email=' + data.email + '&nickname=' + res2.data.nickname + '&avatar=' + res2.data.avatar)
-        res2.data.id = user.id
+        Axios.get(env.DEVELOPERAPI + '/login?id=' + user.id + '&email=' + user.iss + '&nickname=' + res2.data.data.nickname + '&avatar=' + res2.data.data.avatar)
         commit('setUserProfile', res2.data.data)
         commit('setLoggedIn', true)
         commit('setUserId', user.id)
         return true
       }
     },
-    setLoggedIn ({ commit }, login) {
-      commit('setLoggedIn', login)
+    async logout ({ commit }) {
+      removeCookie('ACCESS-TOKEN')
+      clearAllCookie()
+      commit('setLoggedIn', false)
+      return true
+    },
+    async setLoggedIn ({ commit }, login) {
+      commit('setLoggedIn', login.status)
+      let res2 = await getUserProfile(login.id)
+      const avatar = await getAvatarUrl(res2.data.data.avatar)
+      commit('setUserId', login.id)
+      commit('setUserProfile', res2.data.data)
+      commit('setUserAvatar', avatar)
     },
     async setUserInfo ({ commit }, info) {
       const user = await getUserProfile(info.id)
       const avatar = await getAvatarUrl(user.data.data.avatar)
       commit('setUserInfo', user)
       commit('setUserAvatar', avatar)
+    },
+    async setCurrentAppId ({ commit }, id) {
+      commit('setCurrentAppId', id)
     }
   }
 })
