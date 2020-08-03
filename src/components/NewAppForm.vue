@@ -192,7 +192,17 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          Axios.post(env.DEVELOPERAPI + '/app/new', { params: { form: this.ruleForm } }).then(res => {
+            if (res.data.code === 0) {
+              this.$message({
+                message: '创建成功... 现在返回 App 列表',
+                type: 'success',
+                duration: 4000
+              })
+
+              this.$router.push({ name: 'Home' })
+            }
+          })
         } else {
           console.log('error submit!!')
           return false
