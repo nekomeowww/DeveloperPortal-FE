@@ -64,6 +64,9 @@ import VueUploadComponent from 'vue-upload-component'
 import Cropper from 'cropperjs'
 import Compressor from 'compressorjs'
 
+import API from '../../api/api.js'
+import { mapState } from 'vuex'
+
 export default {
   name: 'ImgUpload',
   components: {
@@ -115,6 +118,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['currentAppId', 'userId']),
     computedStyleContent () {
       if (this.updateType === 'artileCover') {
         return {
@@ -260,8 +264,7 @@ export default {
         file = new File([arr], oldFile.name, { type: oldFile.type })
       }
       try {
-        console.log(this.files[0])
-        const res = await this.$API.uploadImage(this.updateType, file)
+        const res = await API.uploadImage(file, this.currentAppId, this.userId)
         res.code = 0
         if (res.code === 0) {
           this.$emit('doneImageUpload', {
