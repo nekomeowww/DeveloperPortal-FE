@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       app: {
-        img: require('@/assets/img/test/app01.png'),
+        img: null,
         name: `Neko's App`,
         id: 1
       }

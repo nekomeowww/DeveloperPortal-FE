@@ -27,45 +27,15 @@
 </template>
 
 <script>
+import Axios from 'axios'
+
+import env from '../../env.json'
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
       appCards: [
-        {
-          img: require('@/assets/img/test/app01.png'),
-          name: `Neko's App`,
-          id: 1
-        },
-        {
-          img: require('@/assets/img/test/app02.png'),
-          name: `Neko's App`,
-          id: 2
-        },
-        {
-          img: require('@/assets/img/test/app03.png'),
-          name: `Neko's App`,
-          id: 3
-        },
-        {
-          img: require('@/assets/img/test/app04.png'),
-          name: `Neko's App`,
-          id: 4
-        },
-        {
-          img: require('@/assets/img/test/app05.png'),
-          name: `Neko's App`,
-          id: 5
-        },
-        {
-          img: require('@/assets/img/test/app06.png'),
-          name: `Neko's App`,
-          id: 6
-        },
-        {
-          img: require('@/assets/img/test/app07.png'),
-          name: `Neko's App`,
-          id: 7
-        },
         {
           img: null,
           name: null,
@@ -73,6 +43,14 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapState(['userId'])
+  },
+  created () {
+  },
+  mounted () {
+    if (this.userId) Axios.get(env.DEVELOPERAPI + '/user/apps?id=' + this.userId).then(apps => {})
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="input">
-    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="ruleForm" @keyup.enter="submitForm('ruleForm')">
+  <div class="input" @keyup.enter="submitForm('ruleForm')">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="ruleForm">
       <el-form-item prop="email">
         <el-input type="email" placeholder="请输入电子邮箱..." v-model="ruleForm.email" autocomplete="off"></el-input>
       </el-form-item>
@@ -51,7 +51,6 @@ export default {
         if (valid) {
           this.login(this.ruleForm).then(res => {
             if (res) {
-              console.log('success')
               this.$message({
                 message: '登录成功，现在为你跳转到管理页面...',
                 type: 'success',
@@ -61,7 +60,6 @@ export default {
                 this.$router.push({ name: 'Home' })
               }, 3000)
             } else {
-              console.log('failed')
               this.$message({
                 message: '电子邮件或密码错误',
                 type: 'error',

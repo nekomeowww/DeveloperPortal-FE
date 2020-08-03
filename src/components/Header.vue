@@ -12,14 +12,46 @@
             <el-button type="primary" class="login-btn">登录</el-button>
           </router-link>
         </div>
-          <img class="avatar" v-if="showAvatar && isLoggedIn" :src="userAvatar" />
+        <el-dropdown
+          placement="bottom-start"
+          v-if="isLoggedIn"
+          class="user-menu"
+        >
+          <!-- <avatarComponents :size="'30px'" :src="avatar" class="home-head-avatar" /> -->
+          <div class="user-avatar">
+            <img
+              v-if="userAvatar"
+              :src="userAvatar"
+              alt="user avatar"
+              class="avatar"
+            >
+          </div>
+          <el-dropdown-menu
+            slot="dropdown"
+            class="user-dorpdown"
+          >
+            <router-link to="/apps">
+              <el-dropdown-item icon="el-icon-check">
+                使用 <span class="purple">{{ userProfile.nickname || userProfile.name }}</span> 登录
+              </el-dropdown-item>
+            </router-link>
+            <div
+              class="link border-br-bl"
+              @click="signOut"
+            >
+              <el-dropdown-item icon="el-icon-error">
+                登出
+              </el-dropdown-item>
+            </div>
+          </el-dropdown-menu>
+        </el-dropdown>
       </header>
     </div>
 </template>
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'Header',
@@ -40,9 +72,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userAvatar', 'isLoggedIn'])
+    ...mapState(['userAvatar', 'isLoggedIn', 'userProfile', 'userId'])
   },
   watch: {
+  },
+  methods: {
+    ...mapActions(['logout']),
+    signOut () {
+      this.logout()
+    }
   },
   created () {
 
@@ -58,11 +96,22 @@ a {
   text-decoration: none;
 }
 
+.user-menu {
+  margin-right: 60px;
+}
+
+.user-dorpdown {
+ margin-right: 60px;
+}
+
 .avatar {
   height: 48px;
   object-fit: cover;
-  margin-right: 40px;
   border-radius: 50%;
+}
+
+.purple {
+  color: #542DE0
 }
 
 #logo {

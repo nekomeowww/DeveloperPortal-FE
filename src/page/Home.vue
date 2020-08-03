@@ -2,7 +2,6 @@
     <div>
       <Header
         :showLoginBtn="!isLoggedIn"
-        :showAvatar="true"
       />
       <Menu />
       <Applications />
@@ -14,7 +13,8 @@
 import Header from '@/components/Header.vue'
 import Menu from '@/components/Menu.vue'
 import Applications from '@/components/Applications.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
@@ -25,8 +25,16 @@ export default {
   computed: {
     ...mapState(['isLoggedIn', 'userProfile'])
   },
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
   mounted () {
-    console.log(this.userProfile)
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+    }
   }
 }
 </script>
