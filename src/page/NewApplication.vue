@@ -26,10 +26,10 @@ export default {
     NewAppForm
   },
   computed: {
-    ...mapState(['isLoggedIn'])
+    ...mapState(['isLoggedIn', 'userId'])
   },
   methods: {
-    ...mapActions(['setLoggedIn'])
+    ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')
@@ -37,17 +37,19 @@ export default {
       const res = disassemble(c)
       res.status = true
       this.setLoggedIn(res)
-    }
 
-    Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {
-      if (apps.data.id) {
-        let id = apps.data.id
-        id = id + 1
-        this.setCurrentAppId(id)
-      } else {
+      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + res.id).then(apps => {
+        if (apps.data.id) {
+          let id = apps.data.id
+          id = id + 1
+          this.setCurrentAppId(id)
+        }
+      }).catch(e => {
         this.setCurrentAppId(1)
-      }
-    })
+      })
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

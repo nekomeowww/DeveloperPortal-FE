@@ -7,7 +7,7 @@
       <div class="app-title">My Application</div>
       <el-row :gutter="20" class="apps">
         <div v-for="(app, index) in appCards" :key=index>
-          <router-link :to="'/app/' + app.id">
+          <router-link :to="{ path:'/app/' + app.id, params: { app: app } }">
             <div v-if="app.id">
               <div class="app-item" :href="app.href">
                 <img class="app-img" :src="app.img" />
@@ -30,27 +30,35 @@
 import Axios from 'axios'
 
 import env from '../../env.json'
-import { mapState } from 'vuex'
 
 export default {
-  data () {
-    return {
-      appCards: [
-        {
-          img: null,
-          name: null,
-          href: null
-        }
-      ]
+  props: {
+    userId: {
+      type: Number,
+      default: 0
     }
   },
-  computed: {
-    ...mapState(['userId'])
+  data () {
+    return {
+      appCards: []
+    }
   },
   created () {
   },
   mounted () {
-    if (this.userId) Axios.get(env.DEVELOPERAPI + '/user/apps?id=' + this.userId).then(apps => {})
+    if (this.userId) {
+      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(appData => {
+        const apps = appData.data.apps
+        apps.forEach(id => {
+          Axios(env.DEVELOPERAPI + '/app/detail?appId=' + id + '&userId=' + this.userId).then(app => {
+            let appObject = { img: '', name: '', id: id }
+            appObject.img = env.DEVELOPERAPI + '/img/' + app.data.img
+            appObject.name = app.data.detail.name
+            this.appCards.push(appObject)
+          })
+        })
+      })
+    }
   }
 }
 </script>
