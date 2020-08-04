@@ -28,7 +28,6 @@ import { getCookie, disassemble } from '../../util/cookie'
 import Axios from 'axios'
 
 import env from '../../../env.json'
-import LoginVue from '../Oauth/Login.vue'
 
 export default {
   props: {
