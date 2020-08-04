@@ -43,8 +43,6 @@ export default {
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
     }
-  },
-  mounted () {
   }
 }
 </script>
