@@ -16,11 +16,11 @@
               <span class="word">互通性 Interoperability</span>
             </span>
           </h1>
-          <a href="https://github.com/Matataki-io/DeveloperPortal-FE">
+          <router-link :to="{ name: 'Home'}">
             <div class="start">
             开始 Get Started
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
       <Footer />
@@ -127,10 +127,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 .wrapper {
+  overflow: hidden;
   height: 85%;
 }
 
@@ -188,6 +188,7 @@ body {
 }
 
 .footer {
+  overflow: hidden;
   position: absolute;
   bottom: 0px;
   width: 100%;
