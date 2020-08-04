@@ -1,7 +1,8 @@
 <template>
-  <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;width: 60%; padding-bottom: 40px; height: 100%;">
+  <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;width: 60%; padding-bottom: 40px; height: 110%;">
     <div class="app-desp">
-      <div class="app-desp-title">Creating New App</div>
+      <div v-if="notNew" class="app-desp-title">General Information</div>
+      <div v-else class="app-desp-title">Creating New App</div>
       <div class="app-desp-content">填写基本的 App 信息</div>
     </div>
     <div>
@@ -29,7 +30,6 @@
               alt="avatar"
             >
             <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
-            <span v-if="showSecretRow" id="new-text">{{ appData.name }}</span>
           </div>
         </img-upload>
         <div style="position: absolute;margin-left: 6rem;">
@@ -40,13 +40,13 @@
         <div v-if="showSecretRow" class="el-form-item" style="margin-left: 100px;display: flex;">
           <div class="cid">
             <span class="form-label">Client ID</span><br>
-            <span class="secret-text">{{ appData.clientId }}</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientId)">复制</el-button>
+            <span class="secret-text">{{ clientId }}</span><br>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">复制</el-button>
           </div>
           <div class="cet">
             <span class="form-label">Client Secret</span><br>
             <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(appData.clientSecret)">复制</el-button>
+            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
             <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
           </div>
         </div>
@@ -79,7 +79,8 @@
           <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
+          <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
         </el-form-item>
         </div>
       </el-form>
@@ -100,6 +101,10 @@ export default {
     imgUpload
   },
   props: {
+    notNew: {
+      type: Boolean,
+      default: false
+    },
     showSecretRow: {
       type: Boolean,
       default: false
@@ -107,6 +112,18 @@ export default {
     appData: {
       type: Object,
       default: () => {}
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
+    clientId: {
+      type: String,
+      default: ''
+    },
+    clientSecret: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -157,6 +174,7 @@ export default {
     if (!this.isLoggedIn) {
       this.$router.push({ name: 'Login' })
     }
+    if (this.appData) this.ruleForm = this.appData
   },
   methods: {
     ...mapActions(['setCurrentAppId']),
@@ -164,7 +182,7 @@ export default {
       let elem = document.getElementById('secret')
       this.defaultCss = elem.style.cssText
       if (elem.innerHTML === '点击以显示') {
-        elem.innerHTML = this.appData.clientSecret
+        elem.innerHTML = this.clientSecret
         let elClassName = ' ' + elem.className + ' '
         while (elClassName.indexOf(' toShow ') !== -1) {
           elClassName = elClassName.replace(' toShow ', '')
@@ -183,8 +201,8 @@ export default {
       }
 
       if (this.showSecretRow) {
-        this.avatar = this.appData.img
-        return this.avatar
+        this.avatar = this.icon
+        return true
       } else if (this.avatar !== '') {
         return this.avatar
       } else {
@@ -195,7 +213,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentAppId, userId: this.userId }).then(res => {
-            if (res.data.code === 0) {
+            if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
                 message: '创建成功... 现在返回 App 列表',
                 type: 'success',
@@ -250,20 +268,7 @@ export default {
   },
   mounted () {
     if (this.showSecretRow) {
-      this.ruleForm = this.appData
-    }
-    if (this.userId) {
-      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {
-        if (apps.data.id) {
-          let id = apps.data.id
-          id = id + 1
-          this.setCurrentAppId(id)
-        } else {
-          this.setCurrentAppId(1)
-        }
-      }).catch(e => {
-        this.setCurrentAppId(1)
-      })
+      if (this.icon !== '') this.avatar = this.icon
     }
   }
 }
