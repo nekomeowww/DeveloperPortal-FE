@@ -21,7 +21,8 @@ export default new Vuex.Store({
     userProfile: '',
     userAvatar: '',
     accessToken: '',
-    currentAppId: 0
+    currentAppId: 0,
+    currentAppIcon: ''
   },
   mutations: {
     setLoggedIn (state, login) {
@@ -44,6 +45,9 @@ export default new Vuex.Store({
     },
     setCurrentAppId (state, id) {
       state.currentAppId = id
+    },
+    setCurrentAppIcon (state, icon) {
+      state.currentAppIcon = icon
     }
   },
   actions: {
@@ -94,6 +98,9 @@ export default new Vuex.Store({
     },
     async setCurrentAppId ({ commit }, id) {
       commit('setCurrentAppId', id)
+    },
+    async setCurrentAppIcon ({ commit }, icon) {
+      commit('setCurrentAppIcon', icon)
     }
   }
 })

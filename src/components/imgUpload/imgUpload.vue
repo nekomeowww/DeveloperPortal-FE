@@ -65,7 +65,7 @@ import Cropper from 'cropperjs'
 import Compressor from 'compressorjs'
 
 import API from '../../api/api.js'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'ImgUpload',
@@ -172,6 +172,7 @@ export default {
     this.isShowFileUpload = true
   },
   methods: {
+    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId']),
     /**
      * Pretreatment // 过滤操作可以写在这里
      * @param  Object|undefined   newFile   读写
@@ -266,6 +267,8 @@ export default {
       try {
         const res = await API.uploadImage(file, this.currentAppId, this.userId)
         res.code = 0
+        this.setCurrentAppIcon(res.data.img)
+        this.setCurrentAppId(res.data.appId)
         if (res.code === 0) {
           this.$emit('doneImageUpload', {
             type: this.updateType,

@@ -80,6 +80,7 @@ export default {
     ...mapActions(['logout']),
     signOut () {
       this.logout()
+      this.$router.push({ name: 'Login' })
     }
   },
   created () {

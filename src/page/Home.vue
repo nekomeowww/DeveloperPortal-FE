@@ -4,7 +4,9 @@
         :showLoginBtn="!isLoggedIn"
       />
       <Menu />
-      <Applications />
+      <Applications
+        :userId="userId"
+      />
     </div>
 </template>
 
@@ -22,18 +24,26 @@ export default {
     Menu,
     Applications
   },
+  data () {
+    return {
+      userId: 0
+    }
+  },
   computed: {
     ...mapState(['isLoggedIn', 'userProfile'])
   },
   methods: {
     ...mapActions(['setLoggedIn'])
   },
-  mounted () {
+  created () {
     const c = getCookie('ACCESS-TOKEN')
     if (c) {
       const res = disassemble(c)
       res.status = true
       this.setLoggedIn(res)
+      this.userId = parseInt(res.id)
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   }
 }
