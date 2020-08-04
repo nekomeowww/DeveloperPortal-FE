@@ -50,7 +50,7 @@ export default {
   created () {
   },
   mounted () {
-    if (this.userId) Axios.get(env.DEVELOPERAPI + '/user/apps?id=' + this.userId).then(apps => {})
+    if (this.userId) Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {})
   }
 }
 </script>
