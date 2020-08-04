@@ -43,8 +43,6 @@ export default {
           let id = apps.data.id
           id = id + 1
           this.setCurrentAppId(id)
-        } else {
-          this.setCurrentAppId(1)
         }
       }).catch(e => {
         this.setCurrentAppId(1)
