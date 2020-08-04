@@ -42,6 +42,8 @@ export default {
       res.status = true
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   }
 }

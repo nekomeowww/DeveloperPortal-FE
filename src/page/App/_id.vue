@@ -28,6 +28,7 @@ import { getCookie, disassemble } from '../../util/cookie'
 import Axios from 'axios'
 
 import env from '../../../env.json'
+import LoginVue from '../Oauth/Login.vue'
 
 export default {
   props: {
@@ -63,14 +64,16 @@ export default {
       res.status = true
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
+      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app => {
+        console.log(app.data)
+        this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
+        this.app.form = app.data.detail
+        this.app.clientId = app.data.clientId
+        this.app.clientSecret = app.data.clientSecret
+      })
+    } else {
+      this.$router.push({ name: 'Login' })
     }
-    Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app => {
-      console.log(app.data)
-      this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
-      this.app.form = app.data.detail
-      this.app.clientId = app.data.clientId
-      this.app.clientSecret = app.data.clientSecret
-    })
   }
 }
 </script>

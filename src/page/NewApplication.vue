@@ -47,6 +47,8 @@ export default {
       }).catch(e => {
         this.setCurrentAppId(1)
       })
+    } else {
+      this.$router.push({ name: 'Login' })
     }
   }
 }
