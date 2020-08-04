@@ -28,7 +28,7 @@
               :src="getAvatar()"
               alt="avatar"
             >
-            <img v-else id="new-logo" src="../assets/img/newapp.png" style="margin-top: -40px;" />
+            <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
             <span v-if="showSecretRow" id="new-text">{{ appData.name }}</span>
           </div>
         </img-upload>
@@ -151,7 +151,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentAppId', 'isLoggedIn', 'userId'])
+    ...mapState(['currentAppId', 'isLoggedIn', 'userId', 'currentAppIcon'])
   },
   created () {
     if (!this.isLoggedIn) {
@@ -176,9 +176,11 @@ export default {
       }
     },
     getAvatar () {
-      Axios(env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
-        this.avatar = env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId
-      })
+      if (this.userId && this.currentAppId) {
+        Axios(env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
+          this.avatar = env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId
+        })
+      }
 
       if (this.showSecretRow) {
         this.avatar = this.appData.img
@@ -238,26 +240,31 @@ export default {
     },
     doneImageUpload () {
       this.imgUploadDone += Date.now()
-      location.reload()
+      this.$message({
+        message: '图片上传成功',
+        type: 'success',
+        duration: 4000
+      })
+      this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
     }
   },
   mounted () {
     if (this.showSecretRow) {
       this.ruleForm = this.appData
     }
-    Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {
-      if (apps.data.id) {
-        console.log('appid', apps.data.id)
-        let id = apps.data.id
-        id = id + 1
-        this.setCurrentAppId(id)
-      } else {
-        console.log('set app id to 1')
+    if (this.userId) {
+      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(apps => {
+        if (apps.data.id) {
+          let id = apps.data.id
+          id = id + 1
+          this.setCurrentAppId(id)
+        } else {
+          this.setCurrentAppId(1)
+        }
+      }).catch(e => {
         this.setCurrentAppId(1)
-      }
-    }).catch(e => {
-      this.setCurrentAppId(1)
-    })
+      })
+    }
   }
 }
 </script>
