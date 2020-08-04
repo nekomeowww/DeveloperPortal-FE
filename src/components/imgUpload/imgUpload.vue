@@ -172,7 +172,7 @@ export default {
     this.isShowFileUpload = true
   },
   methods: {
-    ...mapActions(['setCurrentAppIcon']),
+    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId']),
     /**
      * Pretreatment // 过滤操作可以写在这里
      * @param  Object|undefined   newFile   读写
@@ -268,6 +268,7 @@ export default {
         const res = await API.uploadImage(file, this.currentAppId, this.userId)
         res.code = 0
         this.setCurrentAppIcon(res.data.img)
+        this.setCurrentAppId(res.data.appId)
         if (res.code === 0) {
           this.$emit('doneImageUpload', {
             type: this.updateType,

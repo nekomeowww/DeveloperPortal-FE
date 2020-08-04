@@ -25,7 +25,7 @@
               id="avatar"
               v-if="getAvatar()"
               slot="description"
-              :src="getAvatar()"
+              :src="avatar"
               alt="avatar"
             >
             <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
@@ -194,7 +194,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Axios.post(env.DEVELOPERAPI + '/app/new', { params: { form: this.ruleForm } }).then(res => {
+          Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentAppId, userId: this.userId }).then(res => {
             if (res.data.code === 0) {
               this.$message({
                 message: '创建成功... 现在返回 App 列表',
