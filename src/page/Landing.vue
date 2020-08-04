@@ -224,7 +224,7 @@ body {
 
 @media screen and (max-width: 600px) {
   .text h1 {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 
   .start {
@@ -243,7 +243,7 @@ body {
 
 @media screen and (max-width: 1000px) {
   .text h1 {
-    font-size: 2rem;
+    font-size: 4rem;
   }
 }
 
