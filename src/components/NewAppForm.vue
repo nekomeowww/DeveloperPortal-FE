@@ -221,10 +221,20 @@ export default {
               })
 
               this.$router.push({ name: 'Home' })
+            } else {
+              this.$message({
+                message: '出现了问题，请重试',
+                type: 'error',
+                duration: 4000
+              })
             }
           })
         } else {
-          console.log('error submit!!')
+          this.$message({
+            message: '出现了问题，请重试',
+            type: 'error',
+            duration: 4000
+          })
           return false
         }
       })
