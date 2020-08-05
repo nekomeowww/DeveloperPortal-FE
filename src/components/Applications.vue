@@ -1,5 +1,5 @@
 <template>
-    <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;">
+    <div class="application">
       <div class="app-desp">
         <div class="app-desp-title">Application</div>
         <div class="app-desp-content">Find the perfect feature set for your game in our Game SDK, and sign up for Server Commerce to start selling directly in your server. Get started by creating a new application. We can't wait to see what you make!</div>
@@ -71,7 +71,8 @@ a {
 
 .application {
   font-family:'PingFangSC-Medium','PingFang SC', Arial, Helvetica, sans-serif;
-  padding-right: 2rem;
+  padding: 2rem 2rem 0;
+
 }
 
 .app-desp-title {

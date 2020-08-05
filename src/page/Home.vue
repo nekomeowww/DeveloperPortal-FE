@@ -1,27 +1,21 @@
 <template>
-    <div>
-      <Header
-        :showLoginBtn="!isLoggedIn"
-      />
-      <Menu />
-      <Applications
-        :userId="userId"
-      />
-    </div>
+  <PhotoFrame>
+    <Applications
+      :userId="userId"
+    />
+  </PhotoFrame>
 </template>
 
 <script>
 
-import Header from '@/components/Header.vue'
-import Menu from '@/components/Menu.vue'
+import PhotoFrame from '@/components/PhotoFrame.vue'
 import Applications from '@/components/Applications.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
-    Header,
-    Menu,
+    PhotoFrame,
     Applications
   },
   data () {
