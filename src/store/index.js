@@ -22,7 +22,10 @@ export default new Vuex.Store({
     userAvatar: '',
     accessToken: '',
     currentAppId: 0,
-    currentAppIcon: ''
+    currentAppIcon: '',
+    thirdPartyUserId: 0,
+    thirdPartyUserProfile: '',
+    thirdPartyUserAvatar: ''
   },
   mutations: {
     setLoggedIn (state, login) {
@@ -48,6 +51,15 @@ export default new Vuex.Store({
     },
     setCurrentAppIcon (state, icon) {
       state.currentAppIcon = icon
+    },
+    setThirdPartyUserId (state, id) {
+      state.thirdPartyUserId = id
+    },
+    setThirdPartyUserProfile (state, userprofile) {
+      state.thirdPartyUserProfile = userprofile
+    },
+    setThirdPartyUserAvatar (state, avatar) {
+      state.thirdPartyUserAvatar = avatar
     }
   },
   actions: {
@@ -93,7 +105,8 @@ export default new Vuex.Store({
     async setUserInfo ({ commit }, info) {
       const user = await getUserProfile(info.id)
       const avatar = await getAvatarUrl(user.data.data.avatar)
-      commit('setUserInfo', user)
+      commit('setUserInfo', user.data.data)
+      commit('setUserProfile', user.data.data)
       commit('setUserAvatar', avatar)
     },
     async setCurrentAppId ({ commit }, id) {
@@ -101,6 +114,15 @@ export default new Vuex.Store({
     },
     async setCurrentAppIcon ({ commit }, icon) {
       commit('setCurrentAppIcon', icon)
+    },
+    async setThirdPartyUserId ({ commit }, id) {
+      commit('setThirdPartyUserId', id)
+    },
+    async setThirdPartyUserProfile ({ commit }, info) {
+      const user = await getUserProfile(info.id)
+      const avatar = await getAvatarUrl(user.data.data.avatar)
+      commit('setThirdPartyUserProfile', user.data.data)
+      commit('setThirdPartyUserAvatar', avatar)
     }
   }
 })

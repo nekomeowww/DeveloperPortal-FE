@@ -1,9 +1,18 @@
 <template>
   <div class="oauth-box">
     <span class="login-title">授权登录</span><br>
-    <div class="app-container">
-      <img class="app-img" :src="app.img">
-      <span class="app-name">{{ app.name }}</span>
+    <div class="containers">
+      <div v-if="userData" class="user-container">
+        <img class="user-img" :src="userData.avatar" />
+        <span class="user-name">{{ userData.nickname }}</span>
+      </div>
+      <div v-if="userData">
+        <i class="el-icon-success allow" />
+      </div>
+      <div class="app-container">
+        <img class="app-img" :src="app.img" />
+        <span class="app-name">{{ app.name }}</span>
+      </div>
     </div>
     <div class="oauth-desp">
       授权代表你同意 {{app.name}} 读取和使用<br>
@@ -32,9 +41,16 @@
 </template>
 
 <script>
+
+import env from '../../../env.json'
+
 export default {
   props: {
     app: {
+      type: Object,
+      default: () => {}
+    },
+    userData: {
       type: Object,
       default: () => {}
     }
@@ -54,15 +70,26 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          if (this.userData) {
+            this.$router.push(
+              { name: 'Redirect',
+                params: {
+                  id: this.app.id,
+                  callback: this.app.callback + '&token=' + this.app.token
+                }
+              })
+          } else {
+            window.location = env.MATATAKI + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
+          }
         } else {
-          console.log('error submit!!')
+          this.$message({
+            message: '出现了问题，请重试',
+            type: 'error',
+            duration: 4000
+          })
           return false
         }
       })
-    },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
     }
   }
 }
@@ -88,6 +115,24 @@ export default {
   font-weight: 800;
 }
 
+.user-container {
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.allow {
+  font-size: 2.5rem;
+  color: #67C23A;
+  margin-bottom: 50%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .app-container {
   margin-bottom: 1rem;
   border-radius: 10px;
@@ -96,6 +141,25 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+.containers {
+  display: flex;
+  align-items: center;
+}
+
+.user-img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
 }
 
 .app-img {
