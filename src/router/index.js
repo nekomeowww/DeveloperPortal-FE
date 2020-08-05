@@ -9,6 +9,7 @@ import Doc from '@/page/Doc.vue'
 import App from '@/page/App/_id.vue'
 import Redirect from '@/page/Redirect/_id.vue'
 import OauthLogin from '@/page/Oauth/Login.vue'
+import OauthCallback from '@/page/Oauth/Callback.vue'
 
 Vue.use(Router)
 
@@ -57,12 +58,17 @@ export default new Router({
       name: 'OauthLogin',
       component: OauthLogin,
       props: true
-
     },
     {
       path: '/app/:id/login/:redirect',
       name: 'LoginRedirect',
       component: Redirect,
+      props: true
+    },
+    {
+      path: '/app/:id/callback/:callback',
+      name: 'Callback',
+      component: OauthCallback,
       props: true
     }
   ]

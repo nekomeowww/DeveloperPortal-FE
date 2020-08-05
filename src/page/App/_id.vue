@@ -59,12 +59,13 @@ export default {
       res.status = true
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
-      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app => {
-        console.log(app.data)
+      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
         this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
         this.app.form = app.data.detail
-        this.app.clientId = app.data.clientId
-        this.app.clientSecret = app.data.clientSecret
+      })
+      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId' + this.userId).then(app2 => {
+        this.app.clientId = app2.data.clientId
+        this.app.clientSecret = app2.data.clientSecret
       })
     } else {
       this.$router.push({ name: 'Login' })

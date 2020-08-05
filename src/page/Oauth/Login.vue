@@ -16,6 +16,10 @@
 import Header from '@/components/Header.vue'
 import Oauth from '@/components/Login/Oauth.vue'
 
+import Axios from 'axios'
+
+import env from '../../../env.json'
+
 export default {
   components: {
     Header,
@@ -25,10 +29,19 @@ export default {
     return {
       app: {
         img: null,
-        name: `Neko's App`,
-        id: 1
+        name: '',
+        id: 0
       }
     }
+  },
+  created () {
+    Axios(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
+      this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
+      this.app.name = app.data.detail.name
+      this.app.id = this.$route.params.id
+
+      document.title = '使用你的账号登录 - Matataki 开发者中心'
+    })
   }
 }
 </script>
