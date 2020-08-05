@@ -1,26 +1,22 @@
 <template>
-    <div>
-      <div>
-        <Header
-          :showLoginBtn="!isLoggedIn"
-        />
-        <AppMenu />
-        <NewAppForm
-          :notNew="true"
-          :showSecretRow="true"
-          :appData="app.form"
-          :icon="app.img"
-          :clientId="app.clientId"
-          :clientSecret="app.clientSecret"
-        />
-      </div>
-    </div>
+  <PhotoFrame>
+    <template v-slot:sidebar>
+      <AppMenu />
+    </template>
+    <NewAppForm
+      :notNew="true"
+      :showSecretRow="true"
+      :appData="app.form"
+      :icon="app.img"
+      :clientId="app.clientId"
+      :clientSecret="app.clientSecret"
+    />
+  </PhotoFrame>
 </template>
 
 <script>
-
-import Header from '@/components/Header.vue'
-import AppMenu from '@/components/AppMenu.vue'
+import PhotoFrame from '@/components/PhotoFrame'
+import AppMenu from '@/components/AppMenu'
 import NewAppForm from '@/components/NewAppForm.vue'
 
 import { mapState, mapActions } from 'vuex'
@@ -37,8 +33,8 @@ export default {
     }
   },
   components: {
-    Header,
     AppMenu,
+    PhotoFrame,
     NewAppForm
   },
   data () {

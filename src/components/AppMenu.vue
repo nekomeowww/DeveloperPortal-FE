@@ -1,14 +1,19 @@
 <template>
   <div>
     <div style="height: 100vh">
-      <el-menu default-active="1-4-1" class="el-menu-vertical">
-        <el-menu-item class="menu-item" index="1">
-          <img class="menu-icon" src="../assets/img/info.png" />
-          <span slot="title">基本信息 Information</span>
-        </el-menu-item>
-        <el-menu-item class="menu-item" index="2">
-          <img class="menu-icon" src="../assets/img/oauth.png" />
-          <span slot="title">OAuth2</span>
+      <el-menu
+        class="el-menu-vertical"
+        :default-active="$route.path"
+        router
+      >
+        <el-menu-item
+          v-for="(item, index) in menu"
+          :key="index"
+          class="menu-item"
+          :index="item.path"
+        >
+          <img class="menu-icon" :src="item.icon" />
+          <span slot="title">{{ item.title }}</span>
         </el-menu-item>
       </el-menu>
     </div>
@@ -16,10 +21,25 @@
 </template>
 
 <script>
+import infoIcon from '@/assets/img/info.png'
+import oauthIcon from '@/assets/img/oauth.png'
+
 export default {
   name: 'Menu',
   data () {
     return {
+      menu: [
+        {
+          title: '基本信息 Information',
+          icon: infoIcon,
+          path: `/app/${this.$route.params.id}`
+        },
+        {
+          title: 'OAuth2',
+          icon: oauthIcon,
+          path: `/app/${this.$route.params.id}/oauth2`
+        }
+      ]
     }
   }
 }
@@ -31,18 +51,15 @@ export default {
 .el-menu-vertical {
   display: flex;
   flex-direction: column;
-  margin-top: 1px;
-  padding-top: 40px;
-  padding-left: 40px;
   width:350px;
   min-height: 400px;
   height: auto;
   background:rgba(247,247,247,1);
   box-shadow:1px 0px 0px 0px rgba(219,219,219,1);
-  position: fixed;
-  top: 60px;
-  left: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 30px 40px 0;
 }
 
 .menu-item {
@@ -82,5 +99,11 @@ li {
 a {
   text-decoration: none;
   color: #333333;
+}
+
+@media screen and (max-width: 1200px) {
+  .el-menu-vertical {
+    padding: 30px 0 0;
+  }
 }
 </style>

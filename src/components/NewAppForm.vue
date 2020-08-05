@@ -1,5 +1,5 @@
 <template>
-  <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;width: 60%; padding-bottom: 40px; height: 110%;">
+  <div class="application">
     <div class="app-desp">
       <div v-if="notNew" class="app-desp-title">General Information</div>
       <div v-else class="app-desp-title">Creating New App</div>
@@ -277,7 +277,7 @@ export default {
 
 .application {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
-  padding-right: 2rem;
+  padding: 2rem 2rem 0;
 }
 
 .app-desp-title {

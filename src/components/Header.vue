@@ -1,52 +1,53 @@
 <template>
-    <div>
-      <header class="header home-fixed">
-        <a href="/" style="display: flex;align-items: center;">
-          <img id='logo' src="../assets/img/logo.png" style="height: 30px;"/>
-          <div id='divider'></div>
-          <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
-        </a>
-        <div style="flex: 1;"> </div>
-        <div v-if="showLoginBtn">
-          <router-link to="/login">
-            <el-button type="primary" class="login-btn">登录</el-button>
-          </router-link>
-        </div>
-        <el-dropdown
-          placement="bottom-start"
-          v-if="isLoggedIn"
-          class="user-menu"
-        >
-          <!-- <avatarComponents :size="'30px'" :src="avatar" class="home-head-avatar" /> -->
-          <div class="user-avatar">
-            <img
-              v-if="userAvatar"
-              :src="userAvatar"
-              alt="user avatar"
-              class="avatar"
-            >
-          </div>
-          <el-dropdown-menu
-            slot="dropdown"
-            class="user-dorpdown"
-          >
-            <router-link to="/apps">
-              <el-dropdown-item icon="el-icon-check">
-                使用 <span class="purple">{{ userProfile.nickname || userProfile.name }}</span> 登录
-              </el-dropdown-item>
-            </router-link>
-            <div
-              class="link border-br-bl"
-              @click="signOut"
-            >
-              <el-dropdown-item icon="el-icon-error">
-                登出
-              </el-dropdown-item>
-            </div>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </header>
+  <header class="header home-fixed">
+    <span v-if="enableUnfoldBtn" class="unfold" @click="switchUnfold">
+      <i class="el-icon-s-unfold" />
+    </span>
+    <a href="/" style="display: flex;align-items: center;">
+      <img id='logo' src="../assets/img/logo.png" style="height: 30px;"/>
+      <div id='divider'></div>
+      <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
+    </a>
+    <div style="flex: 1;"> </div>
+    <div v-if="showLoginBtn">
+      <router-link to="/login">
+        <el-button type="primary" class="login-btn">登录</el-button>
+      </router-link>
     </div>
+    <el-dropdown
+      placement="bottom-start"
+      v-if="isLoggedIn"
+      class="user-menu"
+    >
+      <!-- <avatarComponents :size="'30px'" :src="avatar" class="home-head-avatar" /> -->
+      <div class="user-avatar">
+        <img
+          v-if="userAvatar"
+          :src="userAvatar"
+          alt="user avatar"
+          class="avatar"
+        >
+      </div>
+      <el-dropdown-menu
+        slot="dropdown"
+        class="user-dorpdown"
+      >
+        <router-link to="/apps">
+          <el-dropdown-item icon="el-icon-check">
+            使用 <span class="purple">{{ userProfile.nickname || userProfile.name }}</span> 登录
+          </el-dropdown-item>
+        </router-link>
+        <div
+          class="link border-br-bl"
+          @click="signOut"
+        >
+          <el-dropdown-item icon="el-icon-error">
+            登出
+          </el-dropdown-item>
+        </div>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </header>
 </template>
 
 <script>
@@ -65,7 +66,9 @@ export default {
     showLoginBtn: {
       type: Boolean,
       default: true
-    }
+    },
+    enableUnfoldBtn: Boolean,
+    unfold: Boolean
   },
   data () {
     return {
@@ -81,13 +84,15 @@ export default {
     signOut () {
       this.logout()
       this.$router.push({ name: 'Login' })
+    },
+    switchUnfold () {
+      this.$emit('update:unfold', !this.unfold)
     }
   },
   created () {
 
   },
   mounted () {
-
   }
 }
 </script>
@@ -146,6 +151,24 @@ header {
 
 .login-btn {
   margin-right: 2rem;
+}
+
+.unfold {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .unfold {
+    font-size: 26px;
+    margin-right: 20px;
+    display: inline;
+  }
+  .header {
+    padding-left: 20px;
+  }
+  .user-menu {
+    margin-right: 20px;
+  }
 }
 
 </style>
