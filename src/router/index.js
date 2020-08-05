@@ -5,6 +5,7 @@ import Landing from '@/page/Landing.vue'
 import Login from '@/page/Login.vue'
 import Home from '@/page/Home'
 import NewApp from '@/page/NewApplication.vue'
+import Doc from '@/page/Doc.vue'
 import App from '@/page/App/_id.vue'
 import Redirect from '@/page/Redirect/_id.vue'
 import OauthLogin from '@/page/Oauth/Login.vue'
@@ -34,6 +35,11 @@ export default new Router({
       path: '/newapp',
       name: 'NewApp',
       component: NewApp
+    },
+    {
+      path: '/doc',
+      name: 'Doc',
+      component: Doc
     },
     {
       path: '/app/:id',
