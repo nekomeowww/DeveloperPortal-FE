@@ -60,7 +60,7 @@ export default new Router({
       props: true
     },
     {
-      path: '/app/:id/login/:redirect',
+      path: '/app/:id/login/:callback',
       name: 'LoginRedirect',
       component: Redirect,
       props: true
