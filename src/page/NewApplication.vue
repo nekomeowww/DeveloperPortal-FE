@@ -1,19 +1,14 @@
 <template>
-    <div>
-      <Header
-        :showLoginBtn="!isLoggedIn"
-      />
-      <Menu />
-      <NewAppForm />
-    </div>
+  <PhotoFrame>
+    <NewAppForm />
+  </PhotoFrame>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
 import Axios from 'axios'
 
-import Header from '@/components/Header.vue'
-import Menu from '@/components/Menu.vue'
+import PhotoFrame from '@/components/PhotoFrame.vue'
 import NewAppForm from '@/components/NewAppForm.vue'
 
 import { getCookie, disassemble } from '../util/cookie'
@@ -21,8 +16,7 @@ import env from '../../env.json'
 
 export default {
   components: {
-    Header,
-    Menu,
+    PhotoFrame,
     NewAppForm
   },
   computed: {
