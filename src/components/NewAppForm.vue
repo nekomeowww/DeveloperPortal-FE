@@ -103,6 +103,10 @@ export default {
     imgUpload
   },
   props: {
+    id: {
+      type: String,
+      default: ''
+    },
     notNew: {
       type: Boolean,
       default: false
@@ -164,9 +168,8 @@ export default {
           { required: true, message: '请输入简介', trigger: 'change' }
         ]
       },
-      dialogImageUrl: '',
-      dialogVisible: false,
-      disabled: false
+      centerDialogVisible: false,
+      requestCount: 0
     }
   },
   computed: {
@@ -196,12 +199,6 @@ export default {
       }
     },
     getAvatar () {
-      if (this.userId && this.currentAppId) {
-        Axios(env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
-          this.avatar = env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId
-        })
-      }
-
       if (this.showSecretRow) {
         this.avatar = this.icon
         return true
@@ -276,11 +273,15 @@ export default {
         duration: 4000
       })
       this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
+    },
+    openDeletionConfirm () {
+      this.centerDialogVisible = true
     }
   },
   mounted () {
     if (this.showSecretRow) {
       if (this.icon !== '') this.avatar = this.icon
+      if (this.appData) this.ruleForm = this.appData
     }
   }
 }
@@ -289,7 +290,8 @@ export default {
 
 .application {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
-  padding: 2rem 2rem 0;
+  height: 120%;
+  padding: 2rem 2rem 40px;
 }
 
 .app-desp-title {
