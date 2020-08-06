@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <Header
       :show-login-btn="!notLoginBtn && !isLoggedIn"
       :unfold.sync="unfold"
@@ -53,6 +53,7 @@ export default {
 
 <style lang="less" scoped>
 .slot-div {
+  height: 100%;
   padding-top: 60px;
   margin-left: 390px;
 }
