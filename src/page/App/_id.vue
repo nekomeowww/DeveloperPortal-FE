@@ -66,7 +66,7 @@ export default {
       Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
         this.setCurrentAppId(this.$route.params.id)
         this.app.id = this.$route.params.id
-        this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
+        this.app.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
         this.app.form = app.data.detail
       })
       Axios.get(env.DEVELOPERAPI + '/app/secret?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app2 => {
