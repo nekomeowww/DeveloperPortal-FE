@@ -50,9 +50,9 @@ export default {
       Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(appData => {
         const apps = appData.data.apps
         apps.forEach(id => {
-          Axios(env.DEVELOPERAPI + '/app/detail?appId=' + id + '&userId=' + this.userId).then(app => {
+          Axios(env.DEVELOPERAPI + '/app/detail?appId=' + id).then(app => {
             let appObject = { img: '', name: '', id: id }
-            appObject.img = env.DEVELOPERAPI + '/img/' + app.data.img
+            appObject.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
             appObject.name = app.data.detail.name
             this.appCards.push(appObject)
           })

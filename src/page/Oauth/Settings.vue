@@ -3,22 +3,14 @@
     <template v-slot:sidebar>
       <AppMenu />
     </template>
-    <NewAppForm
-      :notNew="true"
-      :showSecretRow="true"
-      :id="app.id"
-      :appData="app.form"
-      :icon="app.img"
-      :clientId="app.clientId"
-      :clientSecret="app.clientSecret"
-    />
+    <OauthSettings />
   </PhotoFrame>
 </template>
 
 <script>
 import PhotoFrame from '@/components/PhotoFrame'
 import AppMenu from '@/components/AppMenu'
-import NewAppForm from '@/components/NewAppForm.vue'
+import OauthSettings from '@/components/OauthSettings.vue'
 
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
@@ -36,7 +28,7 @@ export default {
   components: {
     AppMenu,
     PhotoFrame,
-    NewAppForm
+    OauthSettings
   },
   data () {
     return {

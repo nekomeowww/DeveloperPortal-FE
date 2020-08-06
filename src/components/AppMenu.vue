@@ -41,7 +41,7 @@ export default {
         {
           title: 'OAuth2',
           icon: oauthIcon,
-          path: `/app/${this.$route.params.id}/oauth2`
+          path: `/app/${this.$route.params.id}/settings`
         }
       ]
     }

@@ -53,12 +53,27 @@ export default {
   },
   created () {
     Axios(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
-      this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
-      this.app.name = app.data.detail.name
-      this.app.id = this.$route.params.id
-      this.app.callback = app.data.detail.callback
-
+      if (this.app.name === undefined) {
+        this.$message({
+          message: '出现了问题，App 是无效的',
+          type: 'error',
+          duration: 4000
+        })
+        this.$router.push({ name: 'Landing' })
+      } else {
+        this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
+        this.app.name = app.data.detail.name
+        this.app.id = this.$route.params.id
+        this.app.callback = app.data.detail.callback
+      }
       document.title = '授权 ' + app.data.detail.name + ' 使用你的账号登录 - Matataki 开发者中心'
+    }).catch(e => {
+      this.$message({
+        message: '出现了问题，App 是无效的',
+        type: 'error',
+        duration: 4000
+      })
+      this.router.push({ name: 'Landing' })
     })
 
     const token = this.$route.params.callback.replace('type=token&token=', '')

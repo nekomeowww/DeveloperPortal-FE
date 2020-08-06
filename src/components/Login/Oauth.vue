@@ -18,24 +18,13 @@
       授权代表你同意 {{app.name}} 读取和使用<br>
       你的<strong>头像</strong>，<strong>电子邮件</strong>，以及<strong>用户名</strong>
     </div>
-    <div style="width: 100%">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="ruleForm">
-        <el-form-item prop="fantoken">
-          <span class="form-label">读取和修改你发行的 Fan 票内容</span>
-          <el-switch v-model="ruleForm.fantoken"></el-switch>
-        </el-form-item>
-        <el-form-item prop="document">
-          <span class="form-label">读取和修改你的文章</span>
-          <el-switch v-model="ruleForm.document"></el-switch>
-        </el-form-item>
-        <el-form-item prop="profile">
-          <span class="form-label">读取和修改你的个人资料</span>
-          <el-switch v-model="ruleForm.profile"></el-switch>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
-        </el-form-item>
-      </el-form>
+    <div>
+      <div class="ruleForm">
+        <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken"></el-switch>
+        <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document"></el-switch>
+        <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile"></el-switch>
+        <el-button type="primary" @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +32,7 @@
 <script>
 
 import env from '../../../env.json'
+import Axios from 'axios'
 
 export default {
   props: {
@@ -68,28 +58,18 @@ export default {
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          if (this.userData) {
-            this.$router.push(
-              { name: 'Redirect',
-                params: {
-                  id: this.app.id,
-                  callback: this.app.callback + '&token=' + this.app.token
-                }
-              })
-          } else {
-            window.location = env.MATATAKI + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
-          }
-        } else {
-          this.$message({
-            message: '出现了问题，请重试',
-            type: 'error',
-            duration: 4000
+      if (this.userData) {
+        Axios.post(env.DEVELOPERAPI + '/app/authorize', { id: this.app.id, body: this.ruleForm })
+        this.$router.push(
+          { name: 'Redirect',
+            params: {
+              id: this.app.id,
+              callback: this.app.callback + '&token=' + this.app.token
+            }
           })
-          return false
-        }
-      })
+      } else {
+        window.location = env.MATATAKI + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
+      }
     }
   }
 }
@@ -131,6 +111,10 @@ export default {
   margin-bottom: 50%;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.rule-switch {
+  margin-bottom: 1rem;
 }
 
 .app-container {

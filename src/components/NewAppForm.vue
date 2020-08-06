@@ -82,10 +82,22 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
+            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 App</el-button>
             <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           </el-form-item>
         </div>
       </el-form>
+      <el-dialog
+        title="请确认操作"
+        :visible.sync="centerDialogVisible"
+        width="30%"
+        center>
+        <span>确定要删除这个 App 吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="removeApp">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -103,6 +115,10 @@ export default {
     imgUpload
   },
   props: {
+    id: {
+      type: String,
+      default: ''
+    },
     notNew: {
       type: Boolean,
       default: false
@@ -164,9 +180,16 @@ export default {
           { required: true, message: '请输入简介', trigger: 'change' }
         ]
       },
-      dialogImageUrl: '',
-      dialogVisible: false,
-      disabled: false
+      centerDialogVisible: false,
+      requestCount: 0
+    }
+  },
+  watch: {
+    id (val) {
+      this.id = val
+    },
+    appData (val) {
+      this.ruleForm = val
     }
   },
   computed: {
@@ -176,7 +199,6 @@ export default {
     if (!this.isLoggedIn) {
       this.$router.push({ name: 'Login' })
     }
-    if (this.appData) this.ruleForm = this.appData
   },
   methods: {
     ...mapActions(['setCurrentAppId']),
@@ -196,12 +218,6 @@ export default {
       }
     },
     getAvatar () {
-      if (this.userId && this.currentAppId) {
-        Axios(env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
-          this.avatar = env.DEVELOPERAPI + '/app/appIcon?appId=' + this.currentAppId + '&userId=' + this.userId
-        })
-      }
-
       if (this.showSecretRow) {
         this.avatar = this.icon
         return true
@@ -276,11 +292,44 @@ export default {
         duration: 4000
       })
       this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
+    },
+    openDeletionConfirm () {
+      this.centerDialogVisible = true
+    },
+    removeApp () {
+      Axios.get(env.DEVELOPERAPI + '/app/remove?appId=' + this.id + '&userId=' + this.userId).then(res => {
+        if (res.data.code === 0) {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '删除成功，现在返回 App 列表...',
+            type: 'success',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        } else if (res.data.code === 1) {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '好像出现了点问题，现在返回 App 列表...',
+            type: 'warning',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        } else {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '出现错误，返回 App 列表...',
+            type: 'success',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        }
+      })
     }
   },
   mounted () {
     if (this.showSecretRow) {
       if (this.icon !== '') this.avatar = this.icon
+      if (this.appData) this.ruleForm = this.appData
     }
   }
 }
@@ -289,7 +338,8 @@ export default {
 
 .application {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
-  padding: 2rem 2rem 0;
+  height: 120%;
+  padding: 2rem 2rem 40px;
 }
 
 .app-desp-title {

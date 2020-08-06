@@ -23,8 +23,6 @@ import Header from '@/components/Header.vue'
 
 import { mapState, mapActions } from 'vuex'
 
-import { disassemble } from '../../util/cookie'
-
 export default {
   components: {
     Header
@@ -53,17 +51,9 @@ export default {
     document.title = '跳转中...'
   },
   mounted () {
-    const cookies = this.$route.params.callback.replace('redirect&cookies=', '')
-    const user = disassemble(cookies)
-    if (Date.now() > user.exp) {
+    if (/^(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])(:[0-9]+)?(\/.*)?$/.test(decodeURIComponent(this.callback))) {
       setTimeout(() => {
-        this.$router.push({ name: 'Login' })
-      }, 5000)
-    }
-
-    if (/^(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])(:[0-9]+)?$/.test(this.callback)) {
-      setTimeout(() => {
-        window.location = this.callback
+        window.location = decodeURIComponent(this.callback)
       }, 5000)
     } else {
       this.$message({
