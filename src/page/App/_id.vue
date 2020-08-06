@@ -6,6 +6,7 @@
     <NewAppForm
       :notNew="true"
       :showSecretRow="true"
+      :id="app.id"
       :appData="app.form"
       :icon="app.img"
       :clientId="app.clientId"
@@ -40,8 +41,11 @@ export default {
   data () {
     return {
       app: {
-        img: null,
-        form: null
+        id: '',
+        img: '',
+        form: null,
+        clientId: '',
+        clientSecret: ''
       },
       userId: 0
     }
@@ -50,7 +54,7 @@ export default {
     ...mapState(['isLoggedIn'])
   },
   methods: {
-    ...mapActions(['setLoggedIn'])
+    ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
   created () {
     const c = getCookie('ACCESS-TOKEN')
@@ -60,10 +64,12 @@ export default {
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
       Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
+        this.setCurrentAppId(this.$route.params.id)
+        this.app.id = this.$route.params.id
         this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
         this.app.form = app.data.detail
       })
-      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id + '&userId' + this.userId).then(app2 => {
+      Axios.get(env.DEVELOPERAPI + '/app/secret?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app2 => {
         this.app.clientId = app2.data.clientId
         this.app.clientSecret = app2.data.clientSecret
       })
