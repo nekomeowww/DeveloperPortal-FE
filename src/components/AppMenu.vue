@@ -125,7 +125,7 @@ a {
 
 @media screen and (max-width: 1200px) {
   .sidebar-menu {
-    padding: 30px 0 0;
+    padding: 40px 0 0;
   }
 }
 </style>
