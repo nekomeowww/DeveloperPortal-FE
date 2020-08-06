@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <div style="height: 100vh">
-      <el-menu
-        class="el-menu-vertical"
-        :default-active="$route.path"
-        router
-      >
-        <el-menu-item
-          v-for="(item, index) in menu"
-          :key="index"
-          class="menu-item"
-          :index="item.path"
-        >
-          <img class="menu-icon" :src="item.icon" />
-          <span slot="title">{{ item.title }}</span>
-        </el-menu-item>
-      </el-menu>
+  <div class="sidebar-menu">
+    <div class="sidebar-menu-back">
+      <router-link :to="{path: '/apps'}">
+        <i class="el-icon-arrow-left" />
+        Back to Applications
+      </router-link>
     </div>
+    <el-menu
+      class="el-menu-vertical"
+      :default-active="$route.path"
+      router
+    >
+      <el-menu-item
+        v-for="(item, index) in menu"
+        :key="index"
+        class="menu-item"
+        :index="item.path"
+      >
+        <img class="menu-icon" :src="item.icon" />
+        <span slot="title">{{ item.title }}</span>
+      </el-menu-item>
+    </el-menu>
   </div>
 </template>
 
@@ -45,8 +49,26 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="less" scoped>
+
+.sidebar-menu {
+  background:rgba(247,247,247,1);
+  box-shadow:1px 0px 0px 0px rgba(219,219,219,1);
+  height: 100%;
+  padding: 40px 40px 0;
+  &-back {
+    padding-left: 10px;
+    a {
+      font-size: 16px;
+      font-weight: 500;
+      color: black;
+      line-height: 22px;
+      &:hover {
+        color: #542DE0;
+      }
+    }
+  }
+}
 
 .el-menu-vertical {
   display: flex;
@@ -54,12 +76,12 @@ export default {
   width:350px;
   min-height: 400px;
   height: auto;
-  background:rgba(247,247,247,1);
-  box-shadow:1px 0px 0px 0px rgba(219,219,219,1);
   width: 100%;
   height: 100%;
+  background:rgba(247,247,247,1);
   box-sizing: border-box;
-  padding: 30px 40px 0;
+  padding-top: 20px;
+  border: none;
 }
 
 .menu-item {
@@ -102,7 +124,7 @@ a {
 }
 
 @media screen and (max-width: 1200px) {
-  .el-menu-vertical {
+  .sidebar-menu {
     padding: 30px 0 0;
   }
 }
