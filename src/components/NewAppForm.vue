@@ -6,82 +6,84 @@
       <div class="app-desp-content">填写基本的 App 信息</div>
     </div>
     <div>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
-        <span class="icon-title">App 图标</span>
-        <img-upload
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
+        <div>
+          <span class="icon-title">App 图标</span>
+          <img-upload
             :img-upload-done="imgUploadDone"
             :update-type="'avatar'"
             class="app-icon"
             @doneImageUpload="doneImageUpload"
           >
-          <div
-            slot="uploadButton"
-            class="user-avatar"
-          >
-            <div class="edit">
-              <i class="el-icon-camera" />
-              图标
-            </div>
-            <img
-              id="avatar"
-              v-if="getAvatar()"
-              slot="description"
-              :src="avatar"
-              alt="avatar"
+            <div
+              slot="uploadButton"
+              class="user-avatar"
             >
-            <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
-          </div>
-        </img-upload>
-        <div style="position: absolute;margin-left: 6rem;">
-        <el-form-item label=' ' prop="name">
-          <span class="form-label">名称 Name</span>
-          <el-input placeholder="请输入名称..." v-model="ruleForm.name"></el-input>
-        </el-form-item>
-        <div v-if="showSecretRow" class="el-form-item" style="margin-left: 100px;display: flex;">
-          <div class="cid">
-            <span class="form-label">Client ID</span><br>
-            <span class="secret-text">{{ clientId }}</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">复制</el-button>
-          </div>
-          <div class="cet">
-            <span class="form-label">Client Secret</span><br>
-            <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-            <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
-            <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
-          </div>
+              <div class="edit">
+                <i class="el-icon-camera" />
+                图标
+              </div>
+              <img
+                id="avatar"
+                v-if="getAvatar()"
+                slot="description"
+                :src="avatar"
+                alt="avatar"
+              >
+              <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
+            </div>
+          </img-upload>
         </div>
-        <el-form-item label=' ' prop="desp">
-          <span class="form-label">简介 Description</span>
-          <el-input placeholder="请输入简介... " type="textarea" v-model="ruleForm.desp" :rows="6"></el-input>
-        </el-form-item>
-        <el-form-item label=' ' prop="callback">
-          <span class="form-label">回调链接 Callback URL</span>
-          <el-input placeholder="请输入回调链接... " v-model="ruleForm.callback"></el-input>
-        </el-form-item>
-        <el-form-item prop="orglink">
-          <span class="form-label">个人或组织网站 Website Link</span>
-          <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
-        </el-form-item>
-        <el-form-item prop="orgname">
-          <span class="form-label">组织或公司名称 Organization or Corporation Name</span>
-          <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
-        </el-form-item>
-        <el-form-item prop="toslink">
-          <span class="form-label">用户协议链接 Term of Service URL</span>
-          <el-input placeholder="请输入用户协议链接（方便展示）... " v-model="ruleForm.toslink"></el-input>
-        </el-form-item>
-        <el-form-item prop="pplink">
-          <span class="form-label">隐私协定 Privacy Policy URL</span>
-          <el-input placeholder="请输入隐私协定（方便展示）... " v-model="ruleForm.pplink"></el-input>
-        </el-form-item>
-        <el-form-item prop="usage">
-          <span class="form-label">App 使用目的 App Usage</span>
-          <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
-          <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-        </el-form-item>
+        <div>
+          <el-form-item label=' ' prop="name">
+            <span class="form-label">名称 Name</span>
+            <el-input placeholder="请输入名称..." v-model="ruleForm.name"></el-input>
+          </el-form-item>
+          <div v-if="showSecretRow" class="d-fl">
+            <div class="cid">
+              <span class="form-label">Client ID</span><br>
+              <span class="secret-text">{{ clientId }}</span><br>
+              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">复制</el-button>
+            </div>
+            <div class="cet">
+              <span class="form-label">Client Secret</span><br>
+              <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
+              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
+              <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
+            </div>
+          </div>
+          <el-form-item label=' ' prop="desp">
+            <span class="form-label">简介 Description</span>
+            <el-input placeholder="请输入简介... " type="textarea" v-model="ruleForm.desp" :rows="6"></el-input>
+          </el-form-item>
+          <el-form-item label=' ' prop="callback">
+            <span class="form-label">回调链接 Callback URL</span>
+            <el-input placeholder="请输入回调链接... " v-model="ruleForm.callback"></el-input>
+          </el-form-item>
+          <el-form-item prop="orglink">
+            <span class="form-label">个人或组织网站 Website Link</span>
+            <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
+          </el-form-item>
+          <el-form-item prop="orgname">
+            <span class="form-label">组织或公司名称 Organization or Corporation Name</span>
+            <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
+          </el-form-item>
+          <el-form-item prop="toslink">
+            <span class="form-label">用户协议链接 Term of Service URL</span>
+            <el-input placeholder="请输入用户协议链接（方便展示）... " v-model="ruleForm.toslink"></el-input>
+          </el-form-item>
+          <el-form-item prop="pplink">
+            <span class="form-label">隐私协定 Privacy Policy URL</span>
+            <el-input placeholder="请输入隐私协定（方便展示）... " v-model="ruleForm.pplink"></el-input>
+          </el-form-item>
+          <el-form-item prop="usage">
+            <span class="form-label">App 使用目的 App Usage</span>
+            <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
+            <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+          </el-form-item>
         </div>
       </el-form>
     </div>
@@ -303,6 +305,8 @@ export default {
 }
 .icon-title {
   font-size: 16px;
+  margin-top: 8px;
+  display: inline-block;
 }
 
 .avatar-shift {
@@ -311,7 +315,7 @@ export default {
 
 .app-icon {
   cursor: pointer;
-  margin-top: 1rem;
+  margin: 11px 20px 20px 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -378,7 +382,6 @@ export default {
 
 .ruleForm {
   display: flex;
-  flex-direction: column;
 }
 
 .form-label {
@@ -410,5 +413,16 @@ export default {
 
 .secret-btn {
   margin-top: 10px;
+}
+
+.d-fl {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 992px) {
+  .ruleForm {
+    display: block;
+  }
 }
 </style>
