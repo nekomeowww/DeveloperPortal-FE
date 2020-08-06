@@ -33,6 +33,9 @@ export default {
   methods: {
     ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
+  created () {
+    document.title('创建新的 App - Matataki 开发者中心')
+  },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')
     if (c) {

@@ -82,6 +82,7 @@
 <script>
 
 import env from '../../../env.json'
+import Axios from 'axios'
 
 export default {
   props: {
@@ -108,6 +109,7 @@ export default {
   methods: {
     submitForm (formName) {
       if (this.userData) {
+        Axios.post(env.DEVELOPERAPI + '/app/authorize', { id: this.app.id, body: this.ruleForm })
         this.$router.push(
           { name: 'Redirect',
             params: {

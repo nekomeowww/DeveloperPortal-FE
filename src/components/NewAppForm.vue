@@ -95,7 +95,7 @@
         <span>确定要删除这个 App 吗？</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+          <el-button type="primary" @click="removeApp">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -185,6 +185,9 @@ export default {
     }
   },
   watch: {
+    id (val) {
+      this.id = val
+    },
     appData (val) {
       this.ruleForm = val
     }
@@ -292,6 +295,35 @@ export default {
     },
     openDeletionConfirm () {
       this.centerDialogVisible = true
+    },
+    removeApp () {
+      Axios.get(env.DEVELOPERAPI + '/app/remove?appId=' + this.id + '&userId=' + this.userId).then(res => {
+        if (res.data.code === 0) {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '删除成功，现在返回 App 列表...',
+            type: 'success',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        } else if (res.data.code === 1) {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '好像出现了点问题，现在返回 App 列表...',
+            type: 'warning',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        } else {
+          this.centerDialogVisible = false
+          this.$message({
+            message: '出现错误，返回 App 列表...',
+            type: 'success',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Home' })
+        }
+      })
     }
   },
   mounted () {
