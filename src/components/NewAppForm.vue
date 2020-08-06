@@ -82,10 +82,22 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
+            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 App</el-button>
             <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           </el-form-item>
         </div>
       </el-form>
+      <el-dialog
+        title="请确认操作"
+        :visible.sync="centerDialogVisible"
+        width="30%"
+        center>
+        <span>确定要删除这个 App 吗？</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="centerDialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -172,6 +184,11 @@ export default {
       requestCount: 0
     }
   },
+  watch: {
+    appData (val) {
+      this.ruleForm = val
+    }
+  },
   computed: {
     ...mapState(['currentAppId', 'isLoggedIn', 'userId', 'currentAppIcon'])
   },
@@ -179,7 +196,6 @@ export default {
     if (!this.isLoggedIn) {
       this.$router.push({ name: 'Login' })
     }
-    if (this.appData) this.ruleForm = this.appData
   },
   methods: {
     ...mapActions(['setCurrentAppId']),
