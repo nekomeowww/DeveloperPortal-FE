@@ -6,38 +6,40 @@
       <div class="app-desp-content">填写基本的 App 信息</div>
     </div>
     <div>
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="ruleForm">
-        <span class="icon-title">App 图标</span>
-        <img-upload
-          :img-upload-done="imgUploadDone"
-          :update-type="'avatar'"
-          class="app-icon"
-          @doneImageUpload="doneImageUpload"
-        >
-          <div
-            slot="uploadButton"
-            class="user-avatar"
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
+        <div>
+          <span class="icon-title">App 图标</span>
+          <img-upload
+            :img-upload-done="imgUploadDone"
+            :update-type="'avatar'"
+            class="app-icon"
+            @doneImageUpload="doneImageUpload"
           >
-            <div class="edit">
-              <i class="el-icon-camera" />
-              图标
-            </div>
-            <img
-              id="avatar"
-              v-if="getAvatar()"
-              slot="description"
-              :src="avatar"
-              alt="avatar"
+            <div
+              slot="uploadButton"
+              class="user-avatar"
             >
-            <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
-          </div>
-        </img-upload>
-        <div style="position: absolute;margin-left: 6rem;">
+              <div class="edit">
+                <i class="el-icon-camera" />
+                图标
+              </div>
+              <img
+                id="avatar"
+                v-if="getAvatar()"
+                slot="description"
+                :src="avatar"
+                alt="avatar"
+              >
+              <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
+            </div>
+          </img-upload>
+        </div>
+        <div>
           <el-form-item label=' ' prop="name">
             <span class="form-label">名称 Name</span>
             <el-input placeholder="请输入名称..." v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <div v-if="showSecretRow" class="el-form-item" style="margin-left: 100px;display: flex;">
+          <div v-if="showSecretRow" class="d-fl">
             <div class="cid">
               <span class="form-label">Client ID</span><br>
               <span class="secret-text">{{ clientId }}</span><br>
@@ -303,6 +305,8 @@ export default {
 }
 .icon-title {
   font-size: 16px;
+  margin-top: 8px;
+  display: inline-block;
 }
 
 .avatar-shift {
@@ -311,7 +315,7 @@ export default {
 
 .app-icon {
   cursor: pointer;
-  margin-top: 1rem;
+  margin: 11px 20px 20px 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -378,7 +382,6 @@ export default {
 
 .ruleForm {
   display: flex;
-  flex-direction: column;
 }
 
 .form-label {
@@ -410,5 +413,16 @@ export default {
 
 .secret-btn {
   margin-top: 10px;
+}
+
+.d-fl {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 992px) {
+  .ruleForm {
+    display: block;
+  }
 }
 </style>
