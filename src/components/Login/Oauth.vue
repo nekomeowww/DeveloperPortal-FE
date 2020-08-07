@@ -15,16 +15,13 @@
           <span class="app-name">{{ app.name }}</span>
         </div>
       </div>
-      <div class="oauth-desp">
-        授权代表你同意 {{app.name}} 读取和使用<br>
-        你的<strong>头像</strong>，<strong>电子邮件</strong>，以及<strong>用户名</strong>
-      </div>
       <div>
         <div class="ruleForm">
           <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken"></el-switch>
           <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document"></el-switch>
           <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile"></el-switch>
-          <el-button type="primary" @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
+          <el-button type="primary" v-if="userData" @click="submitForm('ruleForm')">登录 Matataki.io</el-button>
+          <el-button type="primary" v-else @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
         </div>
       </div>
     </div>
