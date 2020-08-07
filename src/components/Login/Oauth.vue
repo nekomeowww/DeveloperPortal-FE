@@ -207,8 +207,8 @@ export default {
 }
 
 .user-name {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
@@ -228,8 +228,8 @@ export default {
 }
 
 .app-name {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
