@@ -37,7 +37,7 @@
         <div>
           <el-form-item label=' ' prop="name">
             <span class="form-label">名称 Name</span>
-            <el-input placeholder="请输入名称..." v-model="ruleForm.name"></el-input>
+            <el-input placeholder="请输入名称..." maxlength="20" v-model="ruleForm.name"></el-input>
           </el-form-item>
           <div v-if="showSecretRow" class="d-fl">
             <div class="cid">
@@ -54,7 +54,7 @@
           </div>
           <el-form-item label=' ' prop="desp">
             <span class="form-label">简介 Description</span>
-            <el-input placeholder="请输入简介... " type="textarea" v-model="ruleForm.desp" :rows="6"></el-input>
+            <el-input placeholder="请输入简介... " type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
           </el-form-item>
           <el-form-item label=' ' prop="callback">
             <span class="form-label">回调链接 Callback URL</span>
