@@ -36,9 +36,11 @@ export default {
   },
   created () {
     Axios(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
-      this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
-      this.app.name = app.data.detail.name
-      this.app.id = this.$route.params.id
+      this.app = {
+        id: this.$route.params.id,
+        img: app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img,
+        ...app.data.detail
+      }
 
       document.title = '使用你的账号登录 - Matataki 开发者中心'
     })
@@ -48,13 +50,18 @@ export default {
 
 <style lang="less" scoped>
 .oauth-login {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 70px 0 10px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 500px) {
+  .oauth-login {
+    padding: 10px 0 10px;
+  }
   .header {
     display: none;
   }

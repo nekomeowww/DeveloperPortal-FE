@@ -9,7 +9,6 @@
         :userData="userData"
       />
     </div>
-    {{$route.params.callback}}
   </div>
 </template>
 
@@ -61,10 +60,11 @@ export default {
         })
         this.$router.push({ name: 'Landing' })
       } else {
-        this.app.img = env.DEVELOPERAPI + '/img/' + app.data.img
-        this.app.name = app.data.detail.name
-        this.app.id = this.$route.params.id
-        this.app.callback = app.data.detail.callback
+        this.app = {
+          id: this.$route.params.id,
+          img: app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img,
+          ...app.data.detail
+        }
       }
       document.title = '授权 ' + app.data.detail.name + ' 使用你的账号登录 - Matataki 开发者中心'
     }).catch(e => {
@@ -73,7 +73,7 @@ export default {
         type: 'error',
         duration: 4000
       })
-      this.router.push({ name: 'Landing' })
+      this.$router.push({ name: 'Landing' })
     })
 
     const token = this.$route.params.callback.replace('type=token&token=', '')
@@ -91,13 +91,18 @@ export default {
 
 <style lang="less" scoped>
 .oauth-login {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 70px 0 10px;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 500px) {
+  .oauth-login {
+    padding: 10px 0 10px;
+  }
   .header {
     display: none;
   }
