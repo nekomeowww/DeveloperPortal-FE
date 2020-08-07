@@ -65,7 +65,7 @@
             <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
           </el-form-item>
           <el-form-item prop="orgname">
-            <span class="form-label">组织或公司名称 Organization or Corporation Name</span>
+            <span class="form-label">个人、组织或公司名称 Organization or Corporation Name</span>
             <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
           </el-form-item>
           <el-form-item prop="toslink">
