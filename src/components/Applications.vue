@@ -19,7 +19,7 @@
         <router-link to="/newapp">
           <div class="app-new">
             <img id="new-logo" src="../assets/img/newapp.png" />
-            <span id="new-text">Start your app</span>
+            <span id="new-text">创建你的 App</span>
           </div>
         </router-link>
       </el-row>

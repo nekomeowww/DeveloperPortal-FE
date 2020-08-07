@@ -38,7 +38,7 @@ export default {
     Axios(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
       this.app = {
         id: this.$route.params.id,
-        img: env.DEVELOPERAPI + '/img/' + app.data.img,
+        img: app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img,
         ...app.data.detail
       }
 

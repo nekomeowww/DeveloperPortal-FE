@@ -6,6 +6,8 @@ import { setCookie, disassemble, clearAllCookie, removeCookie } from '../util/co
 import { getUserProfile } from '@/api/user.js'
 import { loginWithEmail, getAvatarUrl } from '../api/user'
 
+import appIcon from '@/assets/img/app.png'
+import docIcon from '@/assets/img/doc.png'
 import env from '../../env.json'
 
 Vue.use(Vuex)
@@ -25,7 +27,24 @@ export default new Vuex.Store({
     currentAppIcon: '',
     thirdPartyUserId: 0,
     thirdPartyUserProfile: '',
-    thirdPartyUserAvatar: ''
+    thirdPartyUserAvatar: '',
+    menuItems: [
+      {
+        title: '应用 Application',
+        icon: appIcon,
+        path: '/apps'
+      },
+      {
+        title: '开发文档 Documentation',
+        icon: docIcon,
+        path: '/doc'
+      },
+      {
+        title: '起步',
+        elicon: 'el-icon-success',
+        path: '/doc/getstarted'
+      }
+    ]
   },
   mutations: {
     setLoggedIn (state, login) {
@@ -60,6 +79,14 @@ export default new Vuex.Store({
     },
     setThirdPartyUserAvatar (state, avatar) {
       state.thirdPartyUserAvatar = avatar
+    },
+    setMenuItems (state, menuItems) {
+      state.menuItems = menuItems
+    }
+  },
+  getters: {
+    getMenuItems (state, menuItems) {
+      return state.menuItems
     }
   },
   actions: {
@@ -123,6 +150,9 @@ export default new Vuex.Store({
       const avatar = await getAvatarUrl(user.data.data.avatar)
       commit('setThirdPartyUserProfile', user.data.data)
       commit('setThirdPartyUserAvatar', avatar)
+    },
+    setMenuItems ({ commit }, menuItems) {
+      commit('setMenuItems', menuItems)
     }
   }
 })
