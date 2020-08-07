@@ -73,7 +73,7 @@ export default {
         type: 'error',
         duration: 4000
       })
-      this.router.push({ name: 'Landing' })
+      this.$router.push({ name: 'Landing' })
     })
 
     const token = this.$route.params.callback.replace('type=token&token=', '')
