@@ -104,6 +104,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100px;
 }
 
 .allow {
@@ -126,11 +127,14 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100px;
 }
 
 .containers {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 80%;
 }
 
 .user-img {
@@ -145,6 +149,12 @@ export default {
 .user-name {
   margin-top: 0.5rem;
   font-size: 1.2rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  width: 100%;
 }
 
 .app-img {
@@ -159,6 +169,13 @@ export default {
 .app-name {
   margin-top: 0.5rem;
   font-size: 1.2rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  width: 100%;
+  text-align: center;
 }
 
 .ruleForm {
