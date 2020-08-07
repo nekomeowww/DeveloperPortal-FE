@@ -3,7 +3,9 @@
     <template v-slot:sidebar>
       <AppMenu />
     </template>
-    <OauthSettings />
+    <OauthSettings
+      :userId="userId"
+    />
   </PhotoFrame>
 </template>
 
