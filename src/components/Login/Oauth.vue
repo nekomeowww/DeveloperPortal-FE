@@ -21,10 +21,10 @@
       </div>
       <div>
         <div class="ruleForm">
-          <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken"></el-switch>
-          <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document"></el-switch>
-          <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile"></el-switch>
-          <el-button type="primary" v-if="userData" @click="submitForm('ruleForm')">登录 Matataki.io</el-button>
+          <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document" :disabled="rules.document"></el-switch>
+          <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile" :disabled="rules.profile"></el-switch>
+          <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken" :disabled="rules.fantoken"></el-switch>
+          <el-button type="primary" v-if="!userData" @click="submitForm('ruleForm')">登录 Matataki.io</el-button>
           <el-button type="primary" v-else @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
         </div>
       </div>
@@ -84,6 +84,7 @@
 
 import env from '../../../env.json'
 import Axios from 'axios'
+import { mapState } from 'vuex'
 
 export default {
   props: {
@@ -104,20 +105,34 @@ export default {
         fantoken: false
       },
       rules: {
-      }
+        document: false,
+        profile: false,
+        fantoken: false
+      },
+      showTip: false
+    }
+  },
+  computed: {
+    ...mapState(['thirdPartyUserId'])
+  },
+  watch: {
+    app (val) {
+      this.app = val
     }
   },
   methods: {
     submitForm (formName) {
       if (this.userData) {
-        Axios.post(env.DEVELOPERAPI + '/app/authorize', { id: this.app.id, body: this.ruleForm })
+        Axios.post(env.DEVELOPERAPI + '/app/authorize', { id: this.app.id, body: this.ruleForm, user: this.thirdPartyUserId })
+        const token = window.location.pathname.replace(/\/app\/.*\/callback\/type=token&token=/, '')
         this.$router.push(
           { name: 'Redirect',
             params: {
               id: this.app.id,
-              callback: this.app.callback + '&token=' + this.app.token
+              callback: this.app.callback + '&token=' + token
             }
-          })
+          }
+        )
       } else {
         window.location = env.MATATAKI + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
       }
@@ -129,6 +144,52 @@ export default {
       if (isHttp !== 0 && isHttps !== 0) url = 'http://' + url
       return url
     }
+  },
+  mounted () {
+    Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id + '&userId=' + this.userId).then(res => {
+      const permission = res.data.permission
+      const post = permission.post
+      const token = permission.token
+      const profile = permission.profile
+
+      // 为文章权限设置开关
+      if (post.indexOf('读取权限') !== -1 && post.indexOf('编辑权限') !== -1) {
+        this.ruleForm.document = true
+        this.rules.document = true
+      }
+      if (post.indexOf('发布权限') !== -1) {
+        this.ruleForm.document = true
+        this.rules.document = true
+      }
+
+      // 为 Fan 票设置开关
+      if (token.indexOf('读取权限') !== -1 && token.indexOf('编辑权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (token.indexOf('修改协作者权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (token.indexOf('修改增发数量') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+
+      // 为 个人资料 设置开关
+      if (profile.indexOf('读取权限') !== -1 && profile.indexOf('编辑权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (profile.indexOf('删改权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+
+      Object.entries(this.rules).forEach(item => {
+        if (item[1]) this.showTip = true
+      })
+    })
   }
 }
 </script>
