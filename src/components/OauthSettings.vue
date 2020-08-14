@@ -108,6 +108,9 @@ export default {
   },
   mounted () {
     Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id).then(res => {
+      if (res.data.permission === undefined) {
+        return
+      }
       const permission = res.data.permission
       this.checkList = permission.post
       this.checkList2 = permission.token

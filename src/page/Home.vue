@@ -30,6 +30,7 @@ export default {
     ...mapActions(['setLoggedIn'])
   },
   created () {
+    document.title = 'App 列表 - Matataki 开发者中心'
     const c = getCookie('ACCESS-TOKEN')
     if (c) {
       const res = disassemble(c)

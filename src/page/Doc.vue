@@ -13,7 +13,7 @@
 <script>
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import DocumentationMenu from '@/components/DocumentationMenu.vue'
+import DocumentationMenu from '@/components/Documentation/DocumentationMenu.vue'
 import { getCookie, disassemble } from '../util/cookie'
 import { mapActions } from 'vuex'
 
@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted () {
-    document.title('开发文档 - Matataki 开发者中心')
+    document.title = '开发文档 - Matataki 开发者中心'
   }
 }
 </script>

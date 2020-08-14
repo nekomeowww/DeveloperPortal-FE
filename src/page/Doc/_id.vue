@@ -14,9 +14,9 @@
 <script>
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import DocumentationMenu from '@/components/DocumentationMenu.vue'
+import DocumentationMenu from '@/components/Documentation/DocumentationMenu.vue'
 import VueMarkdown from 'vue-markdown'
-import Markdown from '@/components/Markdown.vue'
+import Markdown from '@/components/Documentation/Markdown.vue'
 
 import getstarted from '@/doc/getstarted.md'
 
