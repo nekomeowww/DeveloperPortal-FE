@@ -46,6 +46,9 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
+  },
+  mounted () {
+    document.title = '保险箱 - Matataki 开发者中心'
   }
 }
 </script>
