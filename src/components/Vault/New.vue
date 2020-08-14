@@ -22,6 +22,10 @@
 
 <script>
 import { mapState } from 'vuex'
+import Axios from 'axios'
+
+import env from '../../../env.json'
+
 export default {
   data () {
     return {
@@ -42,7 +46,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentAppId'])
+    ...mapState(['currentAppId', 'userId'])
   },
   methods: {
     submitForm (formName) {
@@ -59,6 +63,7 @@ export default {
               message: '请填写你需要创建的内容'
             })
           } else {
+            Axios.post(env.DEVELOPERAPI + '/app/addvault', { appId: this.currentAppId, userId: this.userId, form: this.form })
             this.$message({
               message: '创建成功... 现在返回 Vault 页面',
               type: 'success',
