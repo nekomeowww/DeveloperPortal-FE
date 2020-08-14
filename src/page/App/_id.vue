@@ -76,6 +76,9 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
+  },
+  mounted () {
+    document.title = '基本信息 - Matataki 开发者中心'
   }
 }
 </script>
