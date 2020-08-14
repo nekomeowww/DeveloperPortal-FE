@@ -8,6 +8,7 @@ import NewApp from '@/page/NewApplication.vue'
 import Settings from '@/page/Oauth/Settings.vue'
 import Vault from '@/page/Vault/_id.vue'
 import NewVault from '@/page/Vault/New.vue'
+import UpdateVault from '@/page/Vault/Update.vue'
 import Doc from '@/page/Doc.vue'
 import Docs from '@/page/Doc/_id.vue'
 import App from '@/page/App/_id.vue'
@@ -56,6 +57,12 @@ export default new Router({
       path: '/app/:id/newvault',
       name: 'NewVault',
       component: NewVault,
+      props: true
+    },
+    {
+      path: '/app/:id/updatevault/:vaultId',
+      name: 'UpdateVault',
+      component: UpdateVault,
       props: true
     },
     {
