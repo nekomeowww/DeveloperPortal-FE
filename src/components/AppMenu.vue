@@ -27,6 +27,7 @@
 <script>
 import infoIcon from '@/assets/img/info.png'
 import oauthIcon from '@/assets/img/oauth.png'
+import vaultIcon from '@/assets/img/vault.png'
 
 export default {
   name: 'Menu',
@@ -42,6 +43,11 @@ export default {
           title: 'OAuth2',
           icon: oauthIcon,
           path: `/app/${this.$route.params.id}/settings`
+        },
+        {
+          title: '保险箱 Vault',
+          icon: vaultIcon,
+          path: `/app/${this.$route.params.id}/vault`
         }
       ]
     }
@@ -98,6 +104,7 @@ export default {
 }
 
 .menu-icon {
+  width: 20px;
   height: 20px;
   margin-right: 10px;
 }
