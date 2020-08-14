@@ -63,7 +63,7 @@ export default {
     }
   },
   mounted () {
-    document.title('开发文档 - Matataki 开发者中心')
+    document.title = '开发文档 - Matataki 开发者中心'
   }
 }
 </script>
