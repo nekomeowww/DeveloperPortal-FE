@@ -57,6 +57,9 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
+  },
+  mounted () {
+    document.title = 'Oauth2 - Matataki 开发者中心'
   }
 }
 </script>
