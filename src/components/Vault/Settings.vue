@@ -16,14 +16,14 @@
           <div v-if="index === 0" class="vault-container" style="padding-top: 12px">
             <div class="vault-name"><i class="el-icon-lock"></i> {{ value.key }}</div>
             <div class="vault-mid"></div>
-            <el-button type="primary" plain @click="updateVault">更新</el-button>
-            <el-button type="danger" icon="el-icon-delete" plain @click="removeVault"></el-button>
+            <el-button type="primary" plain @click="updateVault(value)">更新</el-button>
+            <el-button type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
           </div>
           <div v-if="index !== 0" class="vault-container">
             <div class="vault-name"><i class="el-icon-lock"></i> {{ value.key }}</div>
             <div class="vault-mid"></div>
-            <el-button type="primary" plain @click="updateVault">更新</el-button>
-            <el-button type="danger" icon="el-icon-delete" plain @click="removeVault"></el-button>
+            <el-button type="primary" plain @click="updateVault(value)">更新</el-button>
+            <el-button type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
           </div>
         </div>
       </div>
@@ -32,7 +32,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import Axios from 'axios'
+
+import { getCookie, disassemble } from '../../util/cookie'
+import env from '../../../env.json'
+
 export default {
   props: {
     appId: {
@@ -42,28 +47,63 @@ export default {
   },
   data () {
     return {
-      vaultData: [
-        {
-          key: 'Vault',
-          secret: 'vault'
-        },
-        {
-          key: 'Secret',
-          secret: 'value'
-        }
-      ]
+      vaultData: [],
+      userId: 0
     }
   },
   computed: {
     ...mapState(['currentAppId'])
   },
   methods: {
+    ...mapActions(['setLoggedIn', 'setCurrentAppId']),
     newVault () {
       this.$router.push({ path: '/app/' + this.currentAppId + '/newvault' })
     },
-    updateVault () {
+    updateVault (value) {
+      this.$router.push({ path: '/app/' + this.currentAppId + '/updatevault/' + value.vaultId })
     },
-    removeVault () {
+    removeVault (value) {
+      Axios.get(env.DEVELOPERAPI + '/app/removevault?id=' + value.vaultId + '&appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
+        if (res.data.code === 0) {
+          this.$message({
+            message: '删除成功',
+            type: 'success',
+            duration: 4000
+          })
+          location.reload()
+        }
+      })
+    }
+  },
+  mounted () {
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+      this.userId = parseInt(res.id)
+    }
+    if (this.userId === 0) {
+      this.$message({
+        message: '出现了问题，现在返回 App 列表',
+        type: 'error',
+        duration: 4000
+      })
+      this.$router.push({ name: 'Home' })
+    } else {
+      Axios.get(env.DEVELOPERAPI + '/app/vaultlist?userId=' + this.userId).then(res => {
+        const vaults = res.data.vaults
+        if (vaults.length !== 0) {
+          vaults.forEach(id => {
+            Axios.get(env.DEVELOPERAPI + '/app/vault?appId=' + this.currentAppId + '&id=' + id + '&userId=' + this.userId).then(res2 => {
+              this.vaultData.push({
+                key: res2.data.name,
+                vaultId: id
+              })
+            })
+          })
+        }
+      })
     }
   }
 }
