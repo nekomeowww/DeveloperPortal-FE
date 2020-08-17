@@ -118,7 +118,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentAppId', 'userId']),
+    ...mapState(['currentAppId', 'currentTeamId', 'userId']),
     computedStyleContent () {
       if (this.updateType === 'artileCover') {
         return {
@@ -172,7 +172,7 @@ export default {
     this.isShowFileUpload = true
   },
   methods: {
-    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId']),
+    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId', 'setCurrentTeamId', 'setCurrentTeamIcon']),
     /**
      * Pretreatment // 过滤操作可以写在这里
      * @param  Object|undefined   newFile   读写
@@ -265,10 +265,23 @@ export default {
         file = new File([arr], oldFile.name, { type: oldFile.type })
       }
       try {
-        const res = await API.uploadImage(file, this.currentAppId, this.userId)
-        res.code = 0
-        this.setCurrentAppIcon(res.data.img)
-        this.setCurrentAppId(res.data.appId)
+        let res = {}
+        switch (this.updateType) {
+          case 'avatar':
+            res = await API.uploadImage(file, this.currentAppId, this.userId)
+            if (res.data.code === 0) {
+              this.setCurrentAppIcon(res.data.img)
+              this.setCurrentAppId(res.data.appId)
+            }
+            break
+          case 'team':
+            res = await API.uploadTeamImage(file, this.currentTeamId, this.userId)
+            if (res.data.code === 0) {
+              this.setCurrentTeamIcon(res.data.img)
+              this.setCurrentTeamId(res.data.teamId)
+            }
+            break
+        }
         if (res.code === 0) {
           this.$emit('doneImageUpload', {
             type: this.updateType,

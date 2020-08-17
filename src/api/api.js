@@ -12,5 +12,15 @@ export default {
       url: url,
       data: formdata
     })
+  },
+  uploadTeamImage (data, id, userId) {
+    const url = env.DEVELOPERAPI + '/user/' + userId + '/team/' + id + '/uploadTeamIcon'
+    const formdata = new FormData()
+    formdata.append('image', data)
+    return Axios({
+      method: 'POST',
+      url: url,
+      data: formdata
+    })
   }
 }

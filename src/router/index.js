@@ -5,6 +5,10 @@ import Landing from '@/page/Landing.vue'
 import Login from '@/page/Login.vue'
 import Home from '@/page/Home'
 import NewApp from '@/page/NewApplication.vue'
+import Team from '@/page/Team/index.vue'
+import NewTeam from '@/page/NewTeam.vue'
+import TeamApp from '@/page/Team/_id.vue'
+import TeamSettings from '@/page/Team/Settings.vue'
 import Settings from '@/page/Oauth/Settings.vue'
 import Vault from '@/page/Vault/_id.vue'
 import NewVault from '@/page/Vault/New.vue'
@@ -40,6 +44,28 @@ export default new Router({
       path: '/newapp',
       name: 'NewApp',
       component: NewApp
+    },
+    {
+      path: '/teams',
+      name: 'Teams',
+      component: Team
+    },
+    {
+      path: '/newteam',
+      name: 'NewTeam',
+      component: NewTeam
+    },
+    {
+      path: '/team/:id',
+      name: 'TeamApp',
+      component: TeamApp,
+      props: true
+    },
+    {
+      path: '/team/:id/settings',
+      name: 'TeamSettings',
+      component: TeamSettings,
+      props: true
     },
     {
       path: '/app/:id/settings',

@@ -2,16 +2,16 @@
   <div class="application">
     <div class="app-desp">
       <div v-if="notNew" class="app-desp-title">General Information</div>
-      <div v-else class="app-desp-title">Creating New App</div>
-      <div class="app-desp-content">填写基本的 App 信息</div>
+      <div v-else class="app-desp-title">Creating New Team</div>
+      <div class="app-desp-content">填写基本的团队信息</div>
     </div>
     <div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
         <div>
-          <span class="icon-title">App 图标</span>
+          <span class="icon-title">团队图标</span>
           <img-upload
             :img-upload-done="imgUploadDone"
-            :update-type="'avatar'"
+            :update-type="'team'"
             class="app-icon"
             @doneImageUpload="doneImageUpload"
           >
@@ -49,7 +49,7 @@
               <span class="form-label">Client Secret</span><br>
               <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
               <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
-              <el-button type="primary" size="small" class="secret-btn" @click="resetSecret">重新生成</el-button>
+              <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
             </div>
           </div>
           <el-form-item label=' ' prop="desp">
@@ -230,7 +230,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentAppId, userId: this.userId }).then(res => {
+          Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentTeamId, userId: this.userId }).then(res => {
             if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
                 message: '创建成功... 现在返回 App 列表',
@@ -322,16 +322,6 @@ export default {
             duration: 4000
           })
           this.$router.push({ name: 'Home' })
-        }
-      })
-    },
-    resetSecret () {
-      Axios.get(env.DEVELOPERAPI + '/app/resetsecret?appId=' + this.currentAppId + '&clientId=' + this.clientId).then(res => {
-        console.log(res.data)
-        this.clientSecret = res.data.clientSecret
-        let elem = document.getElementById('secret')
-        if (elem.innerHTML !== '点击以显示') {
-          elem.innerHTML = res.data.clientSecret
         }
       })
     }
