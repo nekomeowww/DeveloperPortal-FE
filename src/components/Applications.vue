@@ -2,7 +2,7 @@
     <div class="application">
       <div class="app-desp">
         <div class="app-desp-title">Application</div>
-        <div class="app-desp-content">Find the perfect feature set for your game in our Game SDK, and sign up for Server Commerce to start selling directly in your server. Get started by creating a new application. We can't wait to see what you make!</div>
+        <div class="app-desp-content">找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！</div>
       </div>
       <div class="app-title">My Application</div>
       <el-row :gutter="20" class="apps">
