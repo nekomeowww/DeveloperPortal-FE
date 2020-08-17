@@ -49,7 +49,7 @@
               <span class="form-label">Client Secret</span><br>
               <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
               <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
-              <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
+              <el-button type="primary" size="small" class="secret-btn" @click="resetSecret">重新生成</el-button>
             </div>
           </div>
           <el-form-item label=' ' prop="desp">
@@ -322,6 +322,16 @@ export default {
             duration: 4000
           })
           this.$router.push({ name: 'Home' })
+        }
+      })
+    },
+    resetSecret () {
+      Axios.get(env.DEVELOPERAPI + '/app/resetsecret?appId=' + this.currentAppId + '&clientId=' + this.clientId).then(res => {
+        console.log(res.data)
+        this.clientSecret = res.data.clientSecret
+        let elem = document.getElementById('secret')
+        if (elem.innerHTML !== '点击以显示') {
+          elem.innerHTML = res.data.clientSecret
         }
       })
     }
