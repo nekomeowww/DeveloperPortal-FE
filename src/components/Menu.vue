@@ -18,6 +18,7 @@
 <script>
 import appIcon from '@/assets/img/app.png'
 import docIcon from '@/assets/img/doc.png'
+import teamIcon from '@/assets/img/team.png'
 
 export default {
   name: 'Menu',
@@ -28,6 +29,11 @@ export default {
           title: '应用 Application',
           icon: appIcon,
           path: '/apps'
+        },
+        {
+          title: '团队 Team',
+          icon: teamIcon,
+          path: '/teams'
         },
         {
           title: '开发文档 Documentation',
@@ -71,6 +77,7 @@ export default {
 }
 
 .menu-icon {
+  width: 20px;
   height: 20px;
   margin-right: 10px;
 }

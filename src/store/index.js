@@ -8,6 +8,7 @@ import { loginWithEmail, getAvatarUrl } from '../api/user'
 
 import appIcon from '@/assets/img/app.png'
 import docIcon from '@/assets/img/doc.png'
+import teamIcon from '@/assets/img/team.png'
 import env from '../../env.json'
 
 Vue.use(Vuex)
@@ -25,6 +26,8 @@ export default new Vuex.Store({
     accessToken: '',
     currentAppId: 0,
     currentAppIcon: '',
+    currentTeamId: 0,
+    currentTeamIcon: '',
     thirdPartyUserId: 0,
     thirdPartyUserProfile: '',
     thirdPartyUserAvatar: '',
@@ -33,6 +36,11 @@ export default new Vuex.Store({
         title: '应用 Application',
         icon: appIcon,
         path: '/apps'
+      },
+      {
+        title: '团队 Team',
+        icon: teamIcon,
+        path: '/teams'
       },
       {
         title: '开发文档 Documentation',
@@ -70,6 +78,12 @@ export default new Vuex.Store({
     },
     setCurrentAppIcon (state, icon) {
       state.currentAppIcon = icon
+    },
+    setCurrentTeamId (state, id) {
+      state.currentTeamId = id
+    },
+    setCurrentTeamIcon (state, icon) {
+      state.currentTeamIcon = icon
     },
     setThirdPartyUserId (state, id) {
       state.thirdPartyUserId = id
@@ -141,6 +155,12 @@ export default new Vuex.Store({
     },
     async setCurrentAppIcon ({ commit }, icon) {
       commit('setCurrentAppIcon', icon)
+    },
+    async setCurrentTeamId ({ commit }, id) {
+      commit('setCurrentTeamId', id)
+    },
+    async setCurrentTeamIcon ({ commit }, icon) {
+      commit('setCurrentTeamIcon', icon)
     },
     async setThirdPartyUserId ({ commit }, id) {
       commit('setThirdPartyUserId', id)

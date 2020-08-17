@@ -1,25 +1,25 @@
 <template>
-    <div class="application">
-      <div class="app-desp">
-        <div class="app-desp-title">Application</div>
-        <div class="app-desp-content">找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！</div>
+    <div class="team">
+      <div class="team-desp">
+        <div class="team-desp-title">Teams</div>
+        <div class="team-desp-content">如果和别人一同合作创建你们的应用程序实例能让你事半功倍，那创建一个合适的团队便是你最佳的选择，在下面创建由你命名和管理的团队吧！</div>
       </div>
-      <div class="app-title">My Application</div>
-      <el-row :gutter="20" class="apps">
-        <div v-for="(app, index) in appCards" :key=index>
-          <router-link :to="{ path:'/app/' + app.id, params: { app: app } }">
-            <div v-if="app.id">
-              <div class="app-item" :href="app.href">
-                <img class="app-img" :src="app.img" />
-                <span class="app-name">{{ app.name }}</span>
+      <div class="team-title">My Teams</div>
+      <el-row :gutter="20" class="teams">
+        <div v-for="(team, index) in appCards" :key=index>
+          <router-link :to="{ path:'/team/' + team.id, params: { team: team } }">
+            <div v-if="team.id">
+              <div class="team-item" :href="team.href">
+                <img class="team-img" :src="team.img" />
+                <span class="team-name">{{ team.name }}</span>
               </div>
             </div>
           </router-link>
         </div>
-        <router-link to="/newapp">
-          <div class="app-new">
-            <img id="new-logo" src="../assets/img/newapp.png" />
-            <span id="new-text">创建你的 App</span>
+        <router-link to="/newteam">
+          <div class="team-new">
+            <img id="new-logo" src="../assets/img/team-img.png" />
+            <span id="new-text">创建你的 Team</span>
           </div>
         </router-link>
       </el-row>
@@ -47,13 +47,13 @@ export default {
   },
   mounted () {
     if (this.userId) {
-      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(appData => {
+      Axios.get(env.DEVELOPERAPI + '/user/teams?id=' + this.userId).then(appData => {
         const apps = appData.data.apps
         apps.forEach(id => {
-          Axios(env.DEVELOPERAPI + '/app/detail?appId=' + id).then(app => {
+          Axios(env.DEVELOPERAPI + '/team/detail?teamId=' + id).then(team => {
             let appObject = { img: '', name: '', id: id }
-            appObject.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
-            appObject.name = app.data.detail.name
+            appObject.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
+            appObject.name = team.data.detail.name
             this.appCards.push(appObject)
           })
         })
@@ -69,29 +69,29 @@ a {
   color: black;
 }
 
-.application {
+.team {
   font-family:'PingFangSC-Medium','PingFang SC', Arial, Helvetica, sans-serif;
   padding: 2rem 2rem 0;
 
 }
 
-.app-desp-title {
+.team-desp-title {
   font-size: 26px;
 }
 
-.app-desp-content {
+.team-desp-content {
   font-size: 16px;
   word-break: break-all;
   margin-top: 20px;
   color: #B2B2B2;
 }
 
-.app-title {
+.team-title {
   margin-top: 20px;
   font-size: 24px;
 }
 
-.apps {
+.teams {
   // margin-top: 20px;
   padding: 20px 0 40px 0;
   display: flex;
@@ -99,14 +99,14 @@ a {
   flex-wrap: wrap;
 }
 
-.app-img {
+.team-img {
   margin-top: 10px;
   height: 128px;
   width: 128px;
   object-fit: cover;
 }
 
-.app-item {
+.team-item {
   margin-bottom: 1rem;
   margin-right: 1rem;
   display: flex;
@@ -128,12 +128,12 @@ a {
   }
 }
 
-.app-name {
+.team-name {
   margin-top: 0.5rem;
   font-size: 16px;
 }
 
-.app-new {
+.team-new {
   display: flex;
   align-items: center;
   flex-direction: column;
