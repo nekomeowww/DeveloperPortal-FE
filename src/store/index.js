@@ -8,7 +8,7 @@ import { loginWithEmail, getAvatarUrl } from '../api/user'
 
 import appIcon from '@/assets/img/app.png'
 import docIcon from '@/assets/img/doc.png'
-import teamIcon from '@/assets/img/team.png'
+import teamIcon from '@/assets/img/Team.png'
 import env from '../../env.json'
 
 Vue.use(Vuex)
