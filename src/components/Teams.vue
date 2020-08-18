@@ -7,7 +7,7 @@
       <div class="team-title">My Teams</div>
       <el-row :gutter="20" class="teams">
         <div v-for="(team, index) in appCards" :key=index>
-          <router-link :to="{ path:'/team/' + team.id, params: { team: team } }">
+          <router-link :to="{ path:'/team/' + team.id + '/settings', params: { team: team } }">
             <div v-if="team.id">
               <div class="team-item" :href="team.href">
                 <img class="team-img" :src="team.img" />
@@ -47,9 +47,9 @@ export default {
   },
   mounted () {
     if (this.userId) {
-      Axios.get(env.DEVELOPERAPI + '/user/teams?id=' + this.userId).then(appData => {
-        const apps = appData.data.apps
-        apps.forEach(id => {
+      Axios.get(env.DEVELOPERAPI + '/user/team?id=' + this.userId).then(appData => {
+        const teams = appData.data.teams
+        teams.forEach(id => {
           Axios(env.DEVELOPERAPI + '/team/detail?teamId=' + id).then(team => {
             let appObject = { img: '', name: '', id: id }
             appObject.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
