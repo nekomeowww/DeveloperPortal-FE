@@ -21,6 +21,7 @@ import Markdown from '@/components/Documentation/Markdown.vue'
 import getstarted from '@/doc/getstarted.md'
 import userprofile from '@/doc/userprofile.md'
 import userwallet from '@/doc/userwallet.md'
+import fanlocker from '@/doc/fanlocker.md'
 
 export default {
   components: {
@@ -41,7 +42,8 @@ export default {
       markdownList: {
         getstarted: getstarted,
         userprofile: userprofile,
-        userwallet: userwallet
+        userwallet: userwallet,
+        fanlocker: fanlocker
       }
     }
   },

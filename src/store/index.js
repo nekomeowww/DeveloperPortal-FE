@@ -61,6 +61,11 @@ export default new Vuex.Store({
         title: '用户钱包 Wallet',
         elicon: 'el-icon-s-finance',
         path: '/doc/userwallet'
+      },
+      {
+        title: 'FanLocker',
+        elicon: 'el-icon-lock',
+        path: '/doc/fanlocker'
       }
     ]
   },
