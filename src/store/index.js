@@ -66,6 +66,11 @@ export default new Vuex.Store({
         title: 'FanLocker',
         elicon: 'el-icon-lock',
         path: '/doc/fanlocker'
+      },
+      {
+        title: 'hexo-plugin-matataki',
+        elicon: 'el-icon-s-open',
+        path: '/doc/hexoplugin'
       }
     ]
   },
