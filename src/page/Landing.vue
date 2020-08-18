@@ -18,7 +18,12 @@
           </h1>
           <router-link :to="{ name: 'Home'}">
             <div class="start">
-            开始 Get Started
+              开始 Get Started
+            </div>
+          </router-link>
+          <router-link :to="{ name: 'Doc' }">
+            <div class="doc">
+              文档
             </div>
           </router-link>
         </div>
@@ -175,6 +180,15 @@ body {
 
 .start:hover {
   background-color: #E0D9F9;
+}
+
+.doc {
+  text-decoration: none;
+  margin-top: 1rem;
+  position: relative;
+  padding: 0px 10px 2px 10px;
+  border-bottom: 2px solid #542DE0;
+  color: #542DE0;
 }
 
 .word {
