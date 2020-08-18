@@ -105,7 +105,7 @@
 <script>
 
 import imgUpload from '@/components/imgUpload/imgUpload.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import Axios from 'axios'
 
 import env from '../../env.json'
@@ -190,6 +190,10 @@ export default {
     },
     appData (val) {
       this.ruleForm = val
+    },
+    currentAppIcon (val) {
+      this.avatar = env.DEVELOPERAPI + '/img' + val
+      console.log(this.avatar)
     }
   },
   computed: {
@@ -201,7 +205,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setCurrentAppId']),
     reveal () {
       let elem = document.getElementById('secret')
       this.defaultCss = elem.style.cssText
@@ -219,7 +222,8 @@ export default {
     },
     getAvatar () {
       if (this.showSecretRow) {
-        this.avatar = this.icon
+        if (!this.currentAppIcon) this.avatar = this.icon
+        else this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
         return true
       } else if (this.avatar !== '') {
         return this.avatar
