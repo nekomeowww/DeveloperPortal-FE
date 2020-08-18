@@ -19,6 +19,10 @@ import VueMarkdown from 'vue-markdown'
 import Markdown from '@/components/Documentation/Markdown.vue'
 
 import getstarted from '@/doc/getstarted.md'
+import userprofile from '@/doc/userprofile.md'
+import userwallet from '@/doc/userwallet.md'
+import fanlocker from '@/doc/fanlocker.md'
+import hexoplugin from '@/doc/hexoplugin.md'
 
 export default {
   components: {
@@ -37,13 +41,20 @@ export default {
     return {
       markdown: '',
       markdownList: {
-        getstarted: getstarted
+        getstarted: getstarted,
+        userprofile: userprofile,
+        userwallet: userwallet,
+        fanlocker: fanlocker,
+        hexoplugin: hexoplugin
       }
     }
   },
   watch: {
     markdownList (val) {
       this.markdown = this.markdownList[this.$route.params.name]
+    },
+    $route (val) {
+      this.markdown = this.markdownList[val.params.name]
     }
   },
   mounted () {
