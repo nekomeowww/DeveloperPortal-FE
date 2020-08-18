@@ -269,20 +269,20 @@ export default {
         switch (this.updateType) {
           case 'avatar':
             res = await API.uploadImage(file, this.currentAppId, this.userId)
-            if (res.data.code === 0) {
+            if (res.data.code === 0 || res.data.code === 1) {
               this.setCurrentAppIcon(res.data.img)
               this.setCurrentAppId(res.data.appId)
             }
             break
           case 'team':
             res = await API.uploadTeamImage(file, this.currentTeamId, this.userId)
-            if (res.data.code === 0) {
+            if (res.data.code === 0 || res.data.code === 1) {
               this.setCurrentTeamIcon(res.data.img)
               this.setCurrentTeamId(res.data.teamId)
             }
             break
         }
-        if (res.code === 0) {
+        if (res.data.code === 0 || res.data.code === 1) {
           this.$emit('doneImageUpload', {
             type: this.updateType,
             data: res

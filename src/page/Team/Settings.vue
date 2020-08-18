@@ -1,24 +1,21 @@
 <template>
   <PhotoFrame>
     <template v-slot:sidebar>
-      <AppMenu />
+      <TeamMenu />
     </template>
-    <NewAppForm
+    <NewTeamForm
       :notNew="true"
-      :showSecretRow="true"
-      :id="app.id"
-      :appData="app.form"
-      :icon="app.img"
-      :clientId="app.clientId"
-      :clientSecret="app.clientSecret"
+      :id="team.id"
+      :teamData="team.form"
+      :icon="team.img"
     />
   </PhotoFrame>
 </template>
 
 <script>
 import PhotoFrame from '@/components/PhotoFrame'
-import AppMenu from '@/components/AppMenu'
-import NewAppForm from '@/components/NewAppForm.vue'
+import TeamMenu from '@/components/TeamMenu'
+import NewTeamForm from '@/components/NewTeamForm.vue'
 
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
@@ -34,18 +31,16 @@ export default {
     }
   },
   components: {
-    AppMenu,
+    TeamMenu,
     PhotoFrame,
-    NewAppForm
+    NewTeamForm
   },
   data () {
     return {
-      app: {
+      team: {
         id: '',
         img: '',
-        form: null,
-        clientId: '',
-        clientSecret: ''
+        form: null
       },
       userId: 0
     }
@@ -54,7 +49,7 @@ export default {
     ...mapState(['isLoggedIn'])
   },
   methods: {
-    ...mapActions(['setLoggedIn', 'setCurrentAppId'])
+    ...mapActions(['setLoggedIn', 'setCurrentTeamId'])
   },
   created () {
     const c = getCookie('ACCESS-TOKEN')
@@ -63,15 +58,11 @@ export default {
       res.status = true
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
-      Axios.get(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
-        this.setCurrentAppId(this.$route.params.id)
-        this.app.id = this.$route.params.id
-        this.app.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
-        this.app.form = app.data.detail
-      })
-      Axios.get(env.DEVELOPERAPI + '/app/secret?appId=' + this.$route.params.id + '&userId=' + this.userId).then(app2 => {
-        this.app.clientId = app2.data.clientId
-        this.app.clientSecret = app2.data.clientSecret
+      Axios.get(env.DEVELOPERAPI + '/team/detail?teamId=' + this.$route.params.id).then(team => {
+        this.setCurrentTeamId(this.$route.params.id)
+        this.team.id = this.$route.params.id
+        this.team.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
+        this.team.form = team.data.detail
       })
     } else {
       this.$router.push({ name: 'Login' })

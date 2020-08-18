@@ -1,7 +1,11 @@
 <template>
   <PhotoFrame>
+    <template v-slot:sidebar>
+      <TeamMenu />
+    </template>
     <Applications
       :userId="userId"
+      :isTeam="true"
     />
   </PhotoFrame>
 </template>
@@ -10,13 +14,15 @@
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
 import Applications from '@/components/Applications.vue'
+import TeamMenu from '@/components/TeamMenu.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
 
 export default {
   components: {
     PhotoFrame,
-    Applications
+    Applications,
+    TeamMenu
   },
   data () {
     return {
