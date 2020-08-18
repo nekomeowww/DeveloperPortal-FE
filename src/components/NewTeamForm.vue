@@ -57,7 +57,7 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
-            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 App</el-button>
+            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 Team</el-button>
             <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           </el-form-item>
         </div>
@@ -222,19 +222,19 @@ export default {
         if (res.data.code === 0) {
           this.centerDialogVisible = false
           this.$message({
-            message: '删除成功，现在返回 App 列表...',
+            message: '删除成功，现在返回 Team 列表...',
             type: 'success',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Teams' })
         } else if (res.data.code === 1) {
           this.centerDialogVisible = false
           this.$message({
-            message: '好像出现了点问题，现在返回 App 列表...',
+            message: '好像出现了点问题，现在返回 Teams 列表...',
             type: 'warning',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Teams' })
         } else {
           this.centerDialogVisible = false
           this.$message({
@@ -242,7 +242,7 @@ export default {
             type: 'success',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ name: 'Teams' })
         }
       })
     }
