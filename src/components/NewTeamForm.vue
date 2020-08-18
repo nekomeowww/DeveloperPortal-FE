@@ -1,9 +1,9 @@
 <template>
-  <div class="application">
-    <div class="app-desp">
-      <div v-if="notNew" class="app-desp-title">General Information</div>
-      <div v-else class="app-desp-title">Creating New Team</div>
-      <div class="app-desp-content">填写基本的团队信息</div>
+  <div class="team">
+    <div class="team-desp">
+      <div v-if="notNew" class="team-desp-title">General Information</div>
+      <div v-else class="team-desp-title">Creating New Team</div>
+      <div class="team-desp-content">填写基本的团队信息</div>
     </div>
     <div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
@@ -12,7 +12,7 @@
           <img-upload
             :img-upload-done="imgUploadDone"
             :update-type="'team'"
-            class="app-icon"
+            class="team-icon"
             @doneImageUpload="doneImageUpload"
           >
             <div
@@ -30,7 +30,7 @@
                 :src="avatar"
                 alt="avatar"
               >
-              <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
+              <img v-else id="new-logo" src="../assets/img/team-img.png" style="height:40px;width: 42.96px;"/>
             </div>
           </img-upload>
         </div>
@@ -39,45 +39,20 @@
             <span class="form-label">名称 Name</span>
             <el-input placeholder="请输入名称..." maxlength="20" v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <div v-if="showSecretRow" class="d-fl">
-            <div class="cid">
-              <span class="form-label">Client ID</span><br>
-              <span class="secret-text">{{ clientId }}</span><br>
-              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">复制</el-button>
-            </div>
-            <div class="cet">
-              <span class="form-label">Client Secret</span><br>
-              <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
-              <el-button type="primary" size="small" class="secret-btn">重新生成</el-button>
-            </div>
-          </div>
           <el-form-item label=' ' prop="desp">
             <span class="form-label">简介 Description</span>
             <el-input placeholder="请输入简介... " type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
           </el-form-item>
-          <el-form-item label=' ' prop="callback">
-            <span class="form-label">回调链接 Callback URL</span>
-            <el-input placeholder="请输入回调链接... " v-model="ruleForm.callback"></el-input>
-          </el-form-item>
           <el-form-item prop="orglink">
-            <span class="form-label">个人或组织网站 Website Link</span>
+            <span class="form-label">组织网站 Website Link</span>
             <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
           </el-form-item>
           <el-form-item prop="orgname">
-            <span class="form-label">个人、组织或公司名称 Organization or Corporation Name</span>
+            <span class="form-label">组织或公司名称 Organization or Corporation Name</span>
             <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
           </el-form-item>
-          <el-form-item prop="toslink">
-            <span class="form-label">用户协议链接 Term of Service URL</span>
-            <el-input placeholder="请输入用户协议链接（方便展示）... " v-model="ruleForm.toslink"></el-input>
-          </el-form-item>
-          <el-form-item prop="pplink">
-            <span class="form-label">隐私协定 Privacy Policy URL</span>
-            <el-input placeholder="请输入隐私协定（方便展示）... " v-model="ruleForm.pplink"></el-input>
-          </el-form-item>
           <el-form-item prop="usage">
-            <span class="form-label">App 使用目的 App Usage</span>
+            <span class="form-label">团队使用目标 Team Objective</span>
             <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
           </el-form-item>
           <el-form-item>
@@ -92,10 +67,10 @@
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
-        <span>确定要删除这个 App 吗？</span>
+        <span>确定要删除这个 Team 吗？</span>
         <span slot="footer" class="dialog-footer">
           <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="removeApp">确 定</el-button>
+          <el-button type="primary" @click="removeTeam">确 定</el-button>
         </span>
       </el-dialog>
     </div>
@@ -105,7 +80,7 @@
 <script>
 
 import imgUpload from '@/components/imgUpload/imgUpload.vue'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 import Axios from 'axios'
 
 import env from '../../env.json'
@@ -123,23 +98,11 @@ export default {
       type: Boolean,
       default: false
     },
-    showSecretRow: {
-      type: Boolean,
-      default: false
-    },
-    appData: {
+    teamData: {
       type: Object,
       default: () => {}
     },
     icon: {
-      type: String,
-      default: ''
-    },
-    clientId: {
-      type: String,
-      default: ''
-    },
-    clientSecret: {
       type: String,
       default: ''
     }
@@ -188,12 +151,12 @@ export default {
     id (val) {
       this.id = val
     },
-    appData (val) {
+    teamData (val) {
       this.ruleForm = val
     }
   },
   computed: {
-    ...mapState(['currentAppId', 'isLoggedIn', 'userId', 'currentAppIcon'])
+    ...mapState(['currentTeamId', 'isLoggedIn', 'userId', 'currentTeamIcon'])
   },
   created () {
     if (!this.isLoggedIn) {
@@ -201,28 +164,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setCurrentAppId']),
-    reveal () {
-      let elem = document.getElementById('secret')
-      this.defaultCss = elem.style.cssText
-      if (elem.innerHTML === '点击以显示') {
-        elem.innerHTML = this.clientSecret
-        let elClassName = ' ' + elem.className + ' '
-        while (elClassName.indexOf(' toShow ') !== -1) {
-          elClassName = elClassName.replace(' toShow ', '')
-        }
-        elem.className = elClassName
-      } else {
-        elem.className += ' ' + 'toShow'
-        elem.innerHTML = '点击以显示'
-      }
-    },
     getAvatar () {
-      if (this.showSecretRow) {
-        this.avatar = this.icon
+      if (this.icon !== '' || this.icon !== undefined) {
+        if (this.currentTeamIcon) this.avatar = env.DEVELOPERAPI + '/img' + this.currentTeamIcon
+        else this.avatar = this.icon
+      }
+      if (this.avatar !== '') {
         return true
-      } else if (this.avatar !== '') {
-        return this.avatar
       } else {
         return false
       }
@@ -230,15 +178,15 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentTeamId, userId: this.userId }).then(res => {
+          Axios.post(env.DEVELOPERAPI + '/team/new', { form: this.ruleForm, teamId: this.currentTeamId, userId: this.userId }).then(res => {
             if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
-                message: '创建成功... 现在返回 App 列表',
+                message: '创建成功... 现在返回 Team 列表',
                 type: 'success',
                 duration: 4000
               })
 
-              this.$router.push({ name: 'Home' })
+              this.$router.push({ name: 'Teams' })
             } else {
               this.$message({
                 message: '出现了问题，请重试',
@@ -257,33 +205,6 @@ export default {
         }
       })
     },
-    copyToClipboard (text) {
-      if (window.clipboardData && window.clipboardData.setData) {
-        // IE specific code path to prevent textarea being shown while dialog is visible.
-        return window.clipboardData.setData('Text', text)
-      } else if (document.queryCommandSupported && document.queryCommandSupported('copy')) {
-        var textarea = document.createElement('textarea')
-        textarea.textContent = text
-        textarea.style.position = 'fixed' // Prevent scrolling to bottom of page in MS Edge.
-        document.body.appendChild(textarea)
-        textarea.select()
-        try {
-          this.$notify.success({
-            title: '复制成功',
-            message: '内容已经成功复制到剪贴板'
-          })
-          return document.execCommand('copy') // Security exception may be thrown by some browsers.
-        } catch (ex) {
-          this.$notify.error({
-            title: '复制失败',
-            message: '请手动复制内容'
-          })
-          return false
-        } finally {
-          document.body.removeChild(textarea)
-        }
-      }
-    },
     doneImageUpload () {
       this.imgUploadDone += Date.now()
       this.$message({
@@ -291,13 +212,13 @@ export default {
         type: 'success',
         duration: 4000
       })
-      this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
+      this.avatar = env.DEVELOPERAPI + '/img' + this.currentTeamIcon
     },
     openDeletionConfirm () {
       this.centerDialogVisible = true
     },
-    removeApp () {
-      Axios.get(env.DEVELOPERAPI + '/app/remove?appId=' + this.id + '&userId=' + this.userId).then(res => {
+    removeTeam () {
+      Axios.get(env.DEVELOPERAPI + '/team/remove?teamId=' + this.id + '&userId=' + this.userId).then(res => {
         if (res.data.code === 0) {
           this.centerDialogVisible = false
           this.$message({
@@ -327,26 +248,26 @@ export default {
     }
   },
   mounted () {
-    if (this.showSecretRow) {
+    if (this.notNew) {
       if (this.icon !== '') this.avatar = this.icon
-      if (this.appData) this.ruleForm = this.appData
+      if (this.teamData) this.ruleForm = this.teamData
     }
   }
 }
 </script>
 <style lang="less" scoped>
 
-.application {
+.team {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
-  height: 120%;
-  padding: 2rem 2rem 40px;
+  height: 100%;
+  padding: 2rem 2rem 2rem;
 }
 
-.app-desp-title {
+.team-desp-title {
   font-size: 26px;
 }
 
-.app-desp-content {
+.team-desp-content {
   font-size: 16px;
   word-break: break-all;
   margin-top: 20px;
@@ -363,7 +284,7 @@ export default {
   margin-bottom: 20px;
 }
 
-.app-icon {
+.team-icon {
   cursor: pointer;
   margin: 11px 20px 20px 0;
   display: flex;
