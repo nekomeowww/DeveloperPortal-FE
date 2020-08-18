@@ -19,6 +19,8 @@ import VueMarkdown from 'vue-markdown'
 import Markdown from '@/components/Documentation/Markdown.vue'
 
 import getstarted from '@/doc/getstarted.md'
+import userprofile from '@/doc/userprofile.md'
+import userwallet from '@/doc/userwallet.md'
 
 export default {
   components: {
@@ -37,13 +39,18 @@ export default {
     return {
       markdown: '',
       markdownList: {
-        getstarted: getstarted
+        getstarted: getstarted,
+        userprofile: userprofile,
+        userwallet: userwallet
       }
     }
   },
   watch: {
     markdownList (val) {
       this.markdown = this.markdownList[this.$route.params.name]
+    },
+    $route (val) {
+      this.markdown = this.markdownList[val.params.name]
     }
   },
   mounted () {

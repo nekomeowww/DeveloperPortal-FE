@@ -48,9 +48,19 @@ export default new Vuex.Store({
         path: '/doc'
       },
       {
-        title: '起步',
+        title: '起步 Get Started',
         elicon: 'el-icon-success',
         path: '/doc/getstarted'
+      },
+      {
+        title: '用户信息 User Profile',
+        elicon: 'el-icon-user-solid',
+        path: '/doc/userprofile'
+      },
+      {
+        title: '用户钱包 Wallet',
+        elicon: 'el-icon-s-finance',
+        path: '/doc/userwallet'
       }
     ]
   },
