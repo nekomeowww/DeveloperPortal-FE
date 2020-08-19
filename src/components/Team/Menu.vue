@@ -17,7 +17,8 @@
         class="menu-item"
         :index="item.path"
       >
-        <img class="menu-icon" :src="item.icon" />
+        <img v-if="item.icon" class="menu-icon" :src="item.icon" />
+        <i v-else :class="item.elicon" class="menu-icon" style="font-size: 20px;" />
         <span slot="title">{{ item.title }}</span>
       </el-menu-item>
     </el-menu>
@@ -27,6 +28,7 @@
 <script>
 import infoIcon from '@/assets/img/info.png'
 import appIcon from '@/assets/img/app.png'
+import userIcon from '@/assets/img/user.png'
 
 export default {
   name: 'Menu',
@@ -42,6 +44,11 @@ export default {
           title: '应用 Application',
           icon: appIcon,
           path: `/team/${this.$route.params.id}`
+        },
+        {
+          title: '成员 Members',
+          icon: userIcon,
+          path: `/team/${this.$route.params.id}/members`
         }
       ]
     }
