@@ -30,7 +30,7 @@
                 :src="avatar"
                 alt="avatar"
               >
-              <img v-else id="new-logo" src="../assets/img/team-img.png" style="height:40px;width: 42.96px;"/>
+              <img v-else id="new-logo" src="../../assets/img/team-img.png" style="height:40px;width: 42.96px;"/>
             </div>
           </img-upload>
         </div>
@@ -53,7 +53,7 @@
           </el-form-item>
           <el-form-item prop="usage">
             <span class="form-label">团队使用目标 Team Objective</span>
-            <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
+            <el-input placeholder="您用创建团队想要做什么呢？... " v-model="ruleForm.usage"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
@@ -83,7 +83,7 @@ import imgUpload from '@/components/imgUpload/imgUpload.vue'
 import { mapState } from 'vuex'
 import Axios from 'axios'
 
-import env from '../../env.json'
+import env from '../../../env.json'
 
 export default {
   components: {

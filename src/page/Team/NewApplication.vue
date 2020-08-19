@@ -2,7 +2,7 @@
   <PhotoFrame>
     <template v-slot:sidebar>
       <div class="sidebar-menu">
-        <router-link :to="{path: '/apps'}">
+        <router-link :to="{path: '/team/' + $route.params.id}">
           <i class="el-icon-arrow-left" />
           Back to Applications
         </router-link>
@@ -17,10 +17,10 @@ import { mapActions, mapState } from 'vuex'
 import Axios from 'axios'
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import NewAppForm from '@/components/NewAppForm.vue'
+import NewAppForm from '@/components/Team/NewAppForm.vue'
 
-import { getCookie, disassemble } from '../util/cookie'
-import env from '../../env.json'
+import { getCookie, disassemble } from '../../util/cookie'
+import env from '../../../env.json'
 
 export default {
   components: {
@@ -31,7 +31,7 @@ export default {
     ...mapState(['isLoggedIn', 'userId'])
   },
   methods: {
-    ...mapActions(['setLoggedIn', 'setCurrentAppId'])
+    ...mapActions(['setLoggedIn', 'setCurrentTeamId'])
   },
   created () {
     document.title = '创建新的 App - Matataki 开发者中心'
@@ -42,8 +42,8 @@ export default {
       const res = disassemble(c)
       res.status = true
       this.setLoggedIn(res)
-
-      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + res.id).then(apps => {
+      this.setCurrentTeamId(this.$route.params.id)
+      Axios.get(env.DEVELOPERAPI + '/team/app?id=' + res.id).then(apps => {
         if (apps.data.id) {
           let id = apps.data.id
           id = id + 1

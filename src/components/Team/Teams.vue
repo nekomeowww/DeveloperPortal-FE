@@ -18,7 +18,7 @@
         </div>
         <router-link to="/newteam">
           <div class="team-new">
-            <img id="new-logo" src="../assets/img/team-img.png" />
+            <img id="new-logo" src="../../assets/img/team-img.png" />
             <span id="new-text">创建你的 Team</span>
           </div>
         </router-link>
@@ -29,7 +29,7 @@
 <script>
 import Axios from 'axios'
 
-import env from '../../env.json'
+import env from '../../../env.json'
 
 export default {
   props: {
