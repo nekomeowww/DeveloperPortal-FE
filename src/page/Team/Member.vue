@@ -3,12 +3,6 @@
     <template v-slot:sidebar>
       <TeamMenu />
     </template>
-    <NewTeamForm
-      :notNew="true"
-      :id="team.id"
-      :teamData="team.form"
-      :icon="team.img"
-    />
   </PhotoFrame>
 </template>
 

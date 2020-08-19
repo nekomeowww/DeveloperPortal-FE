@@ -4,10 +4,14 @@ import Router from 'vue-router'
 import Landing from '@/page/Landing.vue'
 import Login from '@/page/Login.vue'
 import Home from '@/page/Home'
+import Notification from '@/page/Notification.vue'
 import NewApp from '@/page/NewApplication.vue'
 import Team from '@/page/Team/index.vue'
+import Member from '@/page/Team/Member.vue'
 import NewTeam from '@/page/NewTeam.vue'
 import TeamApp from '@/page/Team/_id.vue'
+import NewTeamApp from '@/page/Team/NewApplication.vue'
+import TeamAppSettings from '@/page/Team/App/_id.vue'
 import TeamSettings from '@/page/Team/Settings.vue'
 import Settings from '@/page/Oauth/Settings.vue'
 import Vault from '@/page/Vault/_id.vue'
@@ -41,6 +45,11 @@ export default new Router({
       component: Home
     },
     {
+      path: '/notifications',
+      name: 'Notification',
+      component: Notification
+    },
+    {
       path: '/newapp',
       name: 'NewApp',
       component: NewApp
@@ -56,9 +65,27 @@ export default new Router({
       component: NewTeam
     },
     {
+      path: '/team/:id/members',
+      name: 'Members',
+      component: Member,
+      props: true
+    },
+    {
       path: '/team/:id',
       name: 'TeamApp',
       component: TeamApp,
+      props: true
+    },
+    {
+      path: '/team/:id/newapp',
+      name: 'NewTeamApp',
+      component: NewTeamApp,
+      props: true
+    },
+    {
+      path: '/team/:id/app/:appId',
+      name: 'TeamAppSettings',
+      component: TeamAppSettings,
       props: true
     },
     {

@@ -9,7 +9,7 @@
 <script>
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import Teams from '@/components/Teams.vue'
+import Teams from '@/components/Team/Teams.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
 
