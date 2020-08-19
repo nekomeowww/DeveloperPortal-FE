@@ -14,12 +14,18 @@
         <el-button type="primary" class="login-btn">登录</el-button>
       </router-link>
     </div>
+    <router-link
+      v-if="isLoggedIn"
+      :to="{ name: 'Notification' }">
+      <el-badge :value="undefined" class="item">
+        <i class="el-icon-message-solid notification"></i>
+      </el-badge>
+    </router-link>
     <el-dropdown
       placement="bottom-start"
       v-if="isLoggedIn"
       class="user-menu"
     >
-      <!-- <avatarComponents :size="'30px'" :src="avatar" class="home-head-avatar" /> -->
       <div class="user-avatar">
         <img
           v-if="userAvatar"
@@ -104,6 +110,7 @@ a {
 
 .user-menu {
   margin-right: 60px;
+  margin-left: 1.5rem;
 }
 
 .user-dorpdown {
@@ -151,6 +158,11 @@ header {
 
 .login-btn {
   margin-right: 2rem;
+}
+
+.notification {
+  font-size: 1.6rem;
+  color: #542DE0;
 }
 
 .unfold {

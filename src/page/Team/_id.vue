@@ -13,8 +13,8 @@
 <script>
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import Applications from '@/components/Applications.vue'
-import TeamMenu from '@/components/TeamMenu.vue'
+import Applications from '@/components/Team/Applications.vue'
+import TeamMenu from '@/components/Team/Menu.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
 

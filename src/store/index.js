@@ -28,6 +28,8 @@ export default new Vuex.Store({
     currentAppIcon: '',
     currentTeamId: 0,
     currentTeamIcon: '',
+    currentTeamAppId: 0,
+    currentTeamAppIcon: '',
     thirdPartyUserId: 0,
     thirdPartyUserProfile: '',
     thirdPartyUserAvatar: '',
@@ -105,6 +107,12 @@ export default new Vuex.Store({
     setCurrentTeamIcon (state, icon) {
       state.currentTeamIcon = icon
     },
+    setCurrentTeamAppId (state, id) {
+      state.currentTeamAppId = id
+    },
+    setCurrentTeamAppIcon (state, icon) {
+      state.currentTeamAppIcon = icon
+    },
     setThirdPartyUserId (state, id) {
       state.thirdPartyUserId = id
     },
@@ -181,6 +189,12 @@ export default new Vuex.Store({
     },
     async setCurrentTeamIcon ({ commit }, icon) {
       commit('setCurrentTeamIcon', icon)
+    },
+    async setCurrentTeamAppId ({ commit }, id) {
+      commit('setCurrentTeamAppId', id)
+    },
+    async setCurrentTeamAppIcon ({ commit }, icon) {
+      commit('setCurrentTeamAppIcon', icon)
     },
     async setThirdPartyUserId ({ commit }, id) {
       commit('setThirdPartyUserId', id)

@@ -118,7 +118,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentAppId', 'currentTeamId', 'userId']),
+    ...mapState(['currentAppId', 'currentTeamId', 'currentTeamAppId', 'userId']),
     computedStyleContent () {
       if (this.updateType === 'artileCover') {
         return {
@@ -172,7 +172,7 @@ export default {
     this.isShowFileUpload = true
   },
   methods: {
-    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId', 'setCurrentTeamId', 'setCurrentTeamIcon']),
+    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId', 'setCurrentTeamId', 'setCurrentTeamIcon', 'setCurrentTeamAppId', 'setCurrentTeamAppIcon']),
     /**
      * Pretreatment // 过滤操作可以写在这里
      * @param  Object|undefined   newFile   读写
@@ -279,6 +279,13 @@ export default {
             if (res.data.code === 0 || res.data.code === 1) {
               this.setCurrentTeamIcon(res.data.img)
               this.setCurrentTeamId(res.data.teamId)
+            }
+            break
+          case 'teamapp':
+            res = await API.uploadTeamAppImage(file, this.currentTeamId, this.userId, this.currentTeamAppId)
+            if (res.data.code === 0 || res.data.code === 1) {
+              this.setCurrentTeamAppIcon(res.data.img)
+              this.setCurrentTeamAppId(res.data.appId)
             }
             break
         }

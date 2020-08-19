@@ -2,9 +2,9 @@
   <PhotoFrame>
     <template v-slot:sidebar>
       <div class="sidebar-menu">
-        <router-link :to="{path: '/apps'}">
+        <router-link :to="{path: '/teams'}">
           <i class="el-icon-arrow-left" />
-          Back to Applications
+          Back to Team
         </router-link>
       </div>
     </template>
@@ -17,7 +17,7 @@ import { mapActions, mapState } from 'vuex'
 import Axios from 'axios'
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
-import NewTeamForm from '@/components/NewTeamForm.vue'
+import NewTeamForm from '@/components/Team/NewTeamForm.vue'
 
 import { getCookie, disassemble } from '../util/cookie'
 import env from '../../env.json'

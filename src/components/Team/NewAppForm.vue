@@ -3,7 +3,7 @@
     <div class="app-desp">
       <div v-if="notNew" class="app-desp-title">General Information</div>
       <div v-else class="app-desp-title">Creating New App</div>
-      <div class="app-desp-content">填写基本的 App 信息</div>
+      <div class="app-desp-content">填写基本的 App 信息 {{ currentTeamAppId }}</div>
     </div>
     <div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
@@ -11,7 +11,7 @@
           <span class="icon-title">App 图标</span>
           <img-upload
             :img-upload-done="imgUploadDone"
-            :update-type="'avatar'"
+            :update-type="'teamapp'"
             class="app-icon"
             @doneImageUpload="doneImageUpload"
           >
@@ -30,7 +30,7 @@
                 :src="avatar"
                 alt="avatar"
               >
-              <img v-else id="new-logo" src="../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
+              <img v-else id="new-logo" src="../../assets/img/newapp.png" style="height:40px;width: 42.96px;"/>
             </div>
           </img-upload>
         </div>
@@ -108,7 +108,7 @@ import imgUpload from '@/components/imgUpload/imgUpload.vue'
 import { mapState } from 'vuex'
 import Axios from 'axios'
 
-import env from '../../env.json'
+import env from '../../../env.json'
 
 export default {
   components: {
@@ -191,13 +191,12 @@ export default {
     appData (val) {
       this.ruleForm = val
     },
-    currentAppIcon (val) {
+    currentTeamAppIcon (val) {
       this.avatar = env.DEVELOPERAPI + '/img' + val
-      console.log(this.avatar)
     }
   },
   computed: {
-    ...mapState(['currentAppId', 'isLoggedIn', 'userId', 'currentAppIcon'])
+    ...mapState(['currentTeamAppId', 'isLoggedIn', 'userId', 'currentTeamAppIcon'])
   },
   created () {
     if (!this.isLoggedIn) {
@@ -222,8 +221,8 @@ export default {
     },
     getAvatar () {
       if (this.notNew) {
-        if (!this.currentAppIcon) this.avatar = this.icon
-        else this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
+        if (!this.currentTeamAppIcon) this.avatar = this.icon
+        else this.avatar = env.DEVELOPERAPI + '/img' + this.currentTeamAppIcon
         return true
       } else if (this.avatar !== '') {
         return this.avatar
@@ -234,7 +233,7 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentAppId, userId: this.userId }).then(res => {
+          Axios.post(env.DEVELOPERAPI + '/team/newapp', { form: this.ruleForm, appId: this.currentTeamAppId, teamId: this.$route.params.id }).then(res => {
             if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
                 message: '创建成功... 现在返回 App 列表',
@@ -242,7 +241,7 @@ export default {
                 duration: 4000
               })
 
-              this.$router.push({ name: 'Home' })
+              this.$router.push({ path: '/team/' + this.$route.params.id })
             } else {
               this.$message({
                 message: '出现了问题，请重试',
@@ -295,13 +294,13 @@ export default {
         type: 'success',
         duration: 4000
       })
-      this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
+      this.avatar = env.DEVELOPERAPI + '/img' + this.currentTeamAppIcon
     },
     openDeletionConfirm () {
       this.centerDialogVisible = true
     },
     removeApp () {
-      Axios.get(env.DEVELOPERAPI + '/app/remove?appId=' + this.id + '&userId=' + this.userId).then(res => {
+      Axios.get(env.DEVELOPERAPI + '/team/removeapp?appId=' + this.id + '&teamId=' + this.$route.params.id).then(res => {
         if (res.data.code === 0) {
           this.centerDialogVisible = false
           this.$message({
@@ -309,7 +308,7 @@ export default {
             type: 'success',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ path: '/team/' + this.$route.params.id })
         } else if (res.data.code === 1) {
           this.centerDialogVisible = false
           this.$message({
@@ -317,7 +316,7 @@ export default {
             type: 'warning',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ path: '/team/' + this.$route.params.id })
         } else {
           this.centerDialogVisible = false
           this.$message({
@@ -325,13 +324,12 @@ export default {
             type: 'success',
             duration: 4000
           })
-          this.$router.push({ name: 'Home' })
+          this.$router.push({ path: '/team/' + this.$route.params.id })
         }
       })
     },
     resetSecret () {
-      Axios.get(env.DEVELOPERAPI + '/app/resetsecret?appId=' + this.currentAppId + '&clientId=' + this.clientId).then(res => {
-        console.log(res.data)
+      Axios.get(env.DEVELOPERAPI + '/team/resetsecret?appId=' + this.currentTeamAppId + '&clientId=' + this.clientId).then(res => {
         this.clientSecret = res.data.clientSecret
         let elem = document.getElementById('secret')
         if (elem.innerHTML !== '点击以显示') {
