@@ -221,7 +221,7 @@ export default {
       }
     },
     getAvatar () {
-      if (this.showSecretRow) {
+      if (this.notNew) {
         if (!this.currentAppIcon) this.avatar = this.icon
         else this.avatar = env.DEVELOPERAPI + '/img' + this.currentAppIcon
         return true
