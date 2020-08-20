@@ -57,15 +57,17 @@ export default {
   mounted () {
     if (this.userId) {
       Axios.get(env.DEVELOPERAPI + '/team/app?id=' + this.currentTeamId).then(appData => {
-        const apps = appData.data.apps
-        apps.forEach(id => {
-          Axios(env.DEVELOPERAPI + '/team/appdetail?appId=' + id).then(app => {
-            let appObject = { img: '', name: '', id: id }
-            appObject.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
-            appObject.name = app.data.detail.name
-            this.appCards.push(appObject)
+        if (appData.data.apps) {
+          const apps = appData.data.apps
+          apps.forEach(id => {
+            Axios(env.DEVELOPERAPI + '/team/appdetail?appId=' + id).then(app => {
+              let appObject = { img: '', name: '', id: id }
+              appObject.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
+              appObject.name = app.data.detail.name
+              this.appCards.push(appObject)
+            })
           })
-        })
+        }
       })
     }
   }
