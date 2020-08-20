@@ -8,6 +8,7 @@
         </router-link>
       </div>
     </template>
+    <Notification />
   </PhotoFrame>
 </template>
 
@@ -15,13 +16,15 @@
 
 import PhotoFrame from '@/components/PhotoFrame.vue'
 import Applications from '@/components/Applications.vue'
+import Notification from '@/components/Notification.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
     PhotoFrame,
-    Applications
+    Applications,
+    Notification
   },
   data () {
     return {

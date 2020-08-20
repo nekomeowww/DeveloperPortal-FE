@@ -83,7 +83,6 @@ export default {
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
     }
-    console.log('got token')
     if (this.userId === 0) {
       this.$message({
         message: '出现了问题，现在返回 App 列表',
@@ -92,11 +91,9 @@ export default {
       })
       this.$router.push({ name: 'Home' })
     } else {
-      console.log('get list')
       Axios.get(env.DEVELOPERAPI + '/app/vaultlist?userId=' + this.userId).then(() => {
         Axios.get(env.DEVELOPERAPI + '/app/vaultlist?userId=' + this.userId).then(res => {
           const vaults = res.data.vaults
-          console.log(vaults)
           if (vaults.length !== 0) {
             vaults.forEach(id => {
               Axios.get(env.DEVELOPERAPI + '/app/vault?appId=' + this.currentAppId + '&id=' + id + '&userId=' + this.userId).then(res2 => {
@@ -119,6 +116,7 @@ export default {
   font-family:PingFangSC-Medium,PingFang SC, Arial, Helvetica, sans-serif;
   height: 120%;
   padding: 2rem 2rem 40px;
+  margin-right: 2rem;
 }
 
 .vault-desp-title {

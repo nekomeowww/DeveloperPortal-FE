@@ -17,7 +17,7 @@
     <router-link
       v-if="isLoggedIn"
       :to="{ name: 'Notification' }">
-      <el-badge :value="undefined" class="item">
+      <el-badge :value="hasNotification" class="item">
         <i class="el-icon-message-solid notification"></i>
       </el-badge>
     </router-link>
@@ -59,7 +59,9 @@
 <script>
 
 import { mapState, mapActions } from 'vuex'
+import Axios from 'axios'
 
+import env from '../../env.json'
 export default {
   name: 'Header',
   components: {
@@ -78,6 +80,7 @@ export default {
   },
   data () {
     return {
+      hasNotification: undefined
     }
   },
   computed: {
@@ -96,7 +99,9 @@ export default {
     }
   },
   created () {
-
+    Axios.get(env.DEVELOPERAPI + '/notification/push?id=' + this.userId).then(res => {
+      if (res.data.length >= 1) this.hasNotification = res.data.length
+    })
   },
   mounted () {
   }
