@@ -12,6 +12,7 @@ require('dotenv').config()
 Vue.use(ElementUI)
 Vue.prototype.$message = ElementUI.Message
 Vue.prototype.$notify = ElementUI.Notification
+Vue.prototype.$confirm = ElementUI.MessageBox.confirm
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

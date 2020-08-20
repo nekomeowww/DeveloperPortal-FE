@@ -3,13 +3,17 @@
     <template v-slot:sidebar>
       <TeamMenu />
     </template>
+    <Member
+      :admin="team.admin"
+      :teamData="team.form"
+    />
   </PhotoFrame>
 </template>
 
 <script>
 import PhotoFrame from '@/components/PhotoFrame.vue'
 import TeamMenu from '@/components/Team/Menu.vue'
-import NewTeamForm from '@/components/Team/NewTeamForm.vue'
+import Member from '@/components/Team/Member.vue'
 
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
@@ -27,14 +31,15 @@ export default {
   components: {
     TeamMenu,
     PhotoFrame,
-    NewTeamForm
+    Member
   },
   data () {
     return {
       team: {
         id: '',
         img: '',
-        form: null
+        form: null,
+        admin: 0
       },
       userId: 0
     }
@@ -57,13 +62,14 @@ export default {
         this.team.id = this.$route.params.id
         this.team.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
         this.team.form = team.data.detail
+        this.team.admin = team.data.userId
       })
     } else {
       this.$router.push({ name: 'Login' })
     }
   },
   mounted () {
-    document.title = '基本信息 - Matataki 开发者中心'
+    document.title = '成员管理 - Matataki 开发者中心'
   }
 }
 </script>
