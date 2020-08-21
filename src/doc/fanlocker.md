@@ -26,7 +26,7 @@ data.matataki.name || data.source.replace(/^_post\/|^.*\//, '').replace(/\.md$/,
 ```
 <script src="https://unpkg.com/fanlocker@latest/dist/fanlocker.js"></script>
 <script>
-  let fl = new FanLock({
+  let fl = new FanLocker({
     clientId: '你在开发者中心获取的 Client ID',
     clientSecret: '你在开发者中心获取的 ClientSecret'
   })
@@ -53,4 +53,4 @@ matataki:
 2. 密码（在保险库中也要填写一样的内容）
 3. 密码名称（在保险库中填写一样的内容）
 4. 数量（多少 Fan 票）
-5. 模式（hold 或者 pay，现在仅支持 pay）
+5. 模式（hold 或者 pay，现在仅支持 hold）
