@@ -8,6 +8,7 @@
       :id="team.id"
       :teamData="team.form"
       :icon="team.img"
+      :admins="team.admin"
     />
   </PhotoFrame>
 </template>
@@ -40,7 +41,8 @@ export default {
       team: {
         id: '',
         img: '',
-        form: null
+        form: null,
+        admin: []
       },
       userId: 0
     }
@@ -59,10 +61,22 @@ export default {
       this.setLoggedIn(res)
       this.userId = parseInt(res.id)
       Axios.get(env.DEVELOPERAPI + '/team/detail?teamId=' + this.$route.params.id).then(team => {
+        if (team.data === false) {
+          this.$message({
+            message: '出现了问题，现在返回 Team 列表',
+            type: 'error',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Teams' })
+        }
         this.setCurrentTeamId(this.$route.params.id)
         this.team.id = this.$route.params.id
         this.team.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
         this.team.form = team.data.detail
+        this.team.admin = team.data.admins
+        if (this.team.admin.indexOf(team.data.userId) === -1) {
+          this.team.admin.push(team.data.userId)
+        }
       })
     } else {
       this.$router.push({ name: 'Login' })

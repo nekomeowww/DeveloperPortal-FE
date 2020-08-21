@@ -7,12 +7,13 @@
             <div class="member-mid"></div>
             <el-button v-if="isAdmin" type="primary" @click="centerDialogVisible = true">邀请成员</el-button>
         </div>
-        <div class="member-desp-content">在这里你可以管理成员的权限和邀请和删除你的团队的成员。</div>
+        <div v-if="isAdmin" class="member-desp-content">在这里你可以管理成员的权限和邀请和删除你的团队的成员。</div>
+        <div v-else class="member-desp-content">在这里你可以看到团队的成员</div>
       </div>
       <div class="user-key-value">
         <div v-for="(value, index) in userData" :key=index>
           <div v-if="index === 0" class="user-slot-container" style="padding-top: 12px">
-            <div class="user-container">
+            <div :id="value.id" class="user-container">
               <img class="user-avatar" :src="value.avatar" />
               <div class="user-name-container">
                 <span class="user-nickname">{{ value.nickname }}</span>
@@ -21,11 +22,23 @@
             </div>
             <div class="user-mid"></div>
             <div v-if="value.isOwner">所有者 Owner</div>
-            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" plain @click="removeVault(value)"></el-button>
-            <el-button v-else type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
+            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" circle @click="quit(value)"></el-button>
+            <el-button v-else type="danger" icon="el-icon-delete" circle @click="quit(value)"></el-button>
+            <el-dialog
+              title="请确认操作"
+              :visible.sync="quitDialogVisible"
+              width="30%"
+              center>
+              <span v-if="!isAdmin">确定要退出这个团队吗？</span>
+              <span v-else>确定要删除这个成员吗？</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="quitDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="quitTeam(value)">确 定</el-button>
+              </span>
+            </el-dialog>
           </div>
           <div v-if="index !== 0" class="user-slot-container">
-            <div class="user-container">
+            <div :id="value.id" class="user-container">
               <img class="user-avatar" :src="value.avatar" />
               <div class="user-name-container">
                 <span class="user-nickname">{{ value.nickname }}</span>
@@ -34,8 +47,20 @@
             </div>
             <div class="user-mid"></div>
             <div v-if="value.isOwner">所有者 Owner</div>
-            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" plain @click="removeVault(value)"></el-button>
-            <el-button v-else type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
+            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" circle @click="quit(value)"></el-button>
+            <el-button v-if="isAdmin" type="danger" icon="el-icon-delete" circle @click="quit(value)"></el-button>
+            <el-dialog
+              title="请确认操作"
+              :visible.sync="quitDialogVisible"
+              width="30%"
+              center>
+              <span v-if="!isAdmin">确定要退出这个团队吗？</span>
+              <span v-else>确定要删除这个成员吗？</span>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="quitDialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="quitTeam(value)">确 定</el-button>
+              </span>
+            </el-dialog>
           </div>
         </div>
       </div>
@@ -51,7 +76,7 @@
         <el-option
           v-for="item in userList"
           :key="item.nickname"
-          :label="item.nickname + ' - ' + item.email"
+          :label="item.nickname"
           :value="item.id"
           >
           {{ item.nickname +' - '+ item.email }}
@@ -75,8 +100,12 @@ import Axios from 'axios'
 export default {
   props: {
     admin: {
-      type: Number,
-      default: 0
+      type: Array,
+      default: () => []
+    },
+    users: {
+      type: Array,
+      default: () => []
     },
     teamData: {
       type: Object,
@@ -91,23 +120,28 @@ export default {
       userList: [],
       isAdmin: false,
       inviteMessage: '',
-      centerDialogVisible: false
+      centerDialogVisible: false,
+      quitDialogVisible: false
     }
   },
   watch: {
     admin (val) {
-      Axios.get(env.DEVELOPERAPI + '/user/info?id=' + this.admin).then(res => {
-        this.userData.push({
-          nickname: res.data.nickname,
-          email: res.data.email,
-          avatar: env.MTTKIMGCDN + res.data.avatar,
-          isOwner: true
+      val.forEach(id => {
+        Axios.get(env.DEVELOPERAPI + '/user/info?id=' + id).then(res => {
+          this.userData.push({
+            id: id,
+            nickname: res.data.nickname,
+            email: res.data.email,
+            avatar: env.MTTKIMGCDN + res.data.avatar,
+            isOwner: true
+          })
         })
       })
       this.admin = val
-      if (this.userId !== this.admin) {
+      if (this.admin.indexOf(parseInt(this.userId)) === -1) {
         Axios.get(env.DEVELOPERAPI + '/user/info?id=' + this.userId).then(res => {
           this.userData.push({
+            id: this.userId,
             nickname: res.data.nickname,
             email: res.data.email,
             avatar: env.MTTKIMGCDN + res.data.avatar,
@@ -125,6 +159,23 @@ export default {
     teamData (val) {
       this.teamData = val
       this.inviteMessage = '邀请你的成员加入 ' + val.name
+    },
+    users (val) {
+      val.forEach(id => {
+        if (id === parseInt(this.userId)) {
+          return
+        }
+        Axios.get(env.DEVELOPERAPI + '/user/info?id=' + id).then(res => {
+          this.userData.push({
+            id: id,
+            nickname: res.data.nickname,
+            email: res.data.email,
+            avatar: env.MTTKIMGCDN + res.data.avatar,
+            isOwner: false,
+            isSelf: false
+          })
+        })
+      })
     }
   },
   computed: {
@@ -136,16 +187,38 @@ export default {
       this.drawer = true
     },
     invite () {
-      console.log(this.value)
       Axios.get(env.DEVELOPERAPI + '/invite?id=' + this.userId + '&teamId=' + this.$route.params.id + '&inviteId=' + this.value).then(res => {
-        console.log(res)
+        if (res.data.title) {
+          this.$message({
+            message: '邀请成功',
+            type: 'success',
+            duration: 4000
+          })
+        }
+        this.centerDialogVisible = false
+      })
+    },
+    quit () {
+      this.quitDialogVisible = true
+    },
+    quitTeam (value) {
+      console.log(value)
+      Axios.get(env.DEVELOPERAPI + '/team/quit?userId=' + value.id + '&teamId=' + this.$route.params.id).then(res => {
+        if (res.data.code === 0 && !this.isAdmin) {
+          this.quitDialogVisible = false
+          this.$message({
+            message: '成功，现在返回 Team 列表',
+            type: 'success',
+            duration: 4000
+          })
+          this.$router.push({ name: 'Teams' })
+        }
       })
     }
   },
   created () {
     Axios.get(env.DEVELOPERAPI + '/user/all').then(res => {
       this.userList = res.data.users
-      console.log(this.userList)
     })
   },
   mounted () {

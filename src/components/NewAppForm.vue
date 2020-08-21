@@ -489,4 +489,8 @@ export default {
     display: block;
   }
 }
+
+/deep/ .el-dialog {
+  border-radius: 20px;
+}
 </style>

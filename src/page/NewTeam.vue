@@ -8,7 +8,9 @@
         </router-link>
       </div>
     </template>
-    <NewTeamForm />
+    <NewTeamForm
+      :admins="[parseInt(userId)]"
+    />
   </PhotoFrame>
 </template>
 
@@ -27,8 +29,13 @@ export default {
     PhotoFrame,
     NewTeamForm
   },
+  data () {
+    return {
+      userId: 0
+    }
+  },
   computed: {
-    ...mapState(['isLoggedIn', 'userId'])
+    ...mapState(['isLoggedIn'])
   },
   methods: {
     ...mapActions(['setLoggedIn', 'setCurrentAppId'])
@@ -42,6 +49,7 @@ export default {
       const res = disassemble(c)
       res.status = true
       this.setLoggedIn(res)
+      this.userId = res.id
 
       Axios.get(env.DEVELOPERAPI + '/user/app?id=' + res.id).then(apps => {
         if (apps.data.id) {
