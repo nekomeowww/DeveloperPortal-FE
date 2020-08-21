@@ -26,7 +26,7 @@ data.matataki.name || data.source.replace(/^_post\/|^.*\//, '').replace(/\.md$/,
 ```
 <script src="https://unpkg.com/fanlocker@latest/dist/fanlocker.js"></script>
 <script>
-  let fl = new FanLock({
+  let fl = new FanLocker({
     clientId: '你在开发者中心获取的 Client ID',
     clientSecret: '你在开发者中心获取的 ClientSecret'
   })
