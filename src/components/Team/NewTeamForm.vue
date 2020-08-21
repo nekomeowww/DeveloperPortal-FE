@@ -5,7 +5,7 @@
       <div v-else class="team-desp-title">Creating New Team</div>
       <div class="team-desp-content">填写基本的团队信息</div>
     </div>
-    <div>
+    <div v-if="isOwner">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
         <div>
           <span class="icon-title">团队图标</span>
@@ -57,8 +57,8 @@
           </el-form-item>
           <el-form-item>
             <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
-            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 Team</el-button>
-            <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button v-if="notNew && isOwner" type="danger" @click="openDeletionConfirm">删除 Team</el-button>
+            <el-button v-if="!notNew" type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -73,6 +73,34 @@
           <el-button type="primary" @click="removeTeam">确 定</el-button>
         </span>
       </el-dialog>
+    </div>
+    <div v-if="!isOwner" class="info-container">
+      <div class="avatar-container">
+        <span class="info-label">团队图标</span>
+        <img id="avatar" v-if="getAvatar()" slot="description" :src="avatar" alt="avatar">
+      </div>
+      <div class="detail">
+        <div class="detail-container">
+          <span class="info-label">名称 Name</span>
+          <span class="info-detail">{{ ruleForm.name }}</span>
+        </div>
+        <div class="detail-container">
+          <span class="info-label">简介 Description</span>
+          <span class="info-detail">{{ ruleForm.desp }}</span>
+        </div>
+        <div class="detail-container">
+          <span class="info-label">组织网站 Website Link</span>
+          <span class="info-detail">{{ ruleForm.orglink }}</span>
+        </div>
+        <div class="detail-container">
+          <span class="info-label">组织或公司名称 Organization or Corporation Name</span>
+          <span class="info-detail">{{ ruleForm.orgname }}</span>
+        </div>
+        <div class="detail-container">
+          <span class="info-label">团队使用目标 Team Objective</span>
+          <span class="info-detail">{{ ruleForm.usage }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -105,6 +133,10 @@ export default {
     icon: {
       type: String,
       default: ''
+    },
+    admins: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
@@ -144,7 +176,8 @@ export default {
         ]
       },
       centerDialogVisible: false,
-      requestCount: 0
+      requestCount: 0,
+      isOwner: false
     }
   },
   watch: {
@@ -153,6 +186,13 @@ export default {
     },
     teamData (val) {
       this.ruleForm = val
+    },
+    admins (val) {
+      this.admins = val
+
+      if (val.indexOf(parseInt(this.userId)) !== -1) {
+        this.isOwner = true
+      }
     }
   },
   computed: {
@@ -395,5 +435,31 @@ export default {
   .ruleForm {
     display: block;
   }
+}
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+}
+#avatar {
+  width: 128px;
+  height: 128px;
+  border-radius: 10px;
+  color: #bbb;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.detail-container {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.info-label {
+  color: #B2B2B2;
+  margin-bottom: 0.5rem;
 }
 </style>
