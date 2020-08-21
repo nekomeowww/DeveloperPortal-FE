@@ -4,6 +4,7 @@
       <TeamMenu />
     </template>
     <Member
+      :users="team.users"
       :admin="team.admin"
       :teamData="team.form"
     />
@@ -39,7 +40,8 @@ export default {
         id: '',
         img: '',
         form: null,
-        admin: 0
+        admin: [],
+        users: []
       },
       userId: 0
     }
@@ -62,7 +64,11 @@ export default {
         this.team.id = this.$route.params.id
         this.team.img = team.data.img === '' || team.data.img === undefined ? require('@/assets/img/team-default.png') : env.DEVELOPERAPI + '/img/' + team.data.img
         this.team.form = team.data.detail
-        this.team.admin = team.data.userId
+        this.team.users = team.data.users
+        this.team.admin = team.data.admins
+        if (this.team.admin.indexOf(team.data.userId) === -1) {
+          this.team.admin.push(team.data.userId)
+        }
       })
     } else {
       this.$router.push({ name: 'Login' })
