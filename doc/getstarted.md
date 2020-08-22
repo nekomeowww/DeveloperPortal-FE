@@ -1,3 +1,9 @@
+<style>
+pre {
+  overflow-x: scroll;
+}
+</style>
+
 # 开始
 
 如果你已经创建了一个你自己的 App，可以前往 Oauth2 页面，在那里，你可以进行你的选择。

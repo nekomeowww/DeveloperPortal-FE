@@ -3,6 +3,18 @@ Hexo Plugin for Matataki Fan Token
 This is a on going working project
 <br>
 
+<style>
+pre {
+  overflow-x: scroll;
+}
+</style>
+
+## 预览 Demo
+
+安装后加密的文章就会变成这样：
+
+<img src="https://i.loli.net/2020/08/22/pvniyPHh5R7t8Xr.png" style="height: 300px;" />
+
 ## 安装
 
 这个插件需要两个系统合作完成工作，一个是 [FanLocker](https://github.com/nekomeowww/fanlocker) 一个是本插件。同时你需要一个 [Matataki 开发者中心](https://developer.matataki.io) 的账号来获取 FanLocker  所需要的 ClientId 和 ClientSecret

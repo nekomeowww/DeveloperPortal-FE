@@ -7,6 +7,12 @@
 
 ## GET /user/:id
 
+<style>
+pre {
+  overflow-x: scroll;
+}
+</style>
+
 <br>
 
 <style>

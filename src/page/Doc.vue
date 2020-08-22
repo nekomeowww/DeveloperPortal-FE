@@ -21,7 +21,7 @@ import VueMarkdown from 'vue-markdown'
 
 import appIcon from '@/assets/img/app.png'
 import docIcon from '@/assets/img/doc.png'
-import getStarted from '@/doc/hello.md'
+import getStarted from '../../doc/hello.md'
 
 export default {
   components: {
