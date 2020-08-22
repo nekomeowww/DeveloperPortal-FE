@@ -11,7 +11,9 @@ pre {
 
 ## 预览 Demo
 
-![](https://i.loli.net/2020/08/22/pvniyPHh5R7t8Xr.png)
+安装后加密的文章就会变成这样：
+
+<img src="https://i.loli.net/2020/08/22/pvniyPHh5R7t8Xr.png" style="height: 300px;" />
 
 ## 安装
 
