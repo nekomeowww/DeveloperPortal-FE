@@ -3,6 +3,12 @@ A universal content locker for blog by using Fan token from Matataki.io
 This is a on going working project
 <br>
 
+<style>
+pre {
+  overflow-x: scroll;
+}
+</style>
+
 ## 创建
 
 前往 [Matataki 开发者中心](https://developer.matataki.io) 创建一个名称为你的博客的 App，在 Oauth2 页面可以获取 ClientId 和 ClientSecret，把他们复制下来。
