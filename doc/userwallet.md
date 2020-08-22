@@ -6,6 +6,12 @@
 
 ## GET /token/tokenlist
 
+<style>
+pre {
+  overflow-x: scroll;
+}
+</style>
+
 <br>
 
 这里我们使用普遍广泛使用的 Axios 作为 HTTPS 客户端作为示范，这段代码在 Javascript 中也是可以完美运行的。
