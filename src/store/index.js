@@ -9,6 +9,7 @@ import { loginWithEmail, getAvatarUrl } from '../api/user'
 import appIcon from '@/assets/img/app.png'
 import docIcon from '@/assets/img/doc.png'
 import teamIcon from '@/assets/img/Team.png'
+import authIcon from '@/assets/img/auth.png'
 import env from '../../env.json'
 
 Vue.use(Vuex)
@@ -63,6 +64,11 @@ export default new Vuex.Store({
         title: '用户钱包 Wallet',
         elicon: 'el-icon-s-finance',
         path: '/doc/userwallet'
+      },
+      {
+        title: 'Oauth2',
+        icon: authIcon,
+        path: '/doc/oauth'
       },
       {
         title: 'FanLocker',
