@@ -97,10 +97,12 @@ export default {
           if (vaults.length !== 0) {
             vaults.forEach(id => {
               Axios.get(env.DEVELOPERAPI + '/app/vault?appId=' + this.currentAppId + '&id=' + id + '&userId=' + this.userId).then(res2 => {
-                this.vaultData.push({
-                  key: res2.data.name,
-                  vaultId: id
-                })
+                if (res2.data) {
+                  this.vaultData.push({
+                    key: res2.data.name,
+                    vaultId: id
+                  })
+                }
               })
             })
           }
