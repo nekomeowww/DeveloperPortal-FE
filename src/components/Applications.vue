@@ -134,8 +134,15 @@ a {
 }
 
 .app-name {
-  margin-top: 0.5rem;
-  font-size: 16px;
+  font-size: 14px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  padding: 10px;
+  height: 14px;
 }
 
 .app-new {
