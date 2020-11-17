@@ -134,7 +134,8 @@ export default {
           }
         )
       } else {
-        window.location = env.MATATAKI + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
+        const domain = this.$route.query.network === 'test' ? 'https://test.matataki.io' : env.MATATAKI
+        window.location = domain + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
       }
     },
     // 自动补全 http://
@@ -146,6 +147,7 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route.query)
     Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id + '&userId=' + this.userId).then(res => {
       if (res.data.permission === undefined) {
         return

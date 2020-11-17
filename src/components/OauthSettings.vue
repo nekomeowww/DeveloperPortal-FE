@@ -10,6 +10,9 @@
        <el-button @click="copyToClipboard(link)" type="primary">复制</el-button>
       </div>
       <br>
+      <el-checkbox label="测试网 Test Network" v-model="testEnabled"></el-checkbox>
+      <br>
+      <br>
       <div class="app-desp">
         <div class="app-desp-title">Oauth Permission Control</div>
         <div class="app-desp-content">在这里，你可以控制你的 App 请求什么样的权限，或者是强制要求一些数据获取的权限。</div>
@@ -63,7 +66,17 @@ export default {
       checkList: [],
       checkList2: [],
       checkList3: [],
+      testEnabled: false,
       link: window.location.origin + '/app/' + this.$route.params.id + '/oauth'
+    }
+  },
+  watch: {
+    testEnabled (val) {
+      if (val) {
+        this.link = this.link + '?network=test'
+      } else {
+        this.link = this.link.replace('?network=test', '')
+      }
     }
   },
   methods: {
