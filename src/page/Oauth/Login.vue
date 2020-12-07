@@ -36,6 +36,14 @@ export default {
   },
   created () {
     Axios(env.DEVELOPERAPI + '/app/basic?appId=' + this.$route.params.id).then(app => {
+      const ls = window.localStorage || localStorage
+      ls.removeItem(this.$route.params.id)
+      if (this.$route.query.network) {
+        ls.setItem(this.$route.params.id, JSON.stringify(this.$route.query))
+      } else {
+        ls.setItem(this.$route.params.id, JSON.stringify({ network: 'main' }))
+      }
+
       this.app = {
         id: this.$route.params.id,
         img: app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img,

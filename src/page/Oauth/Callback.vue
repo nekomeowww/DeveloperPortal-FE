@@ -20,7 +20,7 @@ import Oauth from '@/components/Login/Oauth.vue'
 import Axios from 'axios'
 
 import env from '../../../env.json'
-import { getUserProfile, getAvatarUrl } from '../../api/user'
+import { getUserProfile, getAvatarUrl, getUserProfileTest } from '../../api/user'
 import { disassemble } from '../../util/cookie'
 import { mapActions, mapState } from 'vuex'
 
@@ -81,10 +81,24 @@ export default {
     this.setThirdPartyUserId(thirdPartyUser.id)
     this.setThirdPartyUserProfile(thirdPartyUser)
     this.app.token = token
-    getUserProfile(thirdPartyUser.id).then(res => {
-      this.userData.avatar = getAvatarUrl(res.data.data.avatar)
-      this.userData.nickname = res.data.data.nickname
-    })
+
+    const ls = window.localStorage || localStorage
+    const network = JSON.parse(ls.getItem(this.$route.params.id))
+    ls.removeItem(this.$route.params.id)
+
+    if (!network) return
+
+    if (network.network === 'test') {
+      getUserProfileTest(thirdPartyUser.id).then(res => {
+        this.userData.avatar = getAvatarUrl(res.data.data.avatar)
+        this.userData.nickname = res.data.data.nickname
+      })
+    } else {
+      getUserProfile(thirdPartyUser.id).then(res => {
+        this.userData.avatar = getAvatarUrl(res.data.data.avatar)
+        this.userData.nickname = res.data.data.nickname
+      })
+    }
   }
 }
 </script>

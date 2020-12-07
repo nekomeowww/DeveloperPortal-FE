@@ -147,7 +147,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.$route.query)
     Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id + '&userId=' + this.userId).then(res => {
       if (res.data.permission === undefined) {
         return
