@@ -1,26 +1,67 @@
 <template>
-    <div>
-      <header class="header home-fixed">
-        <a href="/" style="display: flex;align-items: center;">
-          <img id='logo' src="../assets/img/logo.png" style="height: 30px;"/>
-          <div id='divider'></div>
-          <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
-        </a>
-        <div style="flex: 1;"> </div>
-        <div v-if="showLoginBtn">
-          <router-link to="/login">
-            <el-button type="primary" class="login-btn">登录</el-button>
-          </router-link>
-        </div>
-          <img class="avatar" v-if="showAvatar && isLoggedIn" :src="userAvatar" />
-      </header>
+  <header class="header home-fixed">
+    <span v-if="enableUnfoldBtn" class="unfold" @click="switchUnfold">
+      <i class="el-icon-s-unfold" />
+    </span>
+    <a href="/" style="display: flex;align-items: center;">
+      <img id='logo' src="../assets/img/logo.png" style="height: 30px;"/>
+      <div id='divider'></div>
+      <img id='developer' src="../assets/img/developer.png" style="height: 14px;"/>
+    </a>
+    <div style="flex: 1;"> </div>
+    <div v-if="showLoginBtn">
+      <router-link to="/login">
+        <el-button type="primary" class="login-btn">登录</el-button>
+      </router-link>
     </div>
+    <router-link
+      v-if="isLoggedIn"
+      :to="{ name: 'Notification' }">
+      <el-badge :value="hasNotification" class="item">
+        <i class="el-icon-message-solid notification"></i>
+      </el-badge>
+    </router-link>
+    <el-dropdown
+      placement="bottom-start"
+      v-if="isLoggedIn"
+      class="user-menu"
+    >
+      <div class="user-avatar">
+        <img
+          v-if="userAvatar"
+          :src="userAvatar"
+          alt="user avatar"
+          class="avatar"
+        >
+      </div>
+      <el-dropdown-menu
+        slot="dropdown"
+        class="user-dorpdown"
+      >
+        <router-link to="/apps">
+          <el-dropdown-item icon="el-icon-check">
+            使用 <span class="purple">{{ userProfile.nickname || userProfile.name }}</span> 登录
+          </el-dropdown-item>
+        </router-link>
+        <div
+          class="link border-br-bl"
+          @click="signOut"
+        >
+          <el-dropdown-item icon="el-icon-error">
+            登出
+          </el-dropdown-item>
+        </div>
+      </el-dropdown-menu>
+    </el-dropdown>
+  </header>
 </template>
 
 <script>
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import Axios from 'axios'
 
+import env from '../../env.json'
 export default {
   name: 'Header',
   components: {
@@ -33,22 +74,36 @@ export default {
     showLoginBtn: {
       type: Boolean,
       default: true
-    }
+    },
+    enableUnfoldBtn: Boolean,
+    unfold: Boolean
   },
   data () {
     return {
+      hasNotification: undefined
     }
   },
   computed: {
-    ...mapState(['userAvatar', 'isLoggedIn'])
+    ...mapState(['userAvatar', 'isLoggedIn', 'userProfile', 'userId'])
   },
   watch: {
   },
+  methods: {
+    ...mapActions(['logout']),
+    signOut () {
+      this.logout()
+      this.$router.push({ name: 'Login' })
+    },
+    switchUnfold () {
+      this.$emit('update:unfold', !this.unfold)
+    }
+  },
   created () {
-
+    Axios.get(env.DEVELOPERAPI + '/notification/push?id=' + this.userId).then(res => {
+      if (res.data.length >= 1) this.hasNotification = res.data.length
+    })
   },
   mounted () {
-
   }
 }
 </script>
@@ -58,11 +113,23 @@ a {
   text-decoration: none;
 }
 
+.user-menu {
+  margin-right: 60px;
+  margin-left: 1.5rem;
+}
+
+.user-dorpdown {
+ margin-right: 60px;
+}
+
 .avatar {
   height: 48px;
   object-fit: cover;
-  margin-right: 40px;
   border-radius: 50%;
+}
+
+.purple {
+  color: #542DE0
 }
 
 #logo {
@@ -96,6 +163,29 @@ header {
 
 .login-btn {
   margin-right: 2rem;
+}
+
+.notification {
+  font-size: 1.6rem;
+  color: #542DE0;
+}
+
+.unfold {
+  display: none;
+}
+
+@media screen and (max-width: 992px) {
+  .unfold {
+    font-size: 26px;
+    margin-right: 20px;
+    display: inline;
+  }
+  .header {
+    padding-left: 20px;
+  }
+  .user-menu {
+    margin-right: 20px;
+  }
 }
 
 </style>

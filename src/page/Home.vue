@@ -1,32 +1,45 @@
 <template>
-    <div>
-      <Header
-        :showLoginBtn="!isLoggedIn"
-        :showAvatar="true"
-      />
-      <Menu />
-      <Applications />
-    </div>
+  <PhotoFrame>
+    <Applications
+      :userId="userId"
+    />
+  </PhotoFrame>
 </template>
 
 <script>
 
-import Header from '@/components/Header.vue'
-import Menu from '@/components/Menu.vue'
+import PhotoFrame from '@/components/PhotoFrame.vue'
 import Applications from '@/components/Applications.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
-    Header,
-    Menu,
+    PhotoFrame,
     Applications
+  },
+  data () {
+    return {
+      userId: 0
+    }
   },
   computed: {
     ...mapState(['isLoggedIn', 'userProfile'])
   },
-  mounted () {
-    console.log(this.userProfile)
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
+  created () {
+    document.title = 'App 列表 - Matataki 开发者中心'
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+      this.userId = parseInt(res.id)
+    } else {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

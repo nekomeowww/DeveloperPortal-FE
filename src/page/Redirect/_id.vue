@@ -2,7 +2,6 @@
   <div style="height: 100%">
     <Header
       :showLoginBtn="false"
-      :showAvatar="true"
     />
     <div class="loading">
       <div class="loader flat-03">
@@ -24,8 +23,6 @@ import Header from '@/components/Header.vue'
 
 import { mapState, mapActions } from 'vuex'
 
-import { disassemble } from '../../util/cookie'
-
 export default {
   components: {
     Header
@@ -45,21 +42,26 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userInfo'])
+    ...mapState(['userInfo', 'isLoggedIn'])
   },
   methods: {
     ...mapActions(['setUserInfo', 'setLoggedIn'])
   },
+  created () {
+    document.title = '跳转中...'
+  },
   mounted () {
-    const cookies = this.$route.params.redirect.replace('redirect&cookies=', '')
-    const user = disassemble(cookies)
-    if (Date.now() < user.exp) {
-      user.cookie = cookies
-      this.setUserInfo(user)
-      this.setLoggedIn(true)
+    if (/^(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])(:[0-9]+)?(\/.*)?$/.test(decodeURIComponent(this.callback))) {
       setTimeout(() => {
-        this.$router.push({ name: 'Home' })
-      }, 5000)
+        window.location = decodeURIComponent(this.callback)
+      }, 1000)
+    } else {
+      this.$message({
+        message: 'App 设定的回调参数不是有效的，请联系 App 作者，现在返回 App 授权页面',
+        type: 'error',
+        duration: 4000
+      })
+      this.$router.push({ name: 'OauthLogin', params: { id: this.id } })
     }
   }
 }

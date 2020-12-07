@@ -1,6 +1,8 @@
 <template>
     <div style="height: 100%;">
-      <Header />
+      <Header
+        :showLoginBtn="!isLoggedIn"
+      />
       <div class="wrapper" style="display: flex; align-items: center; justify-content: center;">
         <img src="@/assets/img/landing-img.png" class="kv"/>
         <div class="text">
@@ -14,11 +16,16 @@
               <span class="word">互通性 Interoperability</span>
             </span>
           </h1>
-          <a href="https://github.com/Matataki-io/DeveloperPortal-FE">
+          <router-link :to="{ name: 'Home'}">
             <div class="start">
-            开始 Get Started
+              开始 Get Started
             </div>
-          </a>
+          </router-link>
+          <router-link :to="{ name: 'Doc' }">
+            <div class="doc">
+              文档
+            </div>
+          </router-link>
         </div>
       </div>
       <Footer />
@@ -29,13 +36,33 @@
 
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
+import { mapState, mapActions } from 'vuex'
+
+import { getCookie, disassemble } from '../util/cookie'
 
 export default {
   components: {
     Header,
     Footer
   },
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapState(['isLoggedIn'])
+  },
+  methods: {
+    ...mapActions(['setLoggedIn'])
+  },
   mounted () {
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+    }
+
     let words = document.getElementsByClassName('word')
     let wordArray = []
     let currentWord = 0
@@ -89,7 +116,10 @@ export default {
     }
 
     changeWord()
-    setInterval(changeWord, 3500)
+    this.theInterval = setInterval(changeWord, 3500)
+  },
+  destroyed () {
+    clearInterval(this.theInterval)
   }
 }
 </script>
@@ -102,10 +132,10 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
 }
 
 .wrapper {
+  overflow: hidden;
   height: 85%;
 }
 
@@ -152,6 +182,15 @@ body {
   background-color: #E0D9F9;
 }
 
+.doc {
+  text-decoration: none;
+  margin-top: 1rem;
+  position: relative;
+  padding: 0px 10px 2px 10px;
+  border-bottom: 2px solid #542DE0;
+  color: #542DE0;
+}
+
 .word {
   color: #542DE0;
   font-weight: 800;
@@ -163,6 +202,7 @@ body {
 }
 
 .footer {
+  overflow: hidden;
   position: absolute;
   bottom: 0px;
   width: 100%;
@@ -199,7 +239,7 @@ body {
 
 @media screen and (max-width: 600px) {
   .text h1 {
-    font-size: 2rem;
+    font-size: 2rem !important;
   }
 
   .start {
@@ -218,7 +258,7 @@ body {
 
 @media screen and (max-width: 1000px) {
   .text h1 {
-    font-size: 2rem;
+    font-size: 4rem;
   }
 }
 

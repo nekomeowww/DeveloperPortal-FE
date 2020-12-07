@@ -1,9 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Axios from 'axios'
 
-import { setCookie, disassemble } from '../util/cookie'
+import { setCookie, disassemble, clearAllCookie, removeCookie } from '../util/cookie'
 import { getUserProfile } from '@/api/user.js'
 import { loginWithEmail, getAvatarUrl } from '../api/user'
+
+import appIcon from '@/assets/img/app.png'
+import docIcon from '@/assets/img/doc.png'
+import teamIcon from '@/assets/img/Team.png'
+import authIcon from '@/assets/img/auth.png'
+import env from '../../env.json'
 
 Vue.use(Vuex)
 
@@ -13,11 +20,67 @@ export default new Vuex.Store({
   },
   state: {
     isLoggedIn: false,
-    userId: '',
+    userId: 0,
     userInfo: '',
     userProfile: '',
     userAvatar: '',
-    accessToken: ''
+    accessToken: '',
+    currentAppId: 0,
+    currentAppIcon: '',
+    currentTeamId: 0,
+    currentTeamIcon: '',
+    currentTeamAppId: 0,
+    currentTeamAppIcon: '',
+    thirdPartyUserId: 0,
+    thirdPartyUserProfile: '',
+    thirdPartyUserAvatar: '',
+    menuItems: [
+      {
+        title: '应用 Application',
+        icon: appIcon,
+        path: '/apps'
+      },
+      {
+        title: '团队 Team',
+        icon: teamIcon,
+        path: '/teams'
+      },
+      {
+        title: '开发文档 Documentation',
+        icon: docIcon,
+        path: '/doc'
+      },
+      {
+        title: '起步 Get Started',
+        elicon: 'el-icon-success',
+        path: '/doc/getstarted'
+      },
+      {
+        title: '用户信息 User Profile',
+        elicon: 'el-icon-user-solid',
+        path: '/doc/userprofile'
+      },
+      {
+        title: '用户钱包 Wallet',
+        elicon: 'el-icon-s-finance',
+        path: '/doc/userwallet'
+      },
+      {
+        title: 'Oauth2',
+        icon: authIcon,
+        path: '/doc/oauth'
+      },
+      {
+        title: 'FanLocker',
+        elicon: 'el-icon-lock',
+        path: '/doc/fanlocker'
+      },
+      {
+        title: 'hexo-plugin-matataki',
+        elicon: 'el-icon-s-open',
+        path: '/doc/hexoplugin'
+      }
+    ]
   },
   mutations: {
     setLoggedIn (state, login) {
@@ -37,6 +100,41 @@ export default new Vuex.Store({
     },
     setToken (state, token) {
       state.accessToken = token
+    },
+    setCurrentAppId (state, id) {
+      state.currentAppId = id
+    },
+    setCurrentAppIcon (state, icon) {
+      state.currentAppIcon = icon
+    },
+    setCurrentTeamId (state, id) {
+      state.currentTeamId = id
+    },
+    setCurrentTeamIcon (state, icon) {
+      state.currentTeamIcon = icon
+    },
+    setCurrentTeamAppId (state, id) {
+      state.currentTeamAppId = id
+    },
+    setCurrentTeamAppIcon (state, icon) {
+      state.currentTeamAppIcon = icon
+    },
+    setThirdPartyUserId (state, id) {
+      state.thirdPartyUserId = id
+    },
+    setThirdPartyUserProfile (state, userprofile) {
+      state.thirdPartyUserProfile = userprofile
+    },
+    setThirdPartyUserAvatar (state, avatar) {
+      state.thirdPartyUserAvatar = avatar
+    },
+    setMenuItems (state, menuItems) {
+      state.menuItems = menuItems
+    }
+  },
+  getters: {
+    getMenuItems (state, menuItems) {
+      return state.menuItems
     }
   },
   actions: {
@@ -58,22 +156,63 @@ export default new Vuex.Store({
         const res2 = await getUserProfile(user.id)
         const avatar = await getAvatarUrl(res2.data.data.avatar)
         commit('setUserAvatar', avatar)
-        // Axios.get(process.env.VUE_APP_CMUAPI + '/user/login?id=' + user.id + '&email=' + data.email + '&nickname=' + res2.data.nickname + '&avatar=' + res2.data.avatar)
-        res2.data.id = user.id
+        Axios.get(env.DEVELOPERAPI + '/login?id=' + user.id + '&email=' + user.iss + '&nickname=' + res2.data.data.nickname + '&avatar=' + res2.data.data.avatar)
         commit('setUserProfile', res2.data.data)
         commit('setLoggedIn', true)
         commit('setUserId', user.id)
         return true
       }
     },
-    setLoggedIn ({ commit }, login) {
-      commit('setLoggedIn', login)
+    async logout ({ commit }) {
+      removeCookie('ACCESS-TOKEN')
+      clearAllCookie()
+      commit('setLoggedIn', false)
+      return true
+    },
+    async setLoggedIn ({ commit }, login) {
+      commit('setLoggedIn', login.status)
+      let res2 = await getUserProfile(login.id)
+      const avatar = await getAvatarUrl(res2.data.data.avatar)
+      commit('setUserId', login.id)
+      commit('setUserProfile', res2.data.data)
+      commit('setUserAvatar', avatar)
     },
     async setUserInfo ({ commit }, info) {
       const user = await getUserProfile(info.id)
       const avatar = await getAvatarUrl(user.data.data.avatar)
-      commit('setUserInfo', user)
+      commit('setUserInfo', user.data.data)
+      commit('setUserProfile', user.data.data)
       commit('setUserAvatar', avatar)
+    },
+    async setCurrentAppId ({ commit }, id) {
+      commit('setCurrentAppId', id)
+    },
+    async setCurrentAppIcon ({ commit }, icon) {
+      commit('setCurrentAppIcon', icon)
+    },
+    async setCurrentTeamId ({ commit }, id) {
+      commit('setCurrentTeamId', id)
+    },
+    async setCurrentTeamIcon ({ commit }, icon) {
+      commit('setCurrentTeamIcon', icon)
+    },
+    async setCurrentTeamAppId ({ commit }, id) {
+      commit('setCurrentTeamAppId', id)
+    },
+    async setCurrentTeamAppIcon ({ commit }, icon) {
+      commit('setCurrentTeamAppIcon', icon)
+    },
+    async setThirdPartyUserId ({ commit }, id) {
+      commit('setThirdPartyUserId', id)
+    },
+    async setThirdPartyUserProfile ({ commit }, info) {
+      const user = await getUserProfile(info.id)
+      const avatar = await getAvatarUrl(user.data.data.avatar)
+      commit('setThirdPartyUserProfile', user.data.data)
+      commit('setThirdPartyUserAvatar', avatar)
+    },
+    setMenuItems ({ commit }, menuItems) {
+      commit('setMenuItems', menuItems)
     }
   }
 })

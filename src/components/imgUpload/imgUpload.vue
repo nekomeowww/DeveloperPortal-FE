@@ -64,6 +64,9 @@ import VueUploadComponent from 'vue-upload-component'
 import Cropper from 'cropperjs'
 import Compressor from 'compressorjs'
 
+import API from '../../api/api.js'
+import { mapState, mapActions } from 'vuex'
+
 export default {
   name: 'ImgUpload',
   components: {
@@ -115,6 +118,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['currentAppId', 'currentTeamId', 'currentTeamAppId', 'userId']),
     computedStyleContent () {
       if (this.updateType === 'artileCover') {
         return {
@@ -168,6 +172,7 @@ export default {
     this.isShowFileUpload = true
   },
   methods: {
+    ...mapActions(['setCurrentAppIcon', 'setCurrentAppId', 'setCurrentTeamId', 'setCurrentTeamIcon', 'setCurrentTeamAppId', 'setCurrentTeamAppIcon']),
     /**
      * Pretreatment // 过滤操作可以写在这里
      * @param  Object|undefined   newFile   读写
@@ -260,10 +265,31 @@ export default {
         file = new File([arr], oldFile.name, { type: oldFile.type })
       }
       try {
-        console.log(this.files[0])
-        const res = await this.$API.uploadImage(this.updateType, file)
-        res.code = 0
-        if (res.code === 0) {
+        let res = {}
+        switch (this.updateType) {
+          case 'avatar':
+            res = await API.uploadImage(file, this.currentAppId, this.userId)
+            if (res.data.code === 0 || res.data.code === 1) {
+              this.setCurrentAppIcon(res.data.img)
+              this.setCurrentAppId(res.data.appId)
+            }
+            break
+          case 'team':
+            res = await API.uploadTeamImage(file, this.currentTeamId, this.userId)
+            if (res.data.code === 0 || res.data.code === 1) {
+              this.setCurrentTeamIcon(res.data.img)
+              this.setCurrentTeamId(res.data.teamId)
+            }
+            break
+          case 'teamapp':
+            res = await API.uploadTeamAppImage(file, this.currentTeamId, this.userId, this.currentTeamAppId)
+            if (res.data.code === 0 || res.data.code === 1) {
+              this.setCurrentTeamAppIcon(res.data.img)
+              this.setCurrentTeamAppId(res.data.appId)
+            }
+            break
+        }
+        if (res.data.code === 0 || res.data.code === 1) {
           this.$emit('doneImageUpload', {
             type: this.updateType,
             data: res

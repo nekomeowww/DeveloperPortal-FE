@@ -20,6 +20,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     }
   },
   plugins: [
+    new webpack.LoaderOptionsPlugin({ options: {} }),
     new webpack.DefinePlugin({
       'process.env': require('../config/test.env')
     })

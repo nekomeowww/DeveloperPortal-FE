@@ -1,40 +1,98 @@
 <template>
   <div class="oauth-box">
-    <span class="login-title">授权登录</span><br>
-    <div class="app-container">
-      <img class="app-img" :src="app.img">
-      <span class="app-name">{{ app.name }}</span>
+    <div class="upper-box">
+      <span class="login-title">授权登录</span><br>
+      <div class="containers">
+        <div v-if="userData" class="user-container">
+          <img class="user-img" :src="userData.avatar" />
+          <span class="user-name">{{ userData.nickname }}</span>
+        </div>
+        <div v-if="userData">
+          <i class="el-icon-success allow" />
+        </div>
+        <div class="app-container">
+          <img class="app-img" :src="app.img" />
+          <span class="app-name">{{ app.name }}</span>
+        </div>
+      </div>
+      <div class="oauth-desp">
+        授权代表你同意 {{app.name}} 读取和使用<br>
+        你的<strong>头像</strong>，<strong>电子邮件</strong>，以及<strong>用户名</strong>
+      </div>
+      <div>
+        <div class="ruleForm">
+          <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document" :disabled="rules.document"></el-switch>
+          <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile" :disabled="rules.profile"></el-switch>
+          <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken" :disabled="rules.fantoken"></el-switch>
+          <el-button type="primary" v-if="!userData" @click="submitForm('ruleForm')">登录 Matataki.io</el-button>
+          <el-button type="primary" v-else @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
+        </div>
+      </div>
     </div>
-    <div class="oauth-desp">
-      授权代表你同意 {{app.name}} 读取和使用<br>
-      你的<strong>头像</strong>，<strong>电子邮件</strong>，以及<strong>用户名</strong>
-    </div>
-    <div style="width: 100%">
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="ruleForm">
-        <el-form-item prop="fantoken">
-          <span class="form-label">读取和修改你发行的 Fan 票内容</span>
-          <el-switch v-model="ruleForm.fantoken"></el-switch>
-        </el-form-item>
-        <el-form-item prop="document">
-          <span class="form-label">读取和修改你的文章</span>
-          <el-switch v-model="ruleForm.document"></el-switch>
-        </el-form-item>
-        <el-form-item prop="profile">
-          <span class="form-label">读取和修改你的个人资料</span>
-          <el-switch v-model="ruleForm.profile"></el-switch>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+    <el-collapse>
+      <el-collapse-item title="更多信息" class="collapse">
+        <div class="info-unit">
+          <h3>
+            简介 Description:
+          </h3>
+          <p class="pre-line" v-html="app.desp || '暂无'" />
+        </div>
+        <div v-if="app.orglink" class="info-unit">
+          <h3>
+            个人或组织网站 Website Link:
+          </h3>
+          <p>
+            <a :href="formatUrl(app.orglink)" target="_blank">
+              {{ app.orglink }}
+            </a>
+          </p>
+        </div>
+        <div class="info-unit">
+          <h3>
+            组织或公司名称 Organization or Corporation Name:
+          </h3>
+          <p>
+            {{ app.orgname || '暂无' }}
+          </p>
+        </div>
+        <div v-if="app.toslink" class="info-unit">
+          <h3>
+            用户协议链接 Term of Service URL:
+          </h3>
+          <p>
+            <a :href="formatUrl(app.toslink)" target="_blank">
+              {{ app.toslink }}
+            </a>
+          </p>
+        </div>
+        <div v-if="app.pplink" class="info-unit">
+          <h3>
+            隐私协定 Privacy Policy URL:
+          </h3>
+          <p>
+            <a :href="formatUrl(app.pplink)" target="_blank">
+              {{ app.pplink }}
+            </a>
+          </p>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
 <script>
+
+import env from '../../../env.json'
+import Axios from 'axios'
+import { mapState } from 'vuex'
+
 export default {
   props: {
     app: {
+      type: Object,
+      default: () => {}
+    },
+    userData: {
       type: Object,
       default: () => {}
     }
@@ -47,23 +105,95 @@ export default {
         fantoken: false
       },
       rules: {
-      }
+        document: false,
+        profile: false,
+        fantoken: false
+      },
+      showTip: false
+    }
+  },
+  computed: {
+    ...mapState(['thirdPartyUserId'])
+  },
+  watch: {
+    app (val) {
+      this.app = val
     }
   },
   methods: {
     submitForm (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      if (this.userData) {
+        Axios.post(env.DEVELOPERAPI + '/app/authorize', { id: this.app.id, body: this.ruleForm, user: this.thirdPartyUserId })
+        const token = window.location.pathname.replace(/\/app\/.*\/callback\/type=token&token=/, '')
+        this.$router.push(
+          { name: 'Redirect',
+            params: {
+              id: this.app.id,
+              callback: this.app.callback + '&token=' + token
+            }
+          }
+        )
+      } else {
+        const domain = this.$route.query.network === 'test' ? 'https://test.matataki.io' : env.MATATAKI
+        window.location = domain + '/login/oauth/' + encodeURIComponent('app/' + this.app.id + '/callback')
+      }
     },
-    resetForm (formName) {
-      this.$refs[formName].resetFields()
+    // 自动补全 http://
+    formatUrl (url) {
+      const isHttp = url.indexOf('http://')
+      const isHttps = url.indexOf('https://')
+      if (isHttp !== 0 && isHttps !== 0) url = 'http://' + url
+      return url
     }
+  },
+  mounted () {
+    Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id + '&userId=' + this.userId).then(res => {
+      if (res.data.permission === undefined) {
+        return
+      }
+      const permission = res.data.permission
+      const post = permission.post
+      const token = permission.token
+      const profile = permission.profile
+
+      // 为文章权限设置开关
+      if (post.indexOf('读取权限') !== -1 && post.indexOf('编辑权限') !== -1) {
+        this.ruleForm.document = true
+        this.rules.document = true
+      }
+      if (post.indexOf('发布权限') !== -1) {
+        this.ruleForm.document = true
+        this.rules.document = true
+      }
+
+      // 为 Fan 票设置开关
+      if (token.indexOf('读取权限') !== -1 && token.indexOf('编辑权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (token.indexOf('修改协作者权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (token.indexOf('修改增发数量') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+
+      // 为 个人资料 设置开关
+      if (profile.indexOf('读取权限') !== -1 && profile.indexOf('编辑权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+      if (profile.indexOf('删改权限') !== -1) {
+        this.ruleForm.fantoken = true
+        this.rules.fantoken = true
+      }
+
+      Object.entries(this.rules).forEach(item => {
+        if (item[1]) this.showTip = true
+      })
+    })
   }
 }
 </script>
@@ -73,19 +203,45 @@ export default {
 .oauth-box {
   font-family: Arial, Helvetica, sans-serif;
   width:500px;
-  height:600px;
   box-shadow:0px 10px 40px 0px rgba(0,0,0,0.1);
   border-radius:10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+  .upper-box {
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .login-title {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   font-weight: 800;
+}
+
+.user-container {
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+
+.allow {
+  font-size: 2.5rem;
+  color: #67C23A;
+  margin-bottom: 50%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.rule-switch {
+  margin-bottom: 1rem;
 }
 
 .app-container {
@@ -96,6 +252,35 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 100px;
+}
+
+.containers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+}
+
+.user-img {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-name {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  width: 100%;
+  text-align: center;
 }
 
 .app-img {
@@ -108,8 +293,15 @@ export default {
 }
 
 .app-name {
-  margin-top: 0.5rem;
-  font-size: 1.2rem;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  width: 100%;
+  text-align: center;
 }
 
 .ruleForm {
@@ -132,7 +324,44 @@ export default {
 }
 
 strong {
-  color: #542DE0
+  color: #542DE0;
+}
+
+.collapse {
+  /deep/ .el-collapse-item__header {
+    justify-content: center;
+    .el-collapse-item__arrow {
+          margin-left: 5px;
+    }
+  }
+}
+
+.info-unit {
+  padding: 0 20px;
+  margin: 10px 0 40px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  h3 {
+    font-size: 16px;
+    margin: 0;
+    color: black;
+  }
+  p {
+    font-size: 14px;
+    margin: 0;
+    color: black;
+    &.pre-line {
+      white-space: pre-line;
+    }
+    a {
+      color: #542DE0;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 500px) {

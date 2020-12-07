@@ -1,13 +1,14 @@
 <template>
-    <div class="application" style="position: absolute;top: 61px;left: 390px;margin-left: 2rem;margin-top: 2rem;">
+    <div class="application">
       <div class="app-desp">
         <div class="app-desp-title">Application</div>
-        <div class="app-desp-content">Find the perfect feature set for your game in our Game SDK, and sign up for Server Commerce to start selling directly in your server. Get started by creating a new application. We can't wait to see what you make!</div>
+        <div class="app-desp-content">找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！</div>
       </div>
-      <div class="app-title">My Application</div>
+      <div v-if="isTeam" class="app-title">My Team's Application</div>
+      <div v-else class="app-title">My Application</div>
       <el-row :gutter="20" class="apps">
         <div v-for="(app, index) in appCards" :key=index>
-          <router-link :to="'/app/' + app.id">
+          <router-link :to="{ path:'/app/' + app.id, params: { app: app } }">
             <div v-if="app.id">
               <div class="app-item" :href="app.href">
                 <img class="app-img" :src="app.img" />
@@ -19,7 +20,7 @@
         <router-link to="/newapp">
           <div class="app-new">
             <img id="new-logo" src="../assets/img/newapp.png" />
-            <span id="new-text">Start your app</span>
+            <span id="new-text">创建你的 App</span>
           </div>
         </router-link>
       </el-row>
@@ -27,51 +28,41 @@
 </template>
 
 <script>
+import Axios from 'axios'
+
+import env from '../../env.json'
+
 export default {
+  props: {
+    userId: {
+      type: Number,
+      default: 0
+    },
+    isTeam: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
-      appCards: [
-        {
-          img: require('@/assets/img/test/app01.png'),
-          name: `Neko's App`,
-          id: 1
-        },
-        {
-          img: require('@/assets/img/test/app02.png'),
-          name: `Neko's App`,
-          id: 2
-        },
-        {
-          img: require('@/assets/img/test/app03.png'),
-          name: `Neko's App`,
-          id: 3
-        },
-        {
-          img: require('@/assets/img/test/app04.png'),
-          name: `Neko's App`,
-          id: 4
-        },
-        {
-          img: require('@/assets/img/test/app05.png'),
-          name: `Neko's App`,
-          id: 5
-        },
-        {
-          img: require('@/assets/img/test/app06.png'),
-          name: `Neko's App`,
-          id: 6
-        },
-        {
-          img: require('@/assets/img/test/app07.png'),
-          name: `Neko's App`,
-          id: 7
-        },
-        {
-          img: null,
-          name: null,
-          href: null
-        }
-      ]
+      appCards: []
+    }
+  },
+  created () {
+  },
+  mounted () {
+    if (this.userId) {
+      Axios.get(env.DEVELOPERAPI + '/user/app?id=' + this.userId).then(appData => {
+        const apps = appData.data.apps
+        apps.forEach(id => {
+          Axios(env.DEVELOPERAPI + '/app/detail?appId=' + id).then(app => {
+            let appObject = { img: '', name: '', id: id }
+            appObject.img = app.data.img === '' || app.data.img === undefined ? require('@/assets/img/app-default.png') : env.DEVELOPERAPI + '/img/' + app.data.img
+            appObject.name = app.data.detail.name
+            this.appCards.push(appObject)
+          })
+        })
+      })
     }
   }
 }
@@ -85,7 +76,8 @@ a {
 
 .application {
   font-family:'PingFangSC-Medium','PingFang SC', Arial, Helvetica, sans-serif;
-  padding-right: 2rem;
+  padding: 2rem 2rem 0;
+
 }
 
 .app-desp-title {
@@ -142,8 +134,15 @@ a {
 }
 
 .app-name {
-  margin-top: 0.5rem;
-  font-size: 16px;
+  font-size: 14px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  word-break: break-all;
+  padding: 10px;
+  height: 14px;
 }
 
 .app-new {
