@@ -54,7 +54,7 @@ export default {
     if (/^(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])(:[0-9]+)?(\/.*)?$/.test(decodeURIComponent(this.callback))) {
       setTimeout(() => {
         window.location = decodeURIComponent(this.callback)
-      }, 5000)
+      }, 1000)
     } else {
       this.$message({
         message: 'App 设定的回调参数不是有效的，请联系 App 作者，现在返回 App 授权页面',
