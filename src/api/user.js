@@ -9,6 +9,10 @@ export function getUserProfile (uid) {
   return Axios.get(env.MATATAKIAPI + `/user/${uid}`)
 }
 
+export function getUserProfileTest (uid) {
+  return Axios.get(env.MATATAKIAPI_TEST + `/user/${uid}`)
+}
+
 export function getAvatarUrl (location) {
   const imageCDNServer = env.MTTKIMGCDN
   return `${imageCDNServer}${location}`
