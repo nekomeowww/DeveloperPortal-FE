@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: SSH Remote Commands
-      uses: appleboy/ssh-action@v0.1.4
+      uses: appleboy/ssh-action@master
       env: 
         API_TOKEN: ${{ secrets.API_TOKEN }}
       with:
