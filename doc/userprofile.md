@@ -1,7 +1,7 @@
 # 用户信息
 
 还记得我们在之前的过程中获取的唯一用户 ID 值吗？现在我们使用 user.id 就可以获取用户的信息了。这个过程是完全依照 RESTful API 规范的。
-如果你要直接使用 Matataki 主站使用的 API 服务，实例地址是：`https://api.smartsignature.io`
+如果你要直接使用 Matataki 主站使用的 API 服务，实例地址是：`https://api.mttk.net`
 如果要调用和获取图像信息，Matataki 图床的 CDN 是：`https://ssimg.frontenduse.top`
 接口如下：
 
