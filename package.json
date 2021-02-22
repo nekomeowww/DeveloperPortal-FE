@@ -13,7 +13,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "compressorjs": "^1.0.6",
     "cropperjs": "^1.5.7",
