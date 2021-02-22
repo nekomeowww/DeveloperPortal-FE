@@ -64,7 +64,7 @@ td {
 参考请求：
 
 ```
-https://api.smartsignature.io/user/10
+https://api.mttk.net/user/10
 ```
 
 参考响应：
