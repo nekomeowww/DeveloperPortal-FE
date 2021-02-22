@@ -1,6 +1,6 @@
 # 用户钱包
 如果你想要获取用户的钱包，必须要在请求中包含一个 cookie 作为请求头的许可才可以获取数据，否则会返回 `"未授权"` 为 message 值，我们现在来介绍如何获取用户的钱包信息。这个过程是完全依照 RESTful API 规范的。
-如果你要直接使用 Matataki 主站使用的 API 服务，实例地址是：`https://api.smartsignature.io`
+如果你要直接使用 Matataki 主站使用的 API 服务，实例地址是：`https://api.mttk.net`
 如果要调用和获取图像信息，Matataki 图床的 CDN 是：`https://ssimg.frontenduse.top`
 接口如下：
 
@@ -20,7 +20,7 @@ pre {
 
 ```
 axios({
-    url: 'https://api.smartsignature.io/token/tokenlist?pagesize=999&order=0&page=1',
+    url: 'https://api.mttk.net/token/tokenlist?pagesize=999&order=0&page=1',
     method: 'GET',
     headers: { 'x-access-token': token }
 })
