@@ -100,9 +100,9 @@ export default {
   data () {
     return {
       ruleForm: {
-        document: false,
-        profile: false,
-        fantoken: false
+        document: true,
+        profile: true,
+        fantoken: true
       },
       rules: {
         document: false,
