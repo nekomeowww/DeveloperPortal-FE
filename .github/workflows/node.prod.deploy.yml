@@ -1,6 +1,8 @@
 name: Production Deployment
 
-on: 
+on:
+  push:
+    branches: [ production ]
   pull_request:
     branches: [ production ]
 
@@ -16,7 +18,7 @@ jobs:
     steps:
     - name: SSH Remote Commands
       uses: appleboy/ssh-action@master
-      env: 
+      env:
         API_TOKEN: ${{ secrets.API_TOKEN }}
       with:
         host: ${{ secrets.HOST }}
