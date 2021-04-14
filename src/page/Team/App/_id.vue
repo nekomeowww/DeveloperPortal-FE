@@ -17,7 +17,7 @@
 
 <script>
 import PhotoFrame from '@/components/PhotoFrame'
-import AppMenu from '@/components/AppMenu'
+import AppMenu from '@/components/TeamAppMenu'
 import NewAppForm from '@/components/Team/NewAppForm.vue'
 
 import { mapState, mapActions } from 'vuex'
