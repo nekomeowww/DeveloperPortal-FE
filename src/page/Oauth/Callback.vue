@@ -23,6 +23,7 @@ import env from '../../../env.json'
 import { getUserProfile, getAvatarUrl, getUserProfileTest } from '../../api/user'
 import { disassemble } from '../../util/cookie'
 import { mapActions, mapState } from 'vuex'
+import i18n from '../../locale'
 
 export default {
   components: {
@@ -54,7 +55,7 @@ export default {
     Axios(env.DEVELOPERAPI + '/app/detail?appId=' + this.$route.params.id).then(app => {
       if (this.app.name === undefined) {
         this.$message({
-          message: '出现了问题，App 是无效的',
+          message: i18n.t('elMessage.error.oAuth'),
           type: 'error',
           duration: 4000
         })
@@ -66,10 +67,10 @@ export default {
           ...app.data.detail
         }
       }
-      document.title = '授权 ' + app.data.detail.name + ' 使用你的账号登录 - Matataki 开发者中心'
+      document.title = i18n.t('siteTitle.oAuth.callback', { name: app.data.detail.name })
     }).catch(e => {
       this.$message({
-        message: '出现了问题，App 是无效的',
+        message: i18n.t('elMessage.error.oAuth'),
         type: 'error',
         duration: 4000
       })

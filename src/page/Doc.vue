@@ -19,9 +19,7 @@ import { mapActions } from 'vuex'
 
 import VueMarkdown from 'vue-markdown'
 
-import appIcon from '@/assets/img/app.png'
-import docIcon from '@/assets/img/doc.png'
-import getStarted from '../../doc/hello.md'
+import i18n from '../locale'
 
 export default {
   components: {
@@ -31,39 +29,26 @@ export default {
   },
   data () {
     return {
-      markdown: getStarted,
-      menuItem: [
-        {
-          title: '应用 Application',
-          icon: appIcon,
-          path: '/apps'
-        },
-        {
-          title: '开发文档 Documentation',
-          icon: docIcon,
-          path: '/doc'
-        },
-        {
-          title: '起步',
-          elicon: 'el-icon-success',
-          path: '/doc/getstarted'
-        }
-      ]
+      markdown: ''
     }
   },
   methods: {
-    ...mapActions(['setLoggedIn'])
+    ...mapActions(['setLoggedIn', 'setMenuItems'])
   },
-  created () {
+  async created () {
     const c = getCookie('ACCESS-TOKEN')
     if (c) {
       const res = disassemble(c)
       res.status = true
       this.setLoggedIn(res)
     }
+
+    const ls = window.localStorage || localStorage
+    const lang = ls.getItem('APP_LANG') || this.$root.$i18n.locale
+    this.markdown = await import(`../../doc/${lang}/hello.md`)
   },
   mounted () {
-    document.title = '开发文档 - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.doc')
   }
 }
 </script>

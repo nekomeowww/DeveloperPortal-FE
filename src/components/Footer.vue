@@ -8,32 +8,32 @@
             target="_blank"
             href="https://www.yuque.com/matataki"
           >
-            帮助和支持
+            {{ $t('comp.footer.nav.help') }}
           </a>
           <a
             class="href"
             target="_blank"
             href="https://www.yuque.com/matataki/matataki"
           >
-            使用手册
+            {{ $t('comp.footer.nav.how') }}
           </a>
           <a
             class="href"
             target="_blank"
             href="https://www.yuque.com/matataki/matataki_version"
           >
-            更新记录
+            {{ $t('comp.footer.nav.version') }}
           </a>
           <a
             class="href"
             target="_blank"
             href="http://www.matataki.io/p/616"
           >
-            智能公告牌
+            {{ $t('comp.footer.nav.note') }}
           </a>
         </div>
         <p class="link">
-          友情链接:
+          {{ $t('comp.footer.nav.link') }}
           <a
             href="https://matters.news/"
             target="_blank"
@@ -78,7 +78,7 @@
                   alt="code"
                 >
                 <p class="wechat-title">
-                  扫码后备注“进群”
+                  {{ $t('comp.footer.nav.wechat1') }}
                 </p>
               </div>
               <div class="wechat-img">
@@ -87,7 +87,7 @@
                   alt="code"
                 >
                 <p class="wechat-title">
-                  关注公众号
+                  {{ $t('comp.footer.nav.wechat2') }}
                 </p>
               </div>
             </div>

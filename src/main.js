@@ -6,6 +6,7 @@ import ElementUI from 'element-ui'
 import '../static/theme/index.css'
 import store from '@/store/index.js'
 import router from './router'
+import i18n from './locale'
 
 require('dotenv').config()
 
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  i18n,
   router,
   store,
   components: { App },

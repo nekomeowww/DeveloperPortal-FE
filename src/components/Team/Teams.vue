@@ -1,10 +1,10 @@
 <template>
     <div class="team">
       <div class="team-desp">
-        <div class="team-desp-title">Teams</div>
-        <div class="team-desp-content">如果和别人一同合作创建你们的应用程序实例能让你事半功倍，那创建一个合适的团队便是你最佳的选择，在下面创建由你命名和管理的团队吧！</div>
+        <div class="team-desp-title">{{ $t('comp.team.title') }}</div>
+        <div class="team-desp-content">{{ $t('comp.team.desc') }}</div>
       </div>
-      <div class="team-title">My Teams</div>
+      <div class="team-title">{{ $t('comp.team.myTeam') }}</div>
       <el-row :gutter="20" class="teams">
         <div v-for="(team, index) in appCards" :key=index>
           <router-link :to="{ path:'/team/' + team.id + '/settings', params: { team: team } }">
@@ -19,7 +19,7 @@
         <router-link to="/newteam">
           <div class="team-new">
             <img id="new-logo" src="../../assets/img/team-img.png" />
-            <span id="new-text">创建你的 Team</span>
+            <span id="new-text">{{ $t('comp.team.new') }}</span>
           </div>
         </router-link>
       </el-row>

@@ -17,13 +17,9 @@ import PhotoFrame from '@/components/PhotoFrame.vue'
 import DocumentationMenu from '@/components/Documentation/DocumentationMenu.vue'
 import VueMarkdown from 'vue-markdown'
 import Markdown from '@/components/Documentation/Markdown.vue'
-
-import getstarted from '../../../doc/getstarted.md'
-import userprofile from '../../../doc/userprofile.md'
-import userwallet from '../../../doc/userwallet.md'
-import oauth from '../../../doc/oauth.md'
-import fanlocker from '../../../doc/fanlocker.md'
-import hexoplugin from '../../../doc/hexoplugin.md'
+import i18n from '../../locale'
+import { getCookie, disassemble } from '../../util/cookie'
+import { mapActions } from 'vuex'
 
 export default {
   components: {
@@ -40,35 +36,39 @@ export default {
   },
   data () {
     return {
-      markdown: '',
-      markdownList: {
-        getstarted: getstarted,
-        userprofile: userprofile,
-        userwallet: userwallet,
-        oauth: oauth,
-        fanlocker: fanlocker,
-        hexoplugin: hexoplugin
-      }
+      markdown: ''
     }
   },
   watch: {
-    markdownList (val) {
-      this.markdown = this.markdownList[this.$route.params.name]
-    },
     $route (val) {
-      this.markdown = this.markdownList[val.params.name]
+      this.getMarkdown()
     }
   },
-  mounted () {
-    this.markdown = this.markdownList[this.$route.params.name]
-    if (this.markdown === undefined) {
-      this.$message({
-        message: '似乎没有这个文档页面，返回到文档首页...',
-        type: 'warning',
-        duration: 4000
-      })
-      this.$router.push({ name: 'Doc' })
+  methods: {
+    ...mapActions(['setLoggedIn']),
+    async getMarkdown () {
+      const ls = window.localStorage || localStorage
+      const lang = ls.getItem('APP_LANG') || this.$root.$i18n.locale
+      this.markdown = await import(`../../../doc/${lang}/${this.$route.params.name}.md`)
+      if (!this.markdown) {
+        this.$message({
+          message: i18n.t('elMessage.error.noDoc'),
+          type: 'warning',
+          duration: 4000
+        })
+        this.$router.push({ name: 'Doc' })
+      }
     }
+  },
+  async created () {
+    const c = getCookie('ACCESS-TOKEN')
+    if (c) {
+      const res = disassemble(c)
+      res.status = true
+      this.setLoggedIn(res)
+    }
+
+    await this.getMarkdown()
   }
 }
 </script>

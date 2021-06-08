@@ -1,14 +1,14 @@
 <template>
   <div class="application">
     <div class="app-desp">
-      <div v-if="notNew" class="app-desp-title">General Information</div>
-      <div v-else class="app-desp-title">Creating New App</div>
-      <div class="app-desp-content">填写基本的 App 信息</div>
+      <div v-if="notNew" class="app-desp-title">{{ $t('comp.newApp.titleNotNew') }}</div>
+      <div v-else class="app-desp-title">{{ $t('comp.newApp.title') }}</div>
+      <div class="app-desp-content">{{ $t('comp.newApp.desc') }}</div>
     </div>
     <div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
         <div>
-          <span class="icon-title">App 图标</span>
+          <span class="icon-title">{{ $t('comp.newApp.icon') }}</span>
           <img-upload
             :img-upload-done="imgUploadDone"
             :update-type="'avatar'"
@@ -21,7 +21,7 @@
             >
               <div class="edit">
                 <i class="el-icon-camera" />
-                图标
+                {{ $t('common.icon') }}
               </div>
               <img
                 id="avatar"
@@ -36,66 +36,66 @@
         </div>
         <div>
           <el-form-item label=' ' prop="name">
-            <span class="form-label">名称 Name</span>
-            <el-input placeholder="请输入名称..." maxlength="20" v-model="ruleForm.name"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.name') }}</span>
+            <el-input :placeholder="place.name" maxlength="20" v-model="ruleForm.name"></el-input>
           </el-form-item>
           <div v-if="showSecretRow" class="d-fl">
             <div class="cid">
               <span class="form-label">Client ID</span><br>
               <span class="secret-text">{{ clientId }}</span><br>
-              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">复制</el-button>
+              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientId)">{{ $t('common.copy') }}</el-button>
             </div>
             <div class="cet">
               <span class="form-label">Client Secret</span><br>
-              <span class="secret-text toShow" id="secret" @click="reveal">点击以显示</span><br>
-              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">复制</el-button>
-              <el-button type="primary" size="small" class="secret-btn" @click="resetSecret">重新生成</el-button>
+              <span class="secret-text toShow" id="secret" @click="reveal">{{ $t('comp.newApp.toShow') }}</span><br>
+              <el-button type="primary" size="small" class="secret-btn" @click="copyToClipboard(clientSecret)">{{ $t('common.copy') }}</el-button>
+              <el-button type="primary" size="small" class="secret-btn" @click="resetSecret">{{ $t('comp.newApp.reset') }}</el-button>
             </div>
           </div>
           <el-form-item label=' ' prop="desp">
-            <span class="form-label">简介 Description</span>
-            <el-input placeholder="请输入简介... " type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.desc') }}</span>
+            <el-input :placeholder="place.desc" type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
           </el-form-item>
           <el-form-item label=' ' prop="callback">
-            <span class="form-label">回调链接 Callback URL</span>
-            <el-input placeholder="请输入回调链接... " v-model="ruleForm.callback"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.callback') }}</span>
+            <el-input :placeholder="place.callback" v-model="ruleForm.callback"></el-input>
           </el-form-item>
           <el-form-item prop="orglink">
-            <span class="form-label">个人或组织网站 Website Link</span>
-            <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.site') }}</span>
+            <el-input :placeholder="place.site" v-model="ruleForm.orglink"></el-input>
           </el-form-item>
           <el-form-item prop="orgname">
-            <span class="form-label">个人、组织或公司名称 Organization or Corporation Name</span>
-            <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.org') }}</span>
+            <el-input :placeholder="place.org" v-model="ruleForm.orgname"></el-input>
           </el-form-item>
           <el-form-item prop="toslink">
-            <span class="form-label">用户协议链接 Term of Service URL</span>
-            <el-input placeholder="请输入用户协议链接（方便展示）... " v-model="ruleForm.toslink"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.tos') }}</span>
+            <el-input :placeholder="place.tos" v-model="ruleForm.toslink"></el-input>
           </el-form-item>
           <el-form-item prop="pplink">
-            <span class="form-label">隐私协定 Privacy Policy URL</span>
-            <el-input placeholder="请输入隐私协定（方便展示）... " v-model="ruleForm.pplink"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.pri') }}</span>
+            <el-input :placeholder="place.pri" v-model="ruleForm.pplink"></el-input>
           </el-form-item>
           <el-form-item prop="usage">
-            <span class="form-label">App 使用目的 App Usage</span>
-            <el-input placeholder="您用这个 App 做什么呢？... " v-model="ruleForm.usage"></el-input>
+            <span class="form-label">{{ $t('comp.newApp.form.usage') }}</span>
+            <el-input :placeholder="place.usage" v-model="ruleForm.usage"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
-            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">删除 App</el-button>
-            <el-button v-else type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">{{ $t('comp.newApp.save') }}</el-button>
+            <el-button v-if="notNew" type="danger" @click="openDeletionConfirm">{{ $t('comp.newApp.delete') }}</el-button>
+            <el-button v-else type="primary" @click="submitForm('ruleForm')">{{ $t('comp.newApp.create') }}</el-button>
           </el-form-item>
         </div>
       </el-form>
       <el-dialog
-        title="请确认操作"
+        :title="dialogTitle"
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
-        <span>确定要删除这个 App 吗？</span>
+        <span>{{ $t('comp.newApp.dialog.content') }}</span>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="removeApp">确 定</el-button>
+          <el-button @click="centerDialogVisible = false">{{ $t('comp.newApp.dialog.cancel') }}</el-button>
+          <el-button type="primary" @click="removeApp">{{ $t('comp.newApp.dialog.confirm') }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -162,10 +162,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: this.$t('comp.newApp.rules.name'), trigger: 'change' }
         ],
         callback: [
-          { required: true, message: '请输入回调地址', trigger: 'change' }
+          { required: true, message: this.$t('comp.newApp.rules.callback'), trigger: 'change' }
         ],
         toslink: [
           { required: false, message: '', trigger: 'change' }
@@ -177,11 +177,23 @@ export default {
           { required: false, message: '', trigger: 'change' }
         ],
         desp: [
-          { required: true, message: '请输入简介', trigger: 'change' }
+          { required: true, message: this.$t('comp.newApp.rules.desc'), trigger: 'change' }
         ]
       },
       centerDialogVisible: false,
-      requestCount: 0
+      requestCount: 0,
+      place: {
+        name: this.$t('comp.newApp.place.name'),
+        desc: this.$t('comp.newApp.place.desc'),
+        callback: this.$t('comp.newApp.place.callback'),
+        site: this.$t('comp.newApp.place.site'),
+        org: this.$t('comp.newApp.place.org'),
+        tos: this.$t('comp.newApp.place.tos'),
+        pri: this.$t('comp.newApp.place.pri'),
+        usage: this.$t('comp.newApp.place.usage')
+      },
+      dialogTitle: this.$t('comp.newApp.dialog.title'),
+      toShow: false
     }
   },
   watch: {
@@ -208,7 +220,8 @@ export default {
     reveal () {
       let elem = document.getElementById('secret')
       this.defaultCss = elem.style.cssText
-      if (elem.innerHTML === '点击以显示') {
+      if (!this.toShow) {
+        this.toShow = true
         elem.innerHTML = this.clientSecret
         let elClassName = ' ' + elem.className + ' '
         while (elClassName.indexOf(' toShow ') !== -1) {
@@ -216,8 +229,9 @@ export default {
         }
         elem.className = elClassName
       } else {
+        this.toShow = false
         elem.className += ' ' + 'toShow'
-        elem.innerHTML = '点击以显示'
+        elem.innerHTML = this.$t('comp.newApp.toShow')
       }
     },
     getAvatar () {
@@ -237,7 +251,7 @@ export default {
           Axios.post(env.DEVELOPERAPI + '/app/new', { form: this.ruleForm, appId: this.currentAppId, userId: this.userId }).then(res => {
             if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
-                message: '创建成功... 现在返回 App 列表',
+                message: this.$t('elMessage.success.appCreate'),
                 type: 'success',
                 duration: 4000
               })
@@ -245,7 +259,7 @@ export default {
               this.$router.push({ name: 'Home' })
             } else {
               this.$message({
-                message: '出现了问题，请重试',
+                message: this.$t('elMessage.error.unknow'),
                 type: 'error',
                 duration: 4000
               })
@@ -253,7 +267,7 @@ export default {
           })
         } else {
           this.$message({
-            message: '出现了问题，请重试',
+            message: this.$t('elMessage.error.unknow'),
             type: 'error',
             duration: 4000
           })
@@ -273,14 +287,14 @@ export default {
         textarea.select()
         try {
           this.$notify.success({
-            title: '复制成功',
-            message: '内容已经成功复制到剪贴板'
+            title: this.$t('elNotify.success.copyT'),
+            message: this.$t('elNotify.success.copyM')
           })
           return document.execCommand('copy') // Security exception may be thrown by some browsers.
         } catch (ex) {
           this.$notify.error({
-            title: '复制失败',
-            message: '请手动复制内容'
+            title: this.$t('elNotify.error.copyT'),
+            message: this.$t('elNotify.error.copyM')
           })
           return false
         } finally {
@@ -291,7 +305,7 @@ export default {
     doneImageUpload () {
       this.imgUploadDone += Date.now()
       this.$message({
-        message: '图片上传成功',
+        message: this.$t('elMessage.success.imageUpload'),
         type: 'success',
         duration: 4000
       })
@@ -305,7 +319,7 @@ export default {
         if (res.data.code === 0) {
           this.centerDialogVisible = false
           this.$message({
-            message: '删除成功，现在返回 App 列表...',
+            message: this.$t('elMessage.success.appDelete'),
             type: 'success',
             duration: 4000
           })
@@ -313,7 +327,7 @@ export default {
         } else if (res.data.code === 1) {
           this.centerDialogVisible = false
           this.$message({
-            message: '好像出现了点问题，现在返回 App 列表...',
+            message: this.$t('elMessage.error.app'),
             type: 'warning',
             duration: 4000
           })
@@ -321,7 +335,7 @@ export default {
         } else {
           this.centerDialogVisible = false
           this.$message({
-            message: '出现错误，返回 App 列表...',
+            message: this.$t('elMessage.error.app'),
             type: 'success',
             duration: 4000
           })
@@ -334,7 +348,7 @@ export default {
         console.log(res.data)
         this.clientSecret = res.data.clientSecret
         let elem = document.getElementById('secret')
-        if (elem.innerHTML !== '点击以显示') {
+        if (this.toShow) {
           elem.innerHTML = res.data.clientSecret
         }
       })

@@ -1,7 +1,7 @@
 <template>
   <div class="oauth-box">
     <div class="upper-box">
-      <span class="login-title">授权登录</span><br>
+      <span class="login-title">{{ $t('comp.oauth.title') }}</span><br>
       <div class="containers">
         <div v-if="userData" class="user-container">
           <img class="user-img" :src="userData.avatar" />
@@ -15,31 +15,34 @@
           <span class="app-name">{{ app.name }}</span>
         </div>
       </div>
-      <div class="oauth-desp">
-        授权代表你同意 {{app.name}} 读取和使用<br>
-        你的<strong>头像</strong>，<strong>电子邮件</strong>，以及<strong>用户名</strong>
-      </div>
+      <i18n path="comp.oauth.desp" tag="div" class="oauth-desp">
+        <span place="appName">{{app.name}}</span>
+        <br place="break">
+        <strong place="avatar">{{ $t('common.avatar') }}</strong>
+        <strong place="email">{{ $t('common.email') }}</strong>
+        <strong place="username">{{ $t('common.username') }}</strong>
+      </i18n>
       <div>
         <div class="ruleForm">
-          <el-switch class="rule-switch" active-text="读取和修改你的文章" v-model="ruleForm.document" :disabled="rules.document"></el-switch>
-          <el-switch class="rule-switch" active-text="读取和修改你的个人资料" v-model="ruleForm.profile" :disabled="rules.profile"></el-switch>
-          <el-switch class="rule-switch" active-text="读取和修改你发行的 Fan 票内容" v-model="ruleForm.fantoken" :disabled="rules.fantoken"></el-switch>
-          <el-button type="primary" v-if="!userData" @click="submitForm('ruleForm')">登录 Matataki.io</el-button>
-          <el-button type="primary" v-else @click="submitForm('ruleForm')">使用 Matataki.io 账号授权登录</el-button>
+          <el-switch class="rule-switch" :active-text="text.post" v-model="ruleForm.document" :disabled="rules.document"></el-switch>
+          <el-switch class="rule-switch" :active-text="text.profile" v-model="ruleForm.profile" :disabled="rules.profile"></el-switch>
+          <el-switch class="rule-switch" :active-text="text.token" v-model="ruleForm.fantoken" :disabled="rules.fantoken"></el-switch>
+          <el-button type="primary" v-if="!userData" @click="submitForm('ruleForm')">{{ $t('comp.oauth.login') }}</el-button>
+          <el-button type="primary" v-else @click="submitForm('ruleForm')">{{ $t('comp.oauth.loginOAuth') }}</el-button>
         </div>
       </div>
     </div>
     <el-collapse>
-      <el-collapse-item title="更多信息" class="collapse">
+      <el-collapse-item :title="text.more" class="collapse">
         <div class="info-unit">
           <h3>
-            简介 Description:
+            {{ $t('comp.oauth.desc') }}
           </h3>
-          <p class="pre-line" v-html="app.desp || '暂无'" />
+          <p class="pre-line" v-html="app.desp || $t('comp.oauth.none')" />
         </div>
         <div v-if="app.orglink" class="info-unit">
           <h3>
-            个人或组织网站 Website Link:
+            {{ $t('comp.oauth.site') }}
           </h3>
           <p>
             <a :href="formatUrl(app.orglink)" target="_blank">
@@ -49,15 +52,15 @@
         </div>
         <div class="info-unit">
           <h3>
-            组织或公司名称 Organization or Corporation Name:
+            {{ $t('comp.oauth.org') }}
           </h3>
           <p>
-            {{ app.orgname || '暂无' }}
+            {{ app.orgname || $t('comp.oauth.none') }}
           </p>
         </div>
         <div v-if="app.toslink" class="info-unit">
           <h3>
-            用户协议链接 Term of Service URL:
+            {{ $t('comp.oauth.tos') }}
           </h3>
           <p>
             <a :href="formatUrl(app.toslink)" target="_blank">
@@ -67,7 +70,7 @@
         </div>
         <div v-if="app.pplink" class="info-unit">
           <h3>
-            隐私协定 Privacy Policy URL:
+            {{ $t('comp.oauth.pri') }}
           </h3>
           <p>
             <a :href="formatUrl(app.pplink)" target="_blank">
@@ -108,6 +111,12 @@ export default {
         document: false,
         profile: false,
         fantoken: false
+      },
+      text: {
+        post: this.$t('comp.oauth.post'),
+        profile: this.$t('comp.oauth.profile'),
+        token: this.$t('comp.oauth.token'),
+        more: this.$t('comp.oauth.more')
       },
       showTip: false
     }

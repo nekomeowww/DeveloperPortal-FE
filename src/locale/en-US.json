@@ -1,0 +1,328 @@
+{
+  "menuTitle": {
+    "app": "Application",
+    "team": "Team",
+    "doc": "Documentation",
+    "start": "Get Started",
+    "profile": "User Profile",
+    "wallet": "User Wallet"
+  },
+  "siteTitle": {
+    "basic": "General Information - Matataki Developer Portal",
+    "oAuth": {
+      "callback": "Authorize {name} to log in with your account - Matataki Developer Portal",
+      "login": "Log in with your account - Matataki Developer Portal",
+      "settings": "OAuth2 - Matataki Developer Portal"
+    },
+    "redirect": "Redirecting - Matataki Developer Portal",
+    "app": {
+      "list": "App list - Matataki Developer Portal",
+      "new": "Create a new app - Matataki Developer Portal"
+    },
+    "team": {
+      "list": "Team list - Matataki Developer Portal",
+      "member": "Member Management - Matataki Developer Portal",
+      "new": "Create a new team - Matataki Developer Portal"
+    },
+    "vault": "Vault - Matataki Developer Portal",
+    "doc": "Documentation - Matataki Developer Portal",
+    "not": "Notification - Matataki Developer Portal"
+  },
+  "elMessage": {
+    "error": {
+      "noDoc": "There seems to be no such documentation page, go back to the documentation home page...",
+      "oAuth": "There is a problem and the app is invalid",
+      "redirect": "The callback parameters set by the App are not valid, please contact the App author and return to the App Authorization page now!",
+      "team": "There was a problem, now back to team list",
+      "app": "There was a problem, now back to the app list",
+      "notImage": "Please choose the image file",
+      "imageLarge": "Image file is too large",
+      "compress": "Automatic image compression failure",
+      "imageUpload": "Image upload failed",
+      "login": "Account not logged in",
+      "unknow": "There was a problem, please try again",
+      "loginFail": "Incorrect email or password",
+      "noPassword": "Password cannot be empty",
+      "noEmail": "Please enter your email address",
+      "wrongEmail": "Incorrect email format",
+      "vaultInput": "There is a problem, check your input"
+    },
+    "success": {
+      "login": "Login successfully, now jump to the admin page for you...",
+      "invite": "Invitation successful",
+      "quitTeam": "Success, now back to team list",
+      "vaultCreate": "Created successfully... Now back to the vault page",
+      "vaultUpdate": "Update successful... Now back to the vault page",
+      "delete": "Deleted successfully",
+      "save": "Save successfully",
+      "appCreate": "Created successfully... Now back to the app list",
+      "appDelete": "Deleted successfully, now back to app list...",
+      "teamCreate": "Created successfully... Now back to the team list",
+      "teamDelete": "Deleted successfully, now back to team list...",
+      "imageUpload": "Image uploaded successfully"
+    }
+  },
+  "elNotify": {
+    "error": {
+      "vaultKeyMax": "The maximum length is 20 characters",
+      "vaultKeyReq": "Name cannot be empty",
+      "vaultKeyReqMsg": "Please fill in a proper name",
+      "vaultValMax": "Maximum length 2000 characters",
+      "vaultValReq": "Content cannot be empty",
+      "vaultValReqMsg": "Please fill in the content you need to create",
+      "copyT": "Copy failure",
+      "copyM": "Please copy the content manually"
+    },
+    "success": {
+      "copyT": "Successful replication",
+      "copyM": "The content has been successfully copied to the clipboard"
+    }
+  },
+  "docMenuItem": {
+    "app": "Applications",
+    "doc": "Development Documentation",
+    "start": "Get Started"
+  },
+  "landing": {
+    "dev": "Develop",
+    "start": "Start now",
+    "doc": "Documentation",
+    "words": [
+      "Creativity",
+      "Integration",
+      "Accessibilities",
+      "Imagination",
+      "Corporative",
+      "Interoperability"
+    ]
+  },
+  "comp": {
+    "image": {
+      "upload": "Upload",
+      "edit": "Edit image",
+      "editDetail": "Resize and position images",
+      "save": "Save"
+    },
+    "input": {
+      "login": "Login",
+      "email": "Please enter your email address",
+      "pass": "Please enter your password"
+    },
+    "oauth": {
+      "title": "Authorized Login",
+      "desp": "Authorization means you agree to {appName} reading and using {break} your {avatar}, {email}, and {username}",
+      "login": "Login to Matataki.io",
+      "loginOAuth": "Authorized login with Matataki.io account",
+      "more": "For more information",
+      "desc": "Description:",
+      "site": "Website:",
+      "org": "Organization or company name:",
+      "tos": "Term of service:",
+      "pri": "Privacy policy:",
+      "none": "None",
+      "post": "Read and modify your articles",
+      "profile": "Read and modify your profile",
+      "token": "Read and modify the contents of your issued Fan tickets"
+    },
+    "team": {
+      "app": {
+        "title": "Team Applications",
+        "desc": "Find the API SDK and API set that best suits the app you have in mind, then request to create an instance hosted by your own server. Use the Matataki API to start building your own app. We can't wait to see what you come up with!",
+        "apps": "My Team Application",
+        "my": "My Application",
+        "new": "Create a team app"
+      },
+      "member": {
+        "title": "Member Management",
+        "invite": "Invite members",
+        "desc": "Here you can see the members of the team.",
+        "descAdmin": "Here you can manage members' permissions and invite and remove members of your team.",
+        "owner": "Owner",
+        "dialogTitle": "Please confirm the operation",
+        "quit": "Sure you want to quit the team?",
+        "remove": "Sure you want to delete this member?",
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "invitePlace": "Search for a member's nickname, or email address",
+        "inviteMessage": "Invite your members to join {name}"
+      },
+      "menu": {
+        "back": "Back to Team List",
+        "info": "General Information",
+        "apps": "Team Applications",
+        "member": "Team Members"
+      },
+      "title": "Team Management",
+      "myTeam": "My Team",
+      "desc": "If collaborating with others to create your application instance is the way to go, then creating the right team is the way to go, create a team named and managed by you below!",
+      "new": "Create your team"
+    },
+    "vault": {
+      "new": {
+        "title": "Create a new Vault",
+        "desc": "Enter your key name and key value below",
+        "key": "Key {max}",
+        "keyMax": "Maximum 20 characters",
+        "value": "Value {max}",
+        "valueMax": "Maximum 2000 characters",
+        "create": "Create Now"
+      },
+      "setting": {
+        "title": "Vault",
+        "new": "Create key-value pairs",
+        "update": "Update",
+        "desc": [
+          "Here you can create and use some simple key-value pairs that will only be allowed to be retrieved if both Client ID and Client Secret are provided, along with the user Token (optional).",
+          "These key-value pairs are stored as equivalent to passwords, you can only store the strings and keep them on the server side as \"keys\" attached to the API for use.",
+          "We do not check what you store, your privacy is ensured and can only be accessed if you provide us with a Client ID and Client Secret."
+        ]
+      },
+      "update": {
+        "title": "Update your Vault",
+        "desc": "Enter your key name and key value below",
+        "update": "Update"
+      }
+    },
+    "app": {
+      "title": "Application List",
+      "desc": "Find the API SDK and API set that best suits the app you have in mind, then request to create an instance hosted by your own server. Use the Matataki API to start building your own app. We can't wait to see what you come up with!",
+      "apps": "My Team Application",
+      "my": "My Application",
+      "new": "Create your app"
+    },
+    "appMenu": {
+      "back": "Back to Application List",
+      "basic": "General Information",
+      "oauth2": "OAuth 2",
+      "vault": "Vault"
+    },
+    "teamAppMenu": {
+      "back": "Back to Application List",
+      "basic": "General Information",
+      "oauth2": "OAuth 2",
+      "vault": "Vault"
+    },
+    "footer": {
+      "nav": {
+        "help": "Help & Support",
+        "how": "User Manual",
+        "version": "Changelog",
+        "note": "Smart Bulletin Board",
+        "link": "Friendly link:",
+        "wechat1": "Scan the code and note",
+        "wechat2": "Follow the public number"
+      }
+    },
+    "header": {
+      "use": "Use"
+    },
+    "noti": {
+      "title": "Notification List",
+      "desc": "Here is the notification list, where all invitations and updates are displayed."
+    },
+    "oaset": {
+      "title": "OAuth 2 Settings",
+      "desc": "Please link your website to the following address to use OAuth login",
+      "testnet": "Test Network",
+      "opc": {
+        "title": "OAuth Permission Control",
+        "desc": "Here you can control what permissions your App requests, or force some data access permissions.",
+        "read": "Read Permissions",
+        "edit": "Edit Permissions",
+        "post": "Posting Permissions",
+        "delete": "Delete Permissions",
+        "creator": "Modify collaborator permissions",
+        "number": "Modification of the number of additional issues",
+        "forPost": "Permissions for articles",
+        "forFan": "Permissions for Fan Tickets",
+        "forProfile": "Permissions for the content of account information"
+      }
+    },
+    "newApp": {
+      "titleNotNew": "General Information",
+      "title": "Create a new application",
+      "desc": "Fill in the basic App information",
+      "icon": "App Icon",
+      "form": {
+        "name": "Name",
+        "desc": "Description",
+        "callback": "Callback URL",
+        "site": "Website Link",
+        "org": "Organization or Corporation Name",
+        "tos": "Term of Service URL",
+        "pri": "Privacy Policy URL",
+        "usage": "App Usage"
+      },
+      "place": {
+        "name": "Please enter the name...",
+        "desc": "Please enter the description...",
+        "callback": "Please enter the callback link...",
+        "site": "Please enter your personal or organizational website...",
+        "org": "Please enter your organization or company name...",
+        "tos": "Please enter a link to the user agreement...",
+        "pri": "Please enter a privacy agreement...",
+        "usage": "What do you do with this app?..."
+      },
+      "toShow": "Click to show",
+      "reset": "Regenerate",
+      "save": "Save Changes",
+      "delete": "Delete App",
+      "create": "Create Now",
+      "dialog": {
+        "title": "Please confirm the operation",
+        "content": "Are you sure you want to delete this app?",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      },
+      "rules": {
+        "name": "Please enter the name",
+        "callback": "Please enter the callback link",
+        "desc": "Please enter the description"
+      }
+    },
+    "newTeam": {
+      "titleNotNew": "General Information",
+      "title": "Create a new team",
+      "desc": "Fill in the basic team information",
+      "icon": "Team Icon",
+      "form": {
+        "name": "Name",
+        "desc": "Description",
+        "site": "Website Link",
+        "org": "Organization or Corporation Name",
+        "usage": "Team Objective"
+      },
+      "place": {
+        "name": "Please enter the name...",
+        "desc": "Please enter the description...",
+        "site": "Please enter your personal or organizational website...",
+        "org": "Please enter your organization or company name...",
+        "usage": "What do you want to do with the creation team?..."
+      },
+      "save": "Save Changes",
+      "delete": "Delete Team",
+      "create": "Create Now",
+      "dialog": {
+        "title": "Please confirm the operation",
+        "content": "Are you sure you want to delete this team?",
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      }
+    }
+  },
+  "common": {
+    "avatar": "Avatar",
+    "email": "Email",
+    "username": "Username",
+    "login": "Login",
+    "signout": "Signout",
+    "join": "Join",
+    "copy": "Copy",
+    "save": "Save",
+    "icon": "Icon"
+  },
+  "redirecting": "Redirecting...",
+  "login": "Login now to {break} to become a developer for {name}",
+  "backToApps": "Back to Application List",
+  "backToTeam": "Back to Team List"
+}

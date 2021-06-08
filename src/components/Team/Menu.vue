@@ -3,7 +3,7 @@
     <div class="sidebar-menu-back">
       <router-link :to="{path: '/teams'}">
         <i class="el-icon-arrow-left" />
-        Back to Teams
+        {{ $t('comp.team.menu.back') }}
       </router-link>
     </div>
     <el-menu
@@ -36,17 +36,17 @@ export default {
     return {
       menu: [
         {
-          title: '基本信息 Information',
+          title: this.$t('comp.team.menu.info'),
           icon: infoIcon,
           path: `/team/${this.$route.params.id}/settings`
         },
         {
-          title: '应用 Application',
+          title: this.$t('comp.team.menu.apps'),
           icon: appIcon,
           path: `/team/${this.$route.params.id}`
         },
         {
-          title: '成员 Members',
+          title: this.$t('comp.team.menu.member'),
           icon: userIcon,
           path: `/team/${this.$route.params.id}/members`
         }

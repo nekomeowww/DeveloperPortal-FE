@@ -21,6 +21,7 @@ import NewAppForm from '@/components/Team/NewAppForm.vue'
 
 import { getCookie, disassemble } from '../../util/cookie'
 import env from '../../../env.json'
+import i18n from '../../locale'
 
 export default {
   components: {
@@ -34,7 +35,7 @@ export default {
     ...mapActions(['setLoggedIn', 'setCurrentTeamId'])
   },
   created () {
-    document.title = '创建新的 App - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.app.new')
   },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')

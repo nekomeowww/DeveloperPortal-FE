@@ -1,0 +1,328 @@
+{
+  "menuTitle": {
+    "app": "应用",
+    "team": "团队",
+    "doc": "开发文档",
+    "start": "起步",
+    "profile": "用户信息",
+    "wallet": "用户钱包"
+  },
+  "siteTitle": {
+    "basic": "基本信息 - Matataki 开发者中心",
+    "oAuth": {
+      "callback": "授权 {name} 使用你的账号登录 - Matataki 开发者中心",
+      "login": "使用你的账号登录 - Matataki 开发者中心",
+      "settings": "Oauth2 - Matataki 开发者中心"
+    },
+    "redirect": "跳转中 - Matataki 开发者中心",
+    "app": {
+      "list": "App 列表 - Matataki 开发者中心",
+      "new": "创建新的 App - Matataki 开发者中心"
+    },
+    "team": {
+      "list": "Team 列表 - Matataki 开发者中心",
+      "member": "成员管理 - Matataki 开发者中心",
+      "new": "创建新的 Team - Matataki 开发者中心"
+    },
+    "vault": "保险箱 - Matataki 开发者中心",
+    "doc": "开发文档 - Matataki 开发者中心",
+    "not": "通知中心 - Matataki 开发者中心"
+  },
+  "elMessage": {
+    "error": {
+      "noDoc": "似乎没有这个文档页面，返回到文档首页...",
+      "oAuth": "出现了问题，App 是无效的",
+      "redirect": "App 设定的回调参数不是有效的，请联系 App 作者，现在返回 App 授权页面",
+      "team": "出现了问题，现在返回 Team 列表",
+      "app": "出现了问题，现在返回 App 列表",
+      "notImage": "请选择图片文件",
+      "imageLarge": "图片文件过大",
+      "compress": "自动压缩图片失败",
+      "imageUpload": "图片上传失败",
+      "login": "账号未登录",
+      "unknow": "出现了问题，请重试",
+      "loginFail": "电子邮件或密码错误",
+      "noPassword": "密码不能为空",
+      "noEmail": "请输入电子邮箱地址",
+      "wrongEmail": "电子邮箱格式不正确",
+      "vaultInput": "出现了问题，检查你的输入"
+    },
+    "success": {
+      "login": "登录成功，现在为你跳转到管理页面...",
+      "invite": "邀请成功",
+      "quitTeam": "成功，现在返回 Team 列表",
+      "vaultCreate": "创建成功... 现在返回 Vault 页面",
+      "vaultUpdate": "更新成功... 现在返回 Vault 页面",
+      "delete": "删除成功",
+      "save": "保存成功",
+      "appCreate": "创建成功... 现在返回 App 列表",
+      "appDelete": "删除成功，现在返回 App 列表...",
+      "teamCreate": "创建成功... 现在返回 Team 列表",
+      "teamDelete": "删除成功，现在返回 Team 列表...",
+      "imageUpload": "图片上传成功"
+    }
+  },
+  "elNotify": {
+    "error": {
+      "vaultKeyMax": "长度最长 20 个字符哦",
+      "vaultKeyReq": "名称不可以为空",
+      "vaultKeyReqMsg": "请填写一个合适的名称",
+      "vaultValMax": "长度最长 2000 个字符哦",
+      "vaultValReq": "内容不可以为空",
+      "vaultValReqMsg": "请填写你需要创建的内容",
+      "copyT": "复制失败",
+      "copyM": "请手动复制内容"
+    },
+    "success": {
+      "copyT": "复制成功",
+      "copyM": "内容已经成功复制到剪贴板"
+    }
+  },
+  "docMenuItem": {
+    "app": "应用",
+    "doc": "开发文档",
+    "start": "起步"
+  },
+  "landing": {
+    "dev": "开发 Develop",
+    "start": "马上开始",
+    "doc": "文档",
+    "words": [
+      "创造力 Creativity",
+      "集成性 Integration",
+      "实用性 Accessibilities",
+      "想象力 Imagination",
+      "合作力 Corporative",
+      "互通性 Interoperability"
+    ]
+  },
+  "comp": {
+    "image": {
+      "upload": "上传",
+      "edit": "编辑图像",
+      "editDetail": "调整图像尺寸和位置",
+      "save": "保存"
+    },
+    "input": {
+      "login": "登录",
+      "email": "请输入电子邮箱",
+      "pass": "请输入密码"
+    },
+    "oauth": {
+      "title": "授权登录",
+      "desp": "授权代表你同意 {appName} 读取和使用{break}你的{avatar}，{email}，以及{username}",
+      "login": "登录 Matataki.io",
+      "loginOAuth": "使用 Matataki.io 账号授权登录",
+      "more": "更多信息",
+      "desc": "简介：",
+      "site": "个人或组织网站：",
+      "org": "组织或公司名称：",
+      "tos": "用户协议链接：",
+      "pri": "隐私协定：",
+      "none": "暂无",
+      "post": "读取和修改你的文章",
+      "profile": "读取和修改你的个人资料",
+      "token": "读取和修改你发行的 Fan 票内容"
+    },
+    "team": {
+      "app": {
+        "title": "团队应用",
+        "desc": "找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！",
+        "apps": "我的团队应用",
+        "my": "我的应用",
+        "new": "创建团队 App"
+      },
+      "member": {
+        "title": "成员管理",
+        "invite": "邀请成员",
+        "desc": "在这里你可以看到团队的成员。",
+        "descAdmin": "在这里你可以管理成员的权限和邀请和删除你的团队的成员。",
+        "owner": "所有者",
+        "dialogTitle": "请确认操作",
+        "quit": "确定要退出这个团队吗？",
+        "remove": "确定要删除这个成员吗？",
+        "cancel": "取 消",
+        "confirm": "确 定",
+        "invitePlace": "搜索成员的昵称，或是电子邮件地址",
+        "inviteMessage": "邀请你的成员加入 {name}"
+      },
+      "menu": {
+        "back": "返回到团队列表",
+        "info": "基本信息",
+        "apps": "团队应用",
+        "member": "团队成员"
+      },
+      "title": "团队管理",
+      "myTeam": "我的团队",
+      "desc": "如果和别人一同合作创建你们的应用程序实例能让你事半功倍，那创建一个合适的团队便是你最佳的选择，在下面创建由你命名和管理的团队吧！",
+      "new": "创建你的团队"
+    },
+    "vault": {
+      "new": {
+        "title": "创建一个新的 Vault",
+        "desc": "在下面输入你的键值名称和键值内容",
+        "key": "名称 {max}",
+        "keyMax": "最长 20 个字符",
+        "value": "内容 {max}",
+        "valueMax": "最长 2000 个字符",
+        "create": "立即创建"
+      },
+      "setting": {
+        "title": "保险箱",
+        "new": "创建键值对",
+        "update": "更新",
+        "desc": [
+          "在这里你可以创建和使用一些简单的键值对，只有提供了 Client ID 和 Client Secret 两者和用户 Token（可选）的时候才会被允许获取。",
+          "这些键值对是相当于密码一样的存储，你只可以存储字符串，留存在服务器端作为 API 附属的「密钥」进行使用，",
+          "我们不会检查你存储了什么，你的隐私都是能够被确保的，只有提供了 Client ID 和 Client Secret 才可以获取。"
+        ]
+      },
+      "update": {
+        "title": "更新你的 Vault",
+        "desc": "在下面输入你的键值名称和键值内容",
+        "update": "更新信息"
+      }
+    },
+    "app": {
+      "title": "应用列表",
+      "desc": "找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！",
+      "apps": "我的团队应用",
+      "my": "我的应用",
+      "new": "创建你的 App"
+    },
+    "appMenu": {
+      "back": "返回到应用列表",
+      "basic": "基本信息",
+      "oauth2": "OAuth 2",
+      "vault": "保险箱"
+    },
+    "teamAppMenu": {
+      "back": "返回到应用列表",
+      "basic": "基本信息",
+      "oauth2": "OAuth 2",
+      "vault": "保险箱"
+    },
+    "footer": {
+      "nav": {
+        "help": "帮助和支持",
+        "how": "使用手册",
+        "version": "更新记录",
+        "note": "智能公告牌",
+        "link": "友情链接：",
+        "wechat1": "扫码后备注“进群”",
+        "wechat2": "关注公众号"
+      }
+    },
+    "header": {
+      "use": "使用"
+    },
+    "noti": {
+      "title": "通知列表",
+      "desc": "这里是通知列表，所有邀请和动态都会显示在这里。"
+    },
+    "oaset": {
+      "title": "OAuth 2 设置",
+      "desc": "请将你的网站链接到下面的地址来使用 OAuth 登录",
+      "testnet": "测试网",
+      "opc": {
+        "title": "OAuth 权限控制",
+        "desc": "在这里，你可以控制你的 App 请求什么样的权限，或者是强制要求一些数据获取的权限。",
+        "read": "读取权限",
+        "edit": "编辑权限",
+        "post": "发布权限",
+        "delete": "删改权限",
+        "creator": "修改协作者权限",
+        "number": "修改增发数量",
+        "forPost": "对文章的权限",
+        "forFan": "对 Fan 票的权限",
+        "forProfile": "对账户信息内容的权限"
+      }
+    },
+    "newApp": {
+      "titleNotNew": "基本信息",
+      "title": "创建新的应用",
+      "desc": "填写基本的 App 信息",
+      "icon": "App 图标",
+      "form": {
+        "name": "名称",
+        "desc": "简介 Description",
+        "callback": "回调链接 Callback URL",
+        "site": "个人或组织网站 Website Link",
+        "org": "个人、组织或公司名称 Organization or Corporation Name",
+        "tos": "用户协议链接 Term of Service URL",
+        "pri": "隐私协定 Privacy Policy URL",
+        "usage": "App 使用目的 App Usage"
+      },
+      "place": {
+        "name": "请输入名称...",
+        "desc": "请输入简介...",
+        "callback": "请输入回调链接...",
+        "site": "请输入您的个人或组织网站...",
+        "org": "请输入您的组织或者是公司名称...",
+        "tos": "请输入用户协议链接（方便展示）...",
+        "pri": "请输入隐私协定（方便展示）...",
+        "usage": "您用这个 App 做什么呢？..."
+      },
+      "toShow": "点击以显示",
+      "reset": "重新生成",
+      "save": "保存更改",
+      "delete": "删除 App",
+      "create": "立即创建",
+      "dialog": {
+        "title": "请确认操作",
+        "content": "确定要删除这个 App 吗？",
+        "cancel": "取 消",
+        "confirm": "确 定"
+      },
+      "rules": {
+        "name": "请输入名称",
+        "callback": "请输入回调地址",
+        "desc": "请输入简介"
+      }
+    },
+    "newTeam": {
+      "titleNotNew": "基本信息",
+      "title": "创建新的团队",
+      "desc": "填写基本的团队信息",
+      "icon": "团队图标",
+      "form": {
+        "name": "名称",
+        "desc": "简介 Description",
+        "site": "组织网站 Website Link",
+        "org": "组织或公司名称 Organization or Corporation Name",
+        "usage": "团队使用目标 Team Objective"
+      },
+      "place": {
+        "name": "请输入名称...",
+        "desc": "请输入简介...",
+        "site": "请输入您的组织网站...",
+        "org": "请输入您的组织或者是公司名称...",
+        "usage": "您用创建团队想要做什么呢？..."
+      },
+      "save": "保存更改",
+      "delete": "删除 Team",
+      "create": "立即创建",
+      "dialog": {
+        "title": "请确认操作",
+        "content": "确定要删除这个 Team 吗？",
+        "cancel": "取 消",
+        "confirm": "确 定"
+      }
+    }
+  },
+  "common": {
+    "avatar": "头像",
+    "email": "电子邮件",
+    "username": "用户名",
+    "login": "登录",
+    "signout": "登出",
+    "join": "加入",
+    "copy": "复制",
+    "save": "保存",
+    "icon": "图标"
+  },
+  "redirecting": "跳转中...",
+  "login": "即刻登录{break}成为 {name} 的开发者",
+  "backToApps": "返回到应用列表",
+  "backToTeam": "返回到团队列表"
+}

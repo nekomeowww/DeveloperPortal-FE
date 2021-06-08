@@ -6,24 +6,24 @@
       <div class="wrapper" style="display: flex; align-items: center; justify-content: center;">
         <img src="@/assets/img/landing-img.png" class="kv"/>
         <div class="text">
-          <h1>开发 Develope<br>
+          <h1>{{ $t('landing.dev') }}<br>
             <span class="container">
-              <span class="word">创造力 Creativity</span>
-              <span class="word">集成性 Integration</span>
-              <span class="word">实用性 Accessibilities</span>
-              <span class="word">想象力 Imagination</span>
-              <span class="word">合作力 Corporative</span>
-              <span class="word">互通性 Interoperability</span>
+              <span class="word">{{ $t('landing.words[0]') }}</span>
+              <span class="word">{{ $t('landing.words[1]') }}</span>
+              <span class="word">{{ $t('landing.words[2]') }}</span>
+              <span class="word">{{ $t('landing.words[3]') }}</span>
+              <span class="word">{{ $t('landing.words[4]') }}</span>
+              <span class="word">{{ $t('landing.words[5]') }}</span>
             </span>
           </h1>
           <router-link :to="{ name: 'Home'}">
             <div class="start">
-              开始 Get Started
+              {{ $t('landing.start') }}
             </div>
           </router-link>
           <router-link :to="{ name: 'Doc' }">
             <div class="doc">
-              文档
+              {{ $t('landing.doc') }}
             </div>
           </router-link>
         </div>

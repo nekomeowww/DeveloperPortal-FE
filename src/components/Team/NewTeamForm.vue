@@ -1,14 +1,14 @@
 <template>
   <div class="team">
     <div class="team-desp">
-      <div v-if="notNew" class="team-desp-title">General Information</div>
-      <div v-else class="team-desp-title">Creating New Team</div>
-      <div class="team-desp-content">填写基本的团队信息</div>
+      <div v-if="notNew" class="team-desp-title">{{ $t('comp.newTeam.titleNotNew') }}</div>
+      <div v-else class="team-desp-title">{{ $t('comp.newTeam.title') }}</div>
+      <div class="team-desp-content">{{ $t('comp.newTeam.desc') }}</div>
     </div>
     <div v-if="isOwner">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="ruleForm">
         <div>
-          <span class="icon-title">团队图标</span>
+          <span class="icon-title">{{ $t('comp.newTeam.icon') }}</span>
           <img-upload
             :img-upload-done="imgUploadDone"
             :update-type="'team'"
@@ -21,7 +21,7 @@
             >
               <div class="edit">
                 <i class="el-icon-camera" />
-                图标
+                {{ $t('common.icon') }}
               </div>
               <img
                 id="avatar"
@@ -36,68 +36,68 @@
         </div>
         <div>
           <el-form-item label=' ' prop="name">
-            <span class="form-label">名称 Name</span>
-            <el-input placeholder="请输入名称..." maxlength="20" v-model="ruleForm.name"></el-input>
+            <span class="form-label">{{ $t('comp.newTeam.form.name') }}</span>
+            <el-input :placeholder="place.name" maxlength="20" v-model="ruleForm.name"></el-input>
           </el-form-item>
           <el-form-item label=' ' prop="desp">
-            <span class="form-label">简介 Description</span>
-            <el-input placeholder="请输入简介... " type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
+            <span class="form-label">{{ $t('comp.newTeam.form.desc') }}</span>
+            <el-input :placeholder="place.desc" type="textarea" maxlength="1000" v-model="ruleForm.desp" :rows="6"></el-input>
           </el-form-item>
           <el-form-item prop="orglink">
-            <span class="form-label">组织网站 Website Link</span>
-            <el-input placeholder="请输入您的个人或组织网站... " v-model="ruleForm.orglink"></el-input>
+            <span class="form-label">{{ $t('comp.newTeam.form.site') }}</span>
+            <el-input :placeholder="place.site" v-model="ruleForm.orglink"></el-input>
           </el-form-item>
           <el-form-item prop="orgname">
-            <span class="form-label">组织或公司名称 Organization or Corporation Name</span>
-            <el-input placeholder="请输入您的组织或者是公司名称... " v-model="ruleForm.orgname"></el-input>
+            <span class="form-label">{{ $t('comp.newTeam.form.org') }}</span>
+            <el-input :placeholder="place.org" v-model="ruleForm.orgname"></el-input>
           </el-form-item>
           <el-form-item prop="usage">
-            <span class="form-label">团队使用目标 Team Objective</span>
-            <el-input placeholder="您用创建团队想要做什么呢？... " v-model="ruleForm.usage"></el-input>
+            <span class="form-label">{{ $t('comp.newTeam.form.usage') }}</span>
+            <el-input :placeholder="place.usage" v-model="ruleForm.usage"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">保存更改</el-button>
-            <el-button v-if="notNew && isOwner" type="danger" @click="openDeletionConfirm">删除 Team</el-button>
-            <el-button v-if="!notNew" type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button v-if="notNew" type="primary" @click="submitForm('ruleForm')">{{ $t('comp.newTeam.save') }}</el-button>
+            <el-button v-if="notNew && isOwner" type="danger" @click="openDeletionConfirm">{{ $t('comp.newTeam.delete') }}</el-button>
+            <el-button v-if="!notNew" type="primary" @click="submitForm('ruleForm')">{{ $t('comp.newTeam.create') }}</el-button>
           </el-form-item>
         </div>
       </el-form>
       <el-dialog
-        title="请确认操作"
+        :title="dialogTitle"
         :visible.sync="centerDialogVisible"
         width="30%"
         center>
-        <span>确定要删除这个 Team 吗？</span>
+        <span>{{ $t('comp.newTeam.dialog.content') }}</span>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="centerDialogVisible = false">取 消</el-button>
-          <el-button type="primary" @click="removeTeam">确 定</el-button>
+          <el-button @click="centerDialogVisible = false">{{ $t('comp.newTeam.dialog.cancel') }}</el-button>
+          <el-button type="primary" @click="removeTeam">{{ $t('comp.newTeam.dialog.confirm') }}</el-button>
         </span>
       </el-dialog>
     </div>
     <div v-if="!isOwner" class="info-container">
       <div class="avatar-container">
-        <span class="info-label">团队图标</span>
+        <span class="info-label">{{ $t('comp.newTeam.icon') }}</span>
         <img id="avatar" v-if="getAvatar()" slot="description" :src="avatar" alt="avatar">
       </div>
       <div class="detail">
         <div class="detail-container">
-          <span class="info-label">名称 Name</span>
+          <span class="info-label">{{ $t('comp.newTeam.form.name') }}</span>
           <span class="info-detail">{{ ruleForm.name }}</span>
         </div>
         <div class="detail-container">
-          <span class="info-label">简介 Description</span>
+          <span class="info-label">{{ $t('comp.newTeam.form.desc') }}</span>
           <span class="info-detail">{{ ruleForm.desp }}</span>
         </div>
         <div class="detail-container">
-          <span class="info-label">组织网站 Website Link</span>
+          <span class="info-label">{{ $t('comp.newTeam.form.site') }}</span>
           <span class="info-detail">{{ ruleForm.orglink }}</span>
         </div>
         <div class="detail-container">
-          <span class="info-label">组织或公司名称 Organization or Corporation Name</span>
+          <span class="info-label">{{ $t('comp.newTeam.form.org') }}</span>
           <span class="info-detail">{{ ruleForm.orgname }}</span>
         </div>
         <div class="detail-container">
-          <span class="info-label">团队使用目标 Team Objective</span>
+          <span class="info-label">{{ $t('comp.newTeam.form.usage') }}</span>
           <span class="info-detail">{{ ruleForm.usage }}</span>
         </div>
       </div>
@@ -157,10 +157,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入名称', trigger: 'change' }
+          { required: true, message: this.$t('comp.newTeam.rules.name'), trigger: 'change' }
         ],
         callback: [
-          { required: true, message: '请输入回调地址', trigger: 'change' }
+          { required: true, message: this.$t('comp.newTeam.rules.callback'), trigger: 'change' }
         ],
         toslink: [
           { required: false, message: '', trigger: 'change' }
@@ -172,12 +172,20 @@ export default {
           { required: false, message: '', trigger: 'change' }
         ],
         desp: [
-          { required: true, message: '请输入简介', trigger: 'change' }
+          { required: true, message: this.$t('comp.newTeam.rules.desc'), trigger: 'change' }
         ]
       },
       centerDialogVisible: false,
       requestCount: 0,
-      isOwner: false
+      isOwner: false,
+      place: {
+        name: this.$t('comp.newTeam.place.name'),
+        desc: this.$t('comp.newTeam.place.desc'),
+        site: this.$t('comp.newTeam.place.site'),
+        org: this.$t('comp.newTeam.place.org'),
+        usage: this.$t('comp.newTeam.place.usage')
+      },
+      dialogTitle: this.$t('comp.newTeam.dialog.title')
     }
   },
   watch: {
@@ -221,7 +229,7 @@ export default {
           Axios.post(env.DEVELOPERAPI + '/team/new', { form: this.ruleForm, teamId: this.currentTeamId, userId: this.userId }).then(res => {
             if (res.data.code === 0 || res.data.code === 1) {
               this.$message({
-                message: '创建成功... 现在返回 Team 列表',
+                message: this.$t('elMessage.success.teamCreate'),
                 type: 'success',
                 duration: 4000
               })
@@ -229,7 +237,7 @@ export default {
               this.$router.push({ name: 'Teams' })
             } else {
               this.$message({
-                message: '出现了问题，请重试',
+                message: this.$t('elMessage.error.unknow'),
                 type: 'error',
                 duration: 4000
               })
@@ -237,7 +245,7 @@ export default {
           })
         } else {
           this.$message({
-            message: '出现了问题，请重试',
+            message: this.$t('elMessage.error.unknow'),
             type: 'error',
             duration: 4000
           })
@@ -248,7 +256,7 @@ export default {
     doneImageUpload () {
       this.imgUploadDone += Date.now()
       this.$message({
-        message: '图片上传成功',
+        message: this.$t('elMessage.success.imageUpload'),
         type: 'success',
         duration: 4000
       })
@@ -262,7 +270,7 @@ export default {
         if (res.data.code === 0) {
           this.centerDialogVisible = false
           this.$message({
-            message: '删除成功，现在返回 Team 列表...',
+            message: this.$t('elMessage.success.teamDelete'),
             type: 'success',
             duration: 4000
           })
@@ -270,7 +278,7 @@ export default {
         } else if (res.data.code === 1) {
           this.centerDialogVisible = false
           this.$message({
-            message: '好像出现了点问题，现在返回 Teams 列表...',
+            message: this.$t('elMessage.error.team'),
             type: 'warning',
             duration: 4000
           })
@@ -278,7 +286,7 @@ export default {
         } else {
           this.centerDialogVisible = false
           this.$message({
-            message: '出现错误，返回 App 列表...',
+            message: this.$t('elMessage.error.team'),
             type: 'success',
             duration: 4000
           })

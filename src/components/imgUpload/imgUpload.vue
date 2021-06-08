@@ -11,7 +11,7 @@
       @input-filter="inputFilter"
     >
       <slot name="uploadButton">
-        <Button>上传</Button>
+        <Button>{{ $t('comp.image.upload') }}</Button>
       </slot>
     </FileUpload>
 
@@ -29,10 +29,10 @@
         class="modal-header"
       >
         <p class="modal-header-title">
-          编辑图像
+          {{ $t('comp.image.edit') }}
         </p>
         <p class="modal-header-subtitle">
-          调整图像尺寸和位置
+          {{ $t('comp.image.editDetail') }}
         </p>
       </div>
       <div
@@ -66,6 +66,7 @@ import Compressor from 'compressorjs'
 
 import API from '../../api/api.js'
 import { mapState, mapActions } from 'vuex'
+import i18n from '../../locale/index.js'
 
 export default {
   name: 'ImgUpload',
@@ -187,7 +188,7 @@ export default {
         if (!/\.(gif|jpg|jpeg|png|webp)$/i.test(newFile.name)) {
           this.$message.error({
             duration: 1000,
-            message: '选择图片'
+            message: i18n.t('elMessage.error.notImage')
           })
           return prevent()
         }
@@ -197,7 +198,7 @@ export default {
         if (newFile.file.size >= 0 && newFile.file.size > 1024 * 1024 * size) {
           this.$message.error({
             duration: 1000,
-            message: '图片过大'
+            message: i18n.t('elMessage.error.imageLarge')
           })
           prevent()
           return false
@@ -220,7 +221,7 @@ export default {
               console.log(err)
               this.$message.error({
                 duration: 1000,
-                message: '自动压缩图片失败'
+                message: i18n.t('elMessage.error.compress')
               })
             }
           })
@@ -298,7 +299,7 @@ export default {
           this.modalLoading = false
           this.$message.error({
             duration: 1000,
-            message: '上传图片失败'
+            message: i18n.t('elMessage.error.imageUpload')
           })
         }
 
@@ -311,13 +312,13 @@ export default {
           this.$message({
             showClose: true,
             duration: 1000,
-            message: '请先登录'
+            message: i18n.t('elMessage.error.login')
           })
         } else {
           this.$message({
             showClose: true,
             duration: 1000,
-            message: '上传图片失败'
+            message: i18n.t('elMessage.error.imageUpload')
           })
         }
       }

@@ -2,50 +2,50 @@
   <div>
     <div class="application">
       <div class="app-desp">
-        <div class="app-desp-title">Oauth App</div>
-        <div class="app-desp-content">请将你的网站链接到下面的地址来使用 Oauth 登录</div>
+        <div class="app-desp-title">{{ $t('comp.oaset.title') }}</div>
+        <div class="app-desp-content">{{ $t('comp.oaset.desc') }}</div>
       </div>
       <div style="display: flex;">
-       <el-input :placeholder="link" class="link" :disabled="true"></el-input>
-       <el-button @click="copyToClipboard(link)" type="primary">复制</el-button>
+        <el-input :placeholder="link" class="link" :disabled="true"></el-input>
+        <el-button @click="copyToClipboard(link)" type="primary">{{ $t('common.copy') }}</el-button>
       </div>
       <br>
-      <el-checkbox label="测试网 Test Network" v-model="testEnabled"></el-checkbox>
+      <el-checkbox :label="testnet" v-model="testEnabled"></el-checkbox>
       <br>
       <br>
       <div class="app-desp">
-        <div class="app-desp-title">Oauth Permission Control</div>
-        <div class="app-desp-content">在这里，你可以控制你的 App 请求什么样的权限，或者是强制要求一些数据获取的权限。</div>
+        <div class="app-desp-title">{{ $t('comp.oaset.opc.title') }}</div>
+        <div class="app-desp-content">{{ $t('comp.oaset.opc.desc') }}</div>
       </div>
       <br>
       <div class="check-list">
         <div class="check-group">
-          <div class="check-title">对文章的权限</div>
+          <div class="check-title">{{ $t('comp.oaset.opc.forPost') }}</div>
           <el-checkbox-group v-model="checkList">
-            <el-checkbox label="读取权限"></el-checkbox>
-            <el-checkbox label="编辑权限"></el-checkbox>
-            <el-checkbox label="发布权限"></el-checkbox>
+            <el-checkbox :label="perm.read" value="读取权限"></el-checkbox>
+            <el-checkbox :label="perm.edit" value="编辑权限"></el-checkbox>
+            <el-checkbox :label="perm.post" value="发布权限"></el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="check-group">
-          <div class="check-title">对 Fan 票的权限</div>
+          <div class="check-title">{{ $t('comp.oaset.opc.forFan') }}</div>
           <el-checkbox-group v-model="checkList2">
-            <el-checkbox label="读取权限"></el-checkbox>
-            <el-checkbox label="编辑权限"></el-checkbox>
-            <el-checkbox label="修改协作者权限"></el-checkbox>
-            <el-checkbox label="修改增发数量"></el-checkbox>
+            <el-checkbox :label="perm.read" value="读取权限"></el-checkbox>
+            <el-checkbox :label="perm.edit" value="编辑权限"></el-checkbox>
+            <el-checkbox :label="perm.creator" value="修改协作者权限"></el-checkbox>
+            <el-checkbox :label="perm.number" value="修改增发数量"></el-checkbox>
           </el-checkbox-group>
         </div>
         <div>
-          <div class="check-title">对账户信息内容的权限</div>
+          <div class="check-title">{{ $t('comp.oaset.opc.forProfile') }}</div>
           <el-checkbox-group v-model="checkList3">
-            <el-checkbox label="读取权限"></el-checkbox>
-            <el-checkbox label="编辑权限"></el-checkbox>
-            <el-checkbox label="删改权限"></el-checkbox>
+            <el-checkbox :label="perm.read" value="读取权限"></el-checkbox>
+            <el-checkbox :label="perm.edit" value="编辑权限"></el-checkbox>
+            <el-checkbox :label="perm.delete" value="删改权限"></el-checkbox>
           </el-checkbox-group>
         </div>
       </div>
-      <el-button class="save" type="primary" @click="submitForm">保存</el-button>
+      <el-button class="save" type="primary" @click="submitForm">{{ $t('common.save') }}</el-button>
     </div>
   </div>
 </template>
@@ -67,7 +67,16 @@ export default {
       checkList2: [],
       checkList3: [],
       testEnabled: false,
-      link: window.location.origin + '/app/' + this.$route.params.id + '/oauth'
+      link: window.location.origin + '/app/' + this.$route.params.id + '/oauth',
+      testnet: this.$t('comp.oaset.testnet'),
+      perm: {
+        read: this.$t('comp.oaset.opc.read'),
+        edit: this.$t('comp.oaset.opc.edit'),
+        post: this.$t('comp.oaset.opc.post'),
+        delete: this.$t('comp.oaset.opc.delete'),
+        creator: this.$t('comp.oaset.opc.creator'),
+        number: this.$t('comp.oaset.opc.number')
+      }
     }
   },
   watch: {
@@ -86,7 +95,7 @@ export default {
       const profilePermission = this.checkList3
       Axios.post(env.DEVELOPERAPI + '/app/permission', { appId: this.$route.params.id, userId: this.userId, permission: { post: postPermission, token: tokenPermission, profile: profilePermission } })
       this.$message({
-        message: '保存成功',
+        message: this.$t('elMessage.success.save'),
         type: 'success',
         duration: 4000
       })
@@ -103,14 +112,14 @@ export default {
         textarea.select()
         try {
           this.$notify.success({
-            title: '复制成功',
-            message: '内容已经成功复制到剪贴板'
+            title: this.$t('elNotify.success.cpoyT'),
+            message: this.$t('elNotify.success.cpoyM')
           })
           return document.execCommand('copy') // Security exception may be thrown by some browsers.
         } catch (ex) {
           this.$notify.error({
-            title: '复制失败',
-            message: '请手动复制内容'
+            title: this.$t('elNotify.error.cpoyT'),
+            message: this.$t('elNotify.error.cpoyM')
           })
           return false
         } finally {
@@ -121,6 +130,7 @@ export default {
   },
   mounted () {
     Axios.get(env.DEVELOPERAPI + '/app/permission?appId=' + this.$route.params.id).then(res => {
+      console.log('APP::Permission:', res)
       if (res.data.permission === undefined) {
         return
       }

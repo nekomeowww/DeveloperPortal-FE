@@ -4,7 +4,7 @@
       <div class="sidebar-menu">
         <router-link :to="{path: '/teams'}">
           <i class="el-icon-arrow-left" />
-          Back to Team
+          {{ $t('backToTeam') }}
         </router-link>
       </div>
     </template>
@@ -23,6 +23,7 @@ import NewTeamForm from '@/components/Team/NewTeamForm.vue'
 
 import { getCookie, disassemble } from '../util/cookie'
 import env from '../../env.json'
+import i18n from '../locale'
 
 export default {
   components: {
@@ -41,7 +42,7 @@ export default {
     ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
   created () {
-    document.title = '创建新的 Team - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.team.new')
   },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')

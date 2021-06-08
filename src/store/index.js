@@ -12,6 +12,8 @@ import teamIcon from '@/assets/img/Team.png'
 import authIcon from '@/assets/img/auth.png'
 import env from '../../env.json'
 
+import i18n from '../locale'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -36,37 +38,43 @@ export default new Vuex.Store({
     thirdPartyUserAvatar: '',
     menuItems: [
       {
-        title: '应用 Application',
+        title: i18n.t('menuTitle.app'),
         icon: appIcon,
-        path: '/apps'
+        path: '/apps',
+        langKey: 'menuTitle.app'
       },
       {
-        title: '团队 Team',
+        title: i18n.t('menuTitle.team'),
         icon: teamIcon,
-        path: '/teams'
+        path: '/teams',
+        langKey: 'menuTitle.team'
       },
       {
-        title: '开发文档 Documentation',
+        title: i18n.t('menuTitle.doc'),
         icon: docIcon,
-        path: '/doc'
+        path: '/doc',
+        langKey: 'menuTitle.doc'
       },
       {
-        title: '起步 Get Started',
+        title: i18n.t('menuTitle.start'),
         elicon: 'el-icon-success',
-        path: '/doc/getstarted'
+        path: '/doc/getstarted',
+        langKey: 'menuTitle.start'
       },
       {
-        title: '用户信息 User Profile',
+        title: i18n.t('menuTitle.profile'),
         elicon: 'el-icon-user-solid',
-        path: '/doc/userprofile'
+        path: '/doc/userprofile',
+        langKey: 'menuTitle.profile'
       },
       {
-        title: '用户钱包 Wallet',
+        title: i18n.t('menuTitle.wallet'),
         elicon: 'el-icon-s-finance',
-        path: '/doc/userwallet'
+        path: '/doc/userwallet',
+        langKey: 'menuTitle.wallet'
       },
       {
-        title: 'Oauth2',
+        title: 'OAuth 2',
         icon: authIcon,
         path: '/doc/oauth'
       },

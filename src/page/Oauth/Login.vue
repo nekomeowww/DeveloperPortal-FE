@@ -19,6 +19,7 @@ import Oauth from '@/components/Login/Oauth.vue'
 import Axios from 'axios'
 
 import env from '../../../env.json'
+import i18n from '../../locale'
 
 export default {
   components: {
@@ -50,7 +51,7 @@ export default {
         ...app.data.detail
       }
 
-      document.title = '使用你的账号登录 - Matataki 开发者中心'
+      document.title = i18n.t('siteTitle.oAuth.login')
     })
   }
 }

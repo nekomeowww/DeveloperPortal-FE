@@ -2,10 +2,10 @@
   <div class="notification">
     <div class="notification-desp">
       <div class="notification-desp-title">
-        <span>通知 Notification</span>
+        <span>{{ $t('comp.noti.title') }}</span>
       </div>
       <div class="notification-desp-content">
-        这里是通知列表，所有邀请和动态都会显示在这里。
+        {{ $t('comp.noti.desc') }}
       </div>
       <div class="notification-key-value">
         <div v-for="(value, index) in notifyData" :key=index>
@@ -25,7 +25,7 @@
               <div class="team-container">
                 <img class="team-img" :src="value.team.img">
                   <div class="team-name-container">
-                    <span class="join">加入</span>
+                    <span class="join">{{ $t('common.join') }}</span>
                     <span class="name">{{ value.team.name }}</span>
                   </div>
                 </div>
@@ -53,7 +53,7 @@
               <div class="team-container">
                 <img class="team-img" :src="value.team.img">
                   <div class="team-name-container">
-                    <span class="join">加入</span>
+                    <span class="join">{{ $t('common.join') }}</span>
                     <span class="name">{{ value.team.name }}</span>
                   </div>
                 </div>
@@ -145,7 +145,7 @@ export default {
     }
     if (this.userId === 0) {
       this.$message({
-        message: '出现了问题，现在返回 App 列表',
+        message: this.$t('elMessage.error.app'),
         type: 'error',
         duration: 4000
       })

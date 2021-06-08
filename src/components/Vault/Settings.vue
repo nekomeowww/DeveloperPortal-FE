@@ -2,27 +2,27 @@
   <div class="vault">
     <div class="vault-desp">
       <div class="vault-desp-title">
-        <span>保险箱 Vault</span>
+        <span>{{ $t('comp.vault.setting.title') }}</span>
         <div class="vault-mid"></div>
-        <el-button type="primary" @click="newVault">创建键值对</el-button>
+        <el-button type="primary" @click="newVault">{{ $t('comp.vault.setting.new') }}</el-button>
       </div>
       <div class="vault-desp-content">
-        在这里你可以创建和使用一些简单的键值对，只有提供了 Client ID 和 Client Secret 两者和用户 Token（可选）的时候才会被允许获取。<br>
-        这些键值对是相当于密码一样的存储，你只可以存储字符串，留存在服务器端作为 API 附属的「密钥」进行使用，<br>
-        我们不会检查你存储了什么，你的隐私都是能够被确保的，只有提供了 Client ID 和 Client Secret 才可以获取。
+        {{ $t('comp.vault.setting.desc[0]') }}<br>
+        {{ $t('comp.vault.setting.desc[1]') }}<br>
+        {{ $t('comp.vault.setting.desc[2]') }}
       </div>
       <div class="vault-key-value">
         <div v-for="(value, index) in vaultData" :key=index>
           <div v-if="index === 0" class="vault-container" style="padding-top: 12px">
             <div class="vault-name"><i class="el-icon-lock"></i> {{ value.key }}</div>
             <div class="vault-mid"></div>
-            <el-button type="primary" plain @click="updateVault(value)">更新</el-button>
+            <el-button type="primary" plain @click="updateVault(value)">{{ $t('comp.vault.setting.update') }}</el-button>
             <el-button type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
           </div>
           <div v-if="index !== 0" class="vault-container">
             <div class="vault-name"><i class="el-icon-lock"></i> {{ value.key }}</div>
             <div class="vault-mid"></div>
-            <el-button type="primary" plain @click="updateVault(value)">更新</el-button>
+            <el-button type="primary" plain @click="updateVault(value)">{{ $t('comp.vault.setting.update') }}</el-button>
             <el-button type="danger" icon="el-icon-delete" plain @click="removeVault(value)"></el-button>
           </div>
         </div>
@@ -66,7 +66,7 @@ export default {
       Axios.get(env.DEVELOPERAPI + '/app/removevault?id=' + value.vaultId + '&appId=' + this.currentAppId + '&userId=' + this.userId).then(res => {
         if (res.data.code === 0) {
           this.$message({
-            message: '删除成功',
+            message: this.$t('elMessage.success.delete'),
             type: 'success',
             duration: 4000
           })
@@ -85,7 +85,7 @@ export default {
     }
     if (this.userId === 0) {
       this.$message({
-        message: '出现了问题，现在返回 App 列表',
+        message: this.$t('elMessage.error.app'),
         type: 'error',
         duration: 4000
       })

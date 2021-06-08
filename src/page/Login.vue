@@ -6,10 +6,11 @@
     <div class="wrapper">
       <img src="@/assets/img/landing-img.png" class="kv"/>
       <div class="login-box">
-        <span class="login-title">
-          即刻登录<br>
-          成为 <span class="purple">Matataki</span> 的开发者
-        </span><br>
+        <i18n path="login" tag="span" class="login-title">
+          <br place="break">
+          <span place="name" class="purple">Matataki</span>
+        </i18n>
+        <br>
         <Input />
       </div>
     </div>

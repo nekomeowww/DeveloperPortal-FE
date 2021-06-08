@@ -23,6 +23,7 @@ import { getCookie, disassemble } from '../../util/cookie'
 import Axios from 'axios'
 
 import env from '../../../env.json'
+import i18n from '../../locale'
 
 export default {
   props: {
@@ -63,7 +64,7 @@ export default {
       Axios.get(env.DEVELOPERAPI + '/team/detail?teamId=' + this.$route.params.id).then(team => {
         if (team.data === false) {
           this.$message({
-            message: '出现了问题，现在返回 Team 列表',
+            message: i18n.t('elMessage.error.team'),
             type: 'error',
             duration: 4000
           })
@@ -83,7 +84,7 @@ export default {
     }
   },
   mounted () {
-    document.title = '基本信息 - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.basic')
   }
 }
 </script>

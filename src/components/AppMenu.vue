@@ -3,7 +3,7 @@
     <div class="sidebar-menu-back">
       <router-link :to="{path: '/apps'}">
         <i class="el-icon-arrow-left" />
-        Back to Applications
+        {{ $t('comp.appMenu.back') }}
       </router-link>
     </div>
     <el-menu
@@ -35,17 +35,17 @@ export default {
     return {
       menu: [
         {
-          title: '基本信息 Information',
+          title: this.$t('comp.appMenu.basic'),
           icon: infoIcon,
           path: `/app/${this.$route.params.id}`
         },
         {
-          title: 'OAuth2',
+          title: this.$t('comp.appMenu.oauth2'),
           icon: oauthIcon,
           path: `/app/${this.$route.params.id}/settings`
         },
         {
-          title: '保险箱 Vault',
+          title: this.$t('comp.appMenu.vault'),
           icon: vaultIcon,
           path: `/app/${this.$route.params.id}/vault`
         }

@@ -21,6 +21,7 @@ import { getCookie, disassemble } from '../../util/cookie'
 import Axios from 'axios'
 
 import env from '../../../env.json'
+import i18n from '../../locale'
 
 export default {
   props: {
@@ -75,7 +76,7 @@ export default {
     }
   },
   mounted () {
-    document.title = '成员管理 - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.team.member')
   }
 }
 </script>

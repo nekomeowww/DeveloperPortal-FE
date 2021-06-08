@@ -16,6 +16,7 @@ import OauthSettings from '@/components/OauthSettings.vue'
 
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
+import i18n from '../../locale'
 
 export default {
   props: {
@@ -59,7 +60,7 @@ export default {
     }
   },
   mounted () {
-    document.title = 'Oauth2 - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.oAuth.settings')
   }
 }
 </script>

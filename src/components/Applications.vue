@@ -1,11 +1,11 @@
 <template>
     <div class="application">
       <div class="app-desp">
-        <div class="app-desp-title">Application</div>
-        <div class="app-desp-content">找到最适合你心目中 App 使用的 API SDK 和 API 设定集，然后申请创建一个由你自己服务器主持的实例。使用 Matataki API 开始构建属于你的应用程序。我们等不及想要看到你的作品了哦！</div>
+        <div class="app-desp-title">{{ $t('comp.app.title') }}</div>
+        <div class="app-desp-content">{{ $t('comp.app.desc') }}</div>
       </div>
-      <div v-if="isTeam" class="app-title">My Team's Application</div>
-      <div v-else class="app-title">My Application</div>
+      <div v-if="isTeam" class="app-title">{{ $t('comp.app.apps') }}</div>
+      <div v-else class="app-title">{{ $t('comp.app.my') }}</div>
       <el-row :gutter="20" class="apps">
         <div v-for="(app, index) in appCards" :key=index>
           <router-link :to="{ path:'/app/' + app.id, params: { app: app } }">
@@ -20,7 +20,7 @@
         <router-link to="/newapp">
           <div class="app-new">
             <img id="new-logo" src="../assets/img/newapp.png" />
-            <span id="new-text">创建你的 App</span>
+            <span id="new-text">{{ $t('comp.app.new') }}</span>
           </div>
         </router-link>
       </el-row>

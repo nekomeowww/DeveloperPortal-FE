@@ -4,7 +4,7 @@
       <div class="sidebar-menu">
         <router-link :to="{path: '/apps'}">
           <i class="el-icon-arrow-left" />
-          Back to Applications
+          {{ $t('backToApps') }}
         </router-link>
       </div>
     </template>
@@ -21,6 +21,7 @@ import NewAppForm from '@/components/NewAppForm.vue'
 
 import { getCookie, disassemble } from '../util/cookie'
 import env from '../../env.json'
+import i18n from '../locale'
 
 export default {
   components: {
@@ -34,7 +35,7 @@ export default {
     ...mapActions(['setLoggedIn', 'setCurrentAppId'])
   },
   created () {
-    document.title = '创建新的 App - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.app.new')
   },
   mounted () {
     const c = getCookie('ACCESS-TOKEN')

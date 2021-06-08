@@ -3,40 +3,16 @@
     <div class="application">
       <div class="member-desp">
         <div class="member-desp-title">
-            <span>成员管理 Members</span>
+            <span>{{ $t('comp.team.member.title') }}</span>
             <div class="member-mid"></div>
-            <el-button v-if="isAdmin" type="primary" @click="centerDialogVisible = true">邀请成员</el-button>
+            <el-button v-if="isAdmin" type="primary" @click="centerDialogVisible = true">{{ $t('comp.team.member.invite') }}</el-button>
         </div>
-        <div v-if="isAdmin" class="member-desp-content">在这里你可以管理成员的权限和邀请和删除你的团队的成员。</div>
-        <div v-else class="member-desp-content">在这里你可以看到团队的成员</div>
+        <div v-if="isAdmin" class="member-desp-content">{{ $t('comp.team.member.descAdmin') }}</div>
+        <div v-else class="member-desp-content">{{ $t('comp.team.member.desc') }}</div>
       </div>
       <div class="user-key-value">
         <div v-for="(value, index) in userData" :key=index>
-          <div v-if="index === 0" class="user-slot-container" style="padding-top: 12px">
-            <div :id="value.id" class="user-container">
-              <img class="user-avatar" :src="value.avatar" />
-              <div class="user-name-container">
-                <span class="user-nickname">{{ value.nickname }}</span>
-                <span class="user-email">{{ value.email }}</span>
-              </div>
-            </div>
-            <div class="user-mid"></div>
-            <div v-if="value.isOwner">所有者 Owner</div>
-            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" circle @click="quit(value)"></el-button>
-            <el-button v-else type="danger" icon="el-icon-delete" circle @click="quit(value)"></el-button>
-            <el-dialog
-              title="请确认操作"
-              :visible.sync="quitDialogVisible"
-              width="30%"
-              center>
-              <span v-if="!isAdmin">确定要退出这个团队吗？</span>
-              <span v-else>确定要删除这个成员吗？</span>
-              <span slot="footer" class="dialog-footer">
-                <el-button @click="quitDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="quitTeam(value)">确 定</el-button>
-              </span>
-            </el-dialog>
-          </div>
+          <div v-if="index === 0" class="user-slot-container"></div>
           <div v-if="index !== 0" class="user-slot-container">
             <div :id="value.id" class="user-container">
               <img class="user-avatar" :src="value.avatar" />
@@ -45,20 +21,19 @@
                 <span class="user-email">{{ value.email }}</span>
               </div>
             </div>
-            <div class="user-mid"></div>
-            <div v-if="value.isOwner">所有者 Owner</div>
-            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" circle @click="quit(value)"></el-button>
+            <div v-if="value.isOwner" class="user-mid">{{ $t('comp.team.member.owner') }}</div>
+            <el-button v-else-if="value.isSelf" type="danger" icon="el-icon-close" circle @click="quit(value)">A</el-button>
             <el-button v-if="isAdmin" type="danger" icon="el-icon-delete" circle @click="quit(value)"></el-button>
             <el-dialog
-              title="请确认操作"
+              :title="dialogTitle"
               :visible.sync="quitDialogVisible"
               width="30%"
               center>
-              <span v-if="!isAdmin">确定要退出这个团队吗？</span>
-              <span v-else>确定要删除这个成员吗？</span>
+              <span v-if="isAdmin">{{ $t('comp.team.member.quit') }}</span>
+              <span v-else>{{ $t('comp.team.member.remove') }}</span>
               <span slot="footer" class="dialog-footer">
-                <el-button @click="quitDialogVisible = false">取 消</el-button>
-                <el-button type="primary" @click="quitTeam(value)">确 定</el-button>
+                <el-button @click="quitDialogVisible = false">{{ $t('comp.team.member.cancel') }}</el-button>
+                <el-button type="primary" @click="quitTeam(value)">{{ $t('comp.team.member.confirm') }}</el-button>
               </span>
             </el-dialog>
           </div>
@@ -72,20 +47,19 @@
       center
     >
       <div style="display: flex">
-      <el-select v-model="value" filterable placeholder="搜索成员的昵称，或是电子邮件地址" style="width: 100%;">
-        <el-option
-          v-for="item in userList"
-          :key="item.nickname"
-          :label="item.nickname"
-          :value="item.id"
-          >
-          {{ item.nickname +' - '+ item.email }}
-        </el-option>
-      </el-select>
-        <el-button type="primary" @click="invite">邀请</el-button>
+        <el-select v-model="value" filterable :placeholder="invitePlace" style="width: 100%;">
+          <el-option
+            v-for="item in userList"
+            :key="item.nickname"
+            :label="item.nickname"
+            :value="item.id"
+            >
+            {{ item.nickname +' - '+ item.email }}
+          </el-option>
+        </el-select>
+        <el-button type="primary" @click="invite" style="margin-left: 20px;">{{ $t('comp.team.member.invite') }}</el-button>
       </div>
-      <span slot="footer" class="dialog-footer">
-      </span>
+      <span slot="footer" class="dialog-footer"></span>
     </el-dialog>
   </div>
 </template>
@@ -96,6 +70,7 @@ import { mapActions, mapState } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
 import env from '../../../env.json'
 import Axios from 'axios'
+import i18n from '../../locale'
 
 export default {
   props: {
@@ -121,7 +96,9 @@ export default {
       isAdmin: false,
       inviteMessage: '',
       centerDialogVisible: false,
-      quitDialogVisible: false
+      quitDialogVisible: false,
+      dialogTitle: this.$t('comp.team.member.dialogTitle'),
+      invitePlace: this.$t('comp.team.member.invitePlace')
     }
   },
   watch: {
@@ -158,7 +135,7 @@ export default {
     },
     teamData (val) {
       this.teamData = val
-      this.inviteMessage = '邀请你的成员加入 ' + val.name
+      this.inviteMessage = i18n.t('comp.team.member.inviteMessage', { name: val.name })
     },
     users (val) {
       val.forEach(id => {
@@ -190,7 +167,7 @@ export default {
       Axios.get(env.DEVELOPERAPI + '/invite?id=' + this.userId + '&teamId=' + this.$route.params.id + '&inviteId=' + this.value).then(res => {
         if (res.data.title) {
           this.$message({
-            message: '邀请成功',
+            message: i18n.t('elMessage.success.invite'),
             type: 'success',
             duration: 4000
           })
@@ -207,7 +184,7 @@ export default {
         if (res.data.code === 0 && !this.isAdmin) {
           this.quitDialogVisible = false
           this.$message({
-            message: '成功，现在返回 Team 列表',
+            message: i18n.t('elMessage.success.quitTeam'),
             type: 'success',
             duration: 4000
           })
@@ -231,7 +208,7 @@ export default {
     }
     if (this.userId === 0) {
       this.$message({
-        message: '出现了问题，现在返回 App 列表',
+        message: i18n.t('elMessage.error.app'),
         type: 'error',
         duration: 4000
       })
@@ -369,6 +346,8 @@ a {
 }
 
 .user-mid {
+  padding-left: 20px;
+  padding-right: 20px;
   flex: 1;
 }
 

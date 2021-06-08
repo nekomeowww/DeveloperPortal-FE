@@ -2,9 +2,9 @@
   <PhotoFrame>
     <template v-slot:sidebar>
       <div class="sidebar-menu">
-        <router-link :to="{path: '/teams'}">
+        <router-link :to="{path: '/apps'}">
           <i class="el-icon-arrow-left" />
-          Back to Home
+          {{ $t('backToApps') }}
         </router-link>
       </div>
     </template>
@@ -19,6 +19,7 @@ import Applications from '@/components/Applications.vue'
 import Notification from '@/components/Notification.vue'
 import { mapState, mapActions } from 'vuex'
 import { getCookie, disassemble } from '../util/cookie'
+import i18n from '../locale'
 
 export default {
   components: {
@@ -38,7 +39,7 @@ export default {
     ...mapActions(['setLoggedIn'])
   },
   created () {
-    document.title = 'App 列表 - Matataki 开发者中心'
+    document.title = i18n.t('siteTitle.not')
     const c = getCookie('ACCESS-TOKEN')
     if (c) {
       const res = disassemble(c)

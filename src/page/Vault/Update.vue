@@ -19,6 +19,7 @@ import UpdateVault from '@/components/Vault/Update.vue'
 
 import { mapActions, mapState } from 'vuex'
 import { getCookie, disassemble } from '../../util/cookie'
+import i18n from '../../locale'
 
 export default {
   props: {
@@ -53,6 +54,9 @@ export default {
     } else {
       this.$router.push({ name: 'Login' })
     }
+  },
+  mounted () {
+    document.title = i18n.t('siteTitle.vault')
   }
 }
 </script>

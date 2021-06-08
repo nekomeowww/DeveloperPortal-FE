@@ -26,17 +26,17 @@ export default {
     return {
       menu: [
         {
-          title: '应用 Application',
+          title: this.$t('menuTitle.app'),
           icon: appIcon,
           path: '/apps'
         },
         {
-          title: '团队 Team',
+          title: this.$t('menuTitle.team'),
           icon: teamIcon,
           path: '/teams'
         },
         {
-          title: '开发文档 Documentation',
+          title: this.$t('menuTitle.doc'),
           icon: docIcon,
           path: '/doc'
         }

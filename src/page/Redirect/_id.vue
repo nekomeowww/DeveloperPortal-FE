@@ -12,7 +12,7 @@
           <div class='cube'></div>
         </div>
       </div>
-      <div class="title">跳转中...</div>
+      <div class="title">{{ $t('redirecting') }}</div>
     </div>
   </div>
 </template>
@@ -22,6 +22,7 @@
 import Header from '@/components/Header.vue'
 
 import { mapState, mapActions } from 'vuex'
+import i18n from '../../locale'
 
 export default {
   components: {
@@ -48,7 +49,7 @@ export default {
     ...mapActions(['setUserInfo', 'setLoggedIn'])
   },
   created () {
-    document.title = '跳转中...'
+    document.title = i18n.t('siteTitle.redirect')
   },
   mounted () {
     if (/^(http|https):\/\/(([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])\.)*([a-z0-9]|[a-z0-9][a-z0-9-]*[a-z0-9])(:[0-9]+)?(\/.*)?$/.test(decodeURIComponent(this.callback))) {
@@ -57,7 +58,7 @@ export default {
       }, 1000)
     } else {
       this.$message({
-        message: 'App 设定的回调参数不是有效的，请联系 App 作者，现在返回 App 授权页面',
+        message: i18n.t('elMessage.error.redirect'),
         type: 'error',
         duration: 4000
       })
