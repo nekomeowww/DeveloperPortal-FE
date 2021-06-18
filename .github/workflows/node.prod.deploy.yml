@@ -23,6 +23,6 @@ jobs:
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.PRIVATE_KEY }}
         envs: API_TOKEN
-        script: cd /mnt/remote/yutsuki-datacenter/vdb/new-services/Git/DeveloperPortal-FE && git pull && rm -rf apitoken.json && touch apitoken.json && printf '{"token":"%s"}' "$API_TOKEN" > apitoken.json && yarn && yarn test && yarn build
+        script: cd ~/Git/DeveloperPortal-FE-Prod && git pull && rm -rf apitoken.json && touch apitoken.json && printf '{"token":"%s"}' "$API_TOKEN" > apitoken.json && yarn && yarn test && yarn build
