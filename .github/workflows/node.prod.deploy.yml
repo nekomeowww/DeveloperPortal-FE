@@ -25,4 +25,4 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.PRIVATE_KEY }}
         envs: API_TOKEN
-        script: cd ~/Git/DeveloperPortal-FE-Prod && git pull && rm -rf apitoken.json && touch apitoken.json && printf '{"token":"%s"}' "$API_TOKEN" > apitoken.json && yarn && yarn test && yarn build
+        script: cd ~/Git/DeveloperPortal-FE-Prod && git pull && rm -rf apitoken.json && touch apitoken.json && printf '{"token":"%s"}' "$API_TOKEN" > apitoken.json && yarn && yarn build
