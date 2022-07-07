@@ -20,7 +20,7 @@
     "dotenv": "^8.2.0",
     "element-ui": "^2.13.2",
     "js-cookie": "^2.2.1",
-    "moment": "^2.27.0",
+    "moment": "^2.29.4",
     "vue": "^2.5.2",
     "vue-i18n": "^8.24.4",
     "vue-markdown": "^2.2.4",
